@@ -1,0 +1,25 @@
+GLFW_ICON ICON "TGR-logo(alone).ico"
+
+1 VERSIONINFO
+FILEVERSION     0,0,47,2
+PRODUCTVERSION  0,0,47,2
+BEGIN
+ BLOCK "StringFileInfo"
+ BEGIN
+  BLOCK "040904E4"	// English US
+  BEGIN
+   VALUE "CompanyName", "Koranva-Forest Foundation"
+   VALUE "FileDescription", "TheGameRazer Powered By RayLib"
+   VALUE "FileVersion", "0.0.47"
+   VALUE "InternalName", "TheGameRazer"
+   VALUE "LegalCopyright", "(C) 2017-2023 Koranva-Forest"
+   VALUE "OriginalFilename", "TheGameRazer.exe"
+   VALUE "ProductName", "TheGameRazer"
+   VALUE "ProductVersion", "0.0.47b"
+  END
+ END
+ BLOCK "VarFileInfo"
+ BEGIN
+  VALUE "Translation", 0x409, 1252	// English US
+ END
+END
