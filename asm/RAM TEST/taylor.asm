@@ -1,1 +1,1 @@
-replace me by coping or linking to: ./asm/std/taylor.asm
+../std/taylor.asm
