@@ -1,1 +1,1 @@
-/media/billpc2684/Shared-Partition/Programming/TGR-PRTO-RAYLIB/asm/std/taylor.asm
+replace me by coping or linking to: ./asm/std/taylor.asm

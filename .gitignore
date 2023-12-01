@@ -4,6 +4,9 @@ TGR
 TGR.exe
 bin/for-windows.rc.data
 
+# SAV Files
+*.sav
+
 # Nano
 *.swp
 
