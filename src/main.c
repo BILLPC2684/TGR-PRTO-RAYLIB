@@ -11,7 +11,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <signal.h>
 #include <math.h>
+#include "netlib.h"
+#include "color.h"
+
+#include <signal.h>
+static volatile bool MainRunning = 1;
+void intHandler(int dummy) { MainRunning = 0; }
 
 #define true  1
 #define false 0
@@ -22,17 +29,18 @@
 
 #define ScreenSise 2764800
 
-#define version "v0.0.47a"
+#define version "v0.0.47c"
 
 static const uint8_t* ErrorTexts[3] = {"Warning", "Error", "Fatal"};
 
 typedef struct {
- bool Debug,Pause,AsService,blockDisp,ROMloaded,SilentRun,EXTSAV,keepAspect;
+ bool Debug,Pause,AsService,blockDisp,ROMloaded,SilentRun,EXTSAV,keepAspect,FancyPrinting;
  uint8_t HeaderSize, *MEM,PageID[2],ROMBANK[33][SIZ8MB],ErrorType,LED[3],controller[2][32],controllerType[2],title[16],controllerDevice[2],GUIOpacity;
- uint16_t Clock, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],controllerKey[2][32];
+ uint16_t Clock, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],controllerKey[2][32],NETWORK_PORT;
  uint64_t tmp[8];
- float IPS[2],MemUse;
- uint8_t *REG, *Error, *BN, *RN, *SN;
+ double IPS[2],MemUse,VMemUse;
+ uint8_t *REG, *Error, *BN, *RN, *SN, NETWORK_IP[256];
+
  Image canvas;
  //TI:    Total Instructions
  //FN:    BIOS FileName
@@ -63,8 +71,6 @@ typedef struct {
 } GPU_INIT;
 GPU_INIT GPU;
 uint16_t GPU_Resolutions[4][2] = {{480,360},{800,600},{852,480},{1280,720}};
-
-#include "taylor.h"
 
 Font font;
 Color
@@ -280,7 +286,7 @@ void printBits(uint8_t byte) {
 
 Font GenerateFont() {
  #define img_sz 128
- printf("\nGenerating TGR Font...\n");
+ printf("\n%sGenerating TGR Font...\n",COLOR_MAGENTA);
  Color *pixels = (Color *)RL_CALLOC(img_sz*img_sz, sizeof(Color));
  
  //ASSEMBLE GLYPHS
@@ -334,7 +340,7 @@ Font GenerateFont() {
  }font.baseSize = 8;
  
  UnloadImage(fontClear);
- printf("\\Done!\n\n");
+	 printf("\\%s%sFont has been Generated!!%s\n\n",COLOR_BOLD,COLOR_GREEN,COLOR_BOTH_DEFAULT);
  return font;
 }
 
@@ -362,17 +368,26 @@ void UpdateColors() {
 void printError() {
  if((strlen(sys.Error)>0) && (sys.ErrorType<3)) {
   uint8_t msg[1024] = {0};
-  sprintf(msg,"[EMU %s] %s\n",ErrorTexts[sys.ErrorType],sys.Error); memset(sys.Error, 0, sizeof(sys.Error));
+  sprintf(msg,"%s%s%s[EMU %s] %s%s%s%s\n",COLOR_BG_DEFAULT,COLOR_BOLD,COLOR_YELLOW,ErrorTexts[sys.ErrorType],(sys.ErrorType<2?"":COLOR_NORMAL),(sys.ErrorType<1?"":COLOR_RED),sys.Error,COLOR_BOTH_DEFAULT); memset(sys.Error, 0, sizeof(sys.Error));
   printf("%s\n\n",msg); sys.ErrorType = 3;
 }}
 uint64_t zeroup(int64_t x) { return (x>=0)?x:0; }
 
+#include <ctype.h>
 
-//#include "taylor.c"
+char* toLower(char* s) {
+  for(char *p=s; *p; p++) *p=tolower(*p);
+  return s;
+}
+
+#include "taylor.c"
 
 void main() {
+ signal(SIGINT, intHandler);
+ sys.Error = malloc(1024);
  for (int i=0;i<40;i++) { TGR_chars[95+i] = utf16(TGR_uni[i]); }
- printf("Loading TGR-PRTO %s Alpha Build...\n\\ TheGameRazer (C) 2017-2023 Koranva-Forest\n \\ Help us on Github: https://github.com/BILLPC2684/TGR-PRTO-RAYLIB\n",version);
+ printf("Loading %s%sTGR-PRTO %s %sAlpha %sBuild...\n\\ %s%sTheGameRazer %s(C) %s2017-2023 Koranva-Forest%s\n \\ %s%sHelp us on Github%s: %s%s%shttps://github.com/BILLPC2684/TGR-PRTO-RAYLIB%s\n",COLOR_BOLD,COLOR_YELLOW,version,
+                 COLOR_BLUE,COLOR_RESET,COLOR_BOLD,COLOR_RED,COLOR_YELLOW,COLOR_GREEN,COLOR_DEFAULT,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,COLOR_RESET);
  SetTraceLogLevel(LOG_WARNING);
 
 //### Can't get discord_game_sdk.so to work .w. ###///
@@ -406,14 +421,17 @@ void main() {
    sys.controllerKey[j][i] = DefaultKEYS[j][i];
  }}
  FILE *fp;
- if ((fp = fopen("settings.cfg", "r")) == NULL) { printf("Error: Unable to open Settings, Using Default Settings...\n"); Error++; }
+ if ((fp = fopen("settings.cfg", "r")) == NULL) { sprintf(sys.Error,"Error: Unable to open Settings, Using Default Settings...\n"); sys.ErrorType=1; printError(); Error++; }
  else {
   cJSON *json,*jsonItem,*jsonSubItem; uint8_t cfgdata[1024];
   int len = fread(cfgdata, 1, sizeof(cfgdata), fp); fclose(fp);
   if ((json = cJSON_Parse(cfgdata)) == NULL) { cJSON_Delete(json); }
   else {
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "FancyPrinting");
+   if(cJSON_IsBool(jsonItem)) sys.FancyPrinting = cJSON_IsTrue(jsonItem);
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "BlockDisp");
+   if(cJSON_IsBool(jsonItem)) sys.blockDisp = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "ShowInput");
-   //printf(">>> %s, %s\n",cJSON_IsBool(jsonItem)?"True":"False",cJSON_IsTrue(jsonItem)?"True":"False");
    if(cJSON_IsBool(jsonItem)) ShowInput = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "HUDinfo");
    if(cJSON_IsBool(jsonItem)) HUDinfo = cJSON_IsTrue(jsonItem);
@@ -422,6 +440,8 @@ void main() {
 
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "KeepAspect");
    if(cJSON_IsBool(jsonItem)) sys.keepAspect = cJSON_IsTrue(jsonItem);
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "DebugMode");
+   if(cJSON_IsBool(jsonItem)) sys.Debug = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "GUIOpacity");
    if(cJSON_IsNumber(jsonItem)) sys.GUIOpacity = jsonItem->valueint;
    
@@ -477,8 +497,48 @@ void main() {
  
  Texture DummyTexture;
  uint8_t inDialog = 0;
- // CPU_init();  // -------------------------- will cause Undefined Reference Error on Compile
- while(true) {
+ CPU_init();
+ 
+ 
+// CPU_load("./ROMs/fib-endless.tgr");
+ 
+// CPU_start();
+// ResetCore(0); ResetCore(1);
+// CPU[0].running = true;
+// CPU[1].running = true;
+ sprintf(sys.NETWORK_IP,"localhost"); sys.NETWORK_PORT=1213;
+ if (netlib_init() == -1) { printf("netlib_init: %s\n", netlib_get_error()); exit(2); }
+ else {
+  ip_address ip;
+  tcp_socket sock;
+  char message[1024];
+  if (netlib_resolve_host(&ip, sys.NETWORK_IP,sys.NETWORK_PORT) == -1) { printf("netlib_resolve_host: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; printError(); }
+  else if (!(sock = netlib_tcp_open(&ip))) { sprintf(sys.Error,"netlib_tcp_open: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; printError(); }
+  else {
+   netlib_byte_buf* buf = netlib_alloc_byte_buf(20);
+   netlib_write_uint32(buf,'t');
+   netlib_write_uint32(buf,'e');
+   netlib_write_uint32(buf,'s');
+   netlib_write_uint32(buf,'t');
+   netlib_write_uint32(buf,'1');
+   if (netlib_tcp_send_buf(sock, buf) < buf->length) { sprintf(sys.Error, "netlib_tcp_send: %s\n", netlib_get_error()); sys.ErrorType=0; printError(); }
+   netlib_free_byte_buf(buf);
+   netlib_tcp_close(sock);
+   netlib_quit();
+ }}
+ while(MainRunning) {
+  if (IsFileDropped()) {
+   FilePathList droppedFiles = LoadDroppedFiles();
+   if (!strcmp(toLower(&droppedFiles.paths[0][strlen(droppedFiles.paths[0])-3]),"tgr")) {
+    CPU_load(droppedFiles.paths[0]);
+    CPU_start();
+   } else if (!strcmp(toLower(&droppedFiles.paths[0][strlen(droppedFiles.paths[0])-3]),"sav")) {
+    CPU_extsav(droppedFiles.paths[0]);
+   } else {
+    sprintf(sys.Error,"Unknown FileType Given!\n"); sys.ErrorType=1; printError();
+   }
+   UnloadDroppedFiles(droppedFiles);
+  }
   sprintf(text,"TheGameRazer - [%s] - %i FPS",(sys.ROMloaded)?((sys.title[0]==0)?"No Title":sys.title):"NO-ROM",sys.FPS);
   SetWindowTitle(text);
   
@@ -486,6 +546,8 @@ void main() {
    if(IsKeyPressed(KEY_I)){ printf("HUDinfo\n"); HUDinfo = 1-HUDinfo; }
    if(IsKeyPressed(KEY_U)){ printf("ShowInput\n"); ShowInput = 1-ShowInput; }
    if(IsKeyPressed(KEY_O)){ printf("OPEN DA MENU!!\n"); inDialog = 1; }
+   if(IsKeyPressed(KEY_D)){ sys.Debug=1-sys.Debug; printf("Debug mode: %s\n",sys.Debug?"Enabled":"Disabled"); inDialog = 1; }
+   if(IsKeyPressed(KEY_Z)){ CPU_start(); }
   }
   for(int j=0;j<2;j++) {
    if (sys.controllerDevice[j] == 0) {
@@ -520,13 +582,13 @@ void main() {
     sprintf(text,"FPS: %2i",sys.FPS);
     getChar(text, 2*8, sys.SH-(4*8), TGR_REDT,true,1);
    } else {
-    sprintf(text,"Instruction Pointer: [0x%07X, 0x%07X]",0,0);
+    sprintf(text,"Instruction Pointer: [0x%07X, 0x%07X]",CPU[0].IP,CPU[1].IP);
     getChar(text, 2*8, sys.SH-(7*8), TGR_BLUET,true,1);
-    sprintf(text," RAM Usage: %i/%i bytes(%03.2f%) full)",0,0,0.f);
+    sprintf(text," RAM Usage: %9ld/%9ld bytes(%03.2d%) full)",(uint64_t)sys.MemUse,0x8000000,sys.MemUse);
     getChar(text, 1*8, sys.SH-(6*8), TGR_REDT,true,1);
-    sprintf(text,"VRAM Usage: %i/%i bytes(%03.2f%) full)",0,0,0.f);
+    sprintf(text,"VRAM Usage: %9i/%9i bytes(%03.2f%) full)",(int)sys.VMemUse,0x4000000,sys.VMemUse);
     getChar(text,1*8, sys.SH-(5*8), TGR_REDT,true,1);
-    sprintf(text,"FPS: %2i/%2i | IPS: %8i (%03.2f%) TR: %i",0,GetFPS(),0,0.00,0);
+    sprintf(text,"FPS: %2i/%2i | IPS: %8i (%03.2f%) TR: %ld",sys.FPS,(int)GetFPS(),(int)(sys.IPS[0]+sys.IPS[1]),(sys.IPS[0]+sys.IPS[1])/24000000.0f*100,(uint64_t)(CPU[0].TI+CPU[1].TI));
     getChar(text, 2*8, sys.SH-(4*8), TGR_REDT,true,1);
 
 
@@ -588,15 +650,16 @@ void main() {
   EndDrawing(); UnloadImage(sys.canvas); UnloadTexture(DummyTexture);
   if (WindowShouldClose()) { break; }
   if (IsWindowResized()) { sys.HostWidth = GetScreenWidth(),sys.HostHeight = GetScreenHeight(); getAspectRatio(sys.ResizeDict); }
- }
- CloseWindow();
- if ((fp = fopen("settings.cfg", "w")) == NULL) { printf("Warning: Unable to modify the config file!\n"); }
+ } CPU_stop(); printf("%s%s\n[EMU Notice] Shutting Down...%s\n",COLOR_BOLD,COLOR_BLUE,COLOR_RESET);
+ if ((fp = fopen("settings.cfg", "w")) == NULL) { sprintf(sys.Error,"Unable to modify the config file!\n"); sys.ErrorType=1; printError(); }
  else {
   cJSON *json = cJSON_CreateObject();
+  cJSON_AddBoolToObject(json,"BlockDisp",sys.blockDisp);
   cJSON_AddBoolToObject(json,"StartWithOverlay",StartWithOverlay);
   cJSON_AddBoolToObject(json,"ShowInput",ShowInput);
   cJSON_AddBoolToObject(json,"HUDinfo",HUDinfo);
   cJSON_AddBoolToObject(json,"KeepAspect",sys.keepAspect);
+  cJSON_AddBoolToObject(json,"DebugMode",sys.Debug);
   cJSON_AddNumberToObject(json, "GUIOpacity", sys.GUIOpacity);
   cJSON *Player,*PlayerKeys;
   for(int j=0;j<2;j++) {
@@ -607,7 +670,7 @@ void main() {
    for(int i=0;i<32;i++) cJSON_AddItemToArray(PlayerKeys, cJSON_CreateNumber(sys.controllerKey[j][i]));
    cJSON_AddItemToObject(Player, "keys", PlayerKeys);
    cJSON_AddItemToObject(json,j==0?"Player0":"Player1",Player);
-  } printf(">>>4 \n"); cJSON_Delete(Player);
+  } //printf(">>>4 \n"); cJSON_Delete(Player);
   // cJSON_AddStringToObject(json, "name", "John);
   // cJSON_AddNumberToObject(json, "age", 30);
   // cJSON_AddStringToObject(json, "email", "");
@@ -621,6 +684,6 @@ void main() {
   fclose(fp);
   // free the JSON string and cJSON object
   cJSON_free(json_str);
-  printf(">>>5 \n"); cJSON_Delete(json);
- }
+  cJSON_Delete(json);
+ } exit(0);
 }

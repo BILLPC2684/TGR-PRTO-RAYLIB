@@ -15,4 +15,6 @@ Please make sure the following libraries are installed at:
 \\`libnetlib.so`: `/usr/lib/` https://github.com/univrsal/netlib/releases (extract)
 ### Mac
 i assume the same as linux, but i have no mac to test on...
-
+## How to load a rom?
+ The Open Menu currently not implemented yet but will be soon\
+ So until then, just drag and drop you `.tgr` files into it

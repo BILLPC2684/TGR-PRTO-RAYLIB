@@ -1,3 +1,12 @@
+# TGR Compiled Files
+settings.cfg
+TGR
+TGR.exe
+bin/for-windows.rc.data
+
+# Nano
+*.swp
+
 # Prerequisites
 *.d
 
@@ -50,3 +59,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Blocked Folders
+dummy/*
