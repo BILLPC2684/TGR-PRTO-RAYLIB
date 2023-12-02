@@ -105,8 +105,6 @@ cd ../..
 
 ##### \\`netlib.dll`: `.\` [GitHub@univrsal/netlib](https://github.com/univrsal/netlib/releases) (extract)
 
-Will need to have `` installed 
-
 ```shell
 wget https://github.com/univrsal/netlib/releases/download/v0.2/netlib.0.2.win64.zip
 tar -zxvf netlib.0.2.win64.zip netlib.dll
