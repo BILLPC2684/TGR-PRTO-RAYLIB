@@ -115,9 +115,10 @@ Will need to have `` installed
 wget https://github.com/univrsal/netlib/releases/download/v0.2/netlib.0.2.win64.zip
 tar -zxvf netlib.0.2.win64.zip netlib.dll
 mv netlib.dll ..
-cd ..
 
 rm netlib.0.2.win64.zip # optional clean up
+
+cd ..
 ```
 
 
