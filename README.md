@@ -74,7 +74,7 @@ Please make sure the following libraries are installed at:
 
 Make sure you have `git`, `wget`, `tar` and mingw's `make` and `gcc` installed,
 
-and have a bash supported terminal installed (like git-cmd/bash or W64Devki [raylib recommends])
+and have a bash supported terminal installed (like [git-cmd/bash](https://github.com/git-for-windows/git/releases) or [W64Devki [raylib recommends]](https://github.com/skeeto/w64devkit))
 
 ```shell
 git clone https://github.com/BILLPC2684/TGR-PRTO-RAYLIB
