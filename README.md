@@ -16,19 +16,19 @@ Every little bit helps!! :3
 
 # Websites:
 
-Offical Website: https://Koranva-Forest.com
+Official Website: [Koranva-Forest.com](https://Koranva-Forest.com)
 
-TGR Page: https://Koranva-Forest.com/TheGameRazer/
+TGR Page: [Koranva-Forest/TheGameRazer](https://Koranva-Forest.com/TheGameRazer/)
 
-Offical ROMs: ~~https://Koranva-Forest.com/TheGameRazer/ROMs~~ Not setted up yet! [404]
+Offical ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRazer/ROMs)~~ Not setted up yet! [404]
 
-3rd Party ROMS: ~~https://Koranva-Forest.com/feed?search=#TGR&#ROM~~ Not setted up yet! [404]
+3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
 
 
 ## Current Build: v0.0.47c Alpha (goal: v0.0.50x Alpha)
 
-- Compile Errors: `No` just some redudant warning from gcc
+- Compile Errors: `No` Just some redudant warning from gcc
 
 - Runnable Build: `Mostly` Functional, working on it...
 
@@ -225,24 +225,24 @@ Check out the WorkingInProgress Tutorials... (this should have everything you ne
 
 ## Note: not all links are ready
 
-- Tutorials: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials~~ [404]
+- Tutorials: ~~[Koranva-Forest/TGR Tutorials](http://Koranva-Forest.com/TheGameRazer/Tutorials)~~ [404]
 
-- 1. Assembly Basics: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/1_AssemblyBasics~~ [404]
+- 1. Assembly Basics: ~~[Koranva-Forest/TGR Tutorials/1_AssemblyBasics](http://Koranva-Forest.com/TheGameRazer/Tutorials/1_AssemblyBasics)~~ [404]
 
-- 2. Create your First Program: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/2_FirstProgram~~ [404]
+- 2. Create your First Program: ~~[Koranva-Forest/TGR Tutorials/2_FirstProgram](http://Koranva-Forest.com/TheGameRazer/Tutorials/2_FirstProgram)~~ [404]
 
-- 3. Compile Your Program: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/3_CompileProgram~~ [404]
+- 3. Compile Your Program: ~~[Koranva-Forest/TGR Tutorials/3_CompileProgram](http://Koranva-Forest.com/TheGameRazer/Tutorials/3_CompileProgram)~~ [404]
 
-- - Adding File To Program: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/4_AddingFiles~~ [404]
+- - Adding File To Program: ~~[Koranva-Forest/TGR Tutorials/4_AddingFiles](http://Koranva-Forest.com/TheGameRazer/Tutorials/4_AddingFiles)~~ [404]
 
-- 5. Dealing with Errors: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/5_ErrorDealing~~ [404]
+- 5. Dealing with Errors: ~~[Koranva-Forest/TGR Tutorials/5_ErrorDealing](http://Koranva-Forest.com/TheGameRazer/Tutorials/5_ErrorDealing)~~ [404]
 
-- 6. Assembler Flags: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/6_AssembleFlags~~ [404]
+- 6. Assembler Flags: ~~[Koranva-Forest/TGR Tutorials/6_AssembleFlags](http://Koranva-Forest.com/TheGameRazer/Tutorials/6_AssembleFlags)~~ [404]
 
-- 7. Interacting with Components: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/7_Components~~ [404]
+- 7. Interacting with Components: ~~[Koranva-Forest/TGR Tutorials/7_Components](http://Koranva-Forest.com/TheGameRazer/Tutorials/7_Components)~~ [404]
 
-- 8. Still Need Help?: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/8_NeedHelp~~ [404]
+- 8. Still Need Help?: ~~[Koranva-Forest/TGR Tutorials/8_NeedHelp](http://Koranva-Forest.com/TheGameRazer/Tutorials/8_NeedHelp)~~ [404]
 
-- Cheat Sheat: ~~http://Koranva-Forest.com/TheGameRazer/Tutorials/CheatSheat~~ [404]
+- Cheat Sheat: ~~[Koranva-Forest/TGR Tutorials/CheatSheat](http://Koranva-Forest.com/TheGameRazer/Tutorials/CheatSheat)~~ [404]
 
 
