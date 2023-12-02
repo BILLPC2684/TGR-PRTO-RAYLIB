@@ -65,3 +65,7 @@ dkms.conf
 
 # Blocked Folders
 dummy/*
+.vscode/*
+bin/raylib/*
+bin/cjSON/*
+bin/*.zip
