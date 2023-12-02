@@ -10,7 +10,6 @@
 #include <math.h>
 #include <time.h>
 #include <raylib.h>
-#include <bits/time.h>
 
 struct timespec start, end;
 void CPUCore(bool ID);
