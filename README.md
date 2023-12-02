@@ -74,7 +74,7 @@ Please make sure the following libraries are installed at:
 
 ### Windows (Mingw)
 
-Make sure you have `git`, `wget`, `tar` and mingw's `make` and `gcc` installed,
+Make sure you have `git`, `wget`, `unzip` and mingw's `make` and `gcc` installed,
 
 and have a bash supported terminal installed (like [git-cmd/bash [recommended]](https://github.com/git-for-windows/git/releases) or [W64Devki](https://github.com/skeeto/w64devkit))
 
@@ -94,22 +94,18 @@ mingw32-make PLATFORM=PLATFORM_DESKTOP
 cd ../..
 ```
 
-##### \\`cJSON`: `.\bin\cJSON\` [GitHub@DaveGamble/cJSON](https://github.com/DaveGamble/cJSON) (clone & compile)
+##### \\`cJSON`: `.\bin\cJSON\` [GitHub@DaveGamble/cJSON](https://github.com/DaveGamble/cJSON) (clone only)
 
 ```shell
 git clone https://github.com/DaveGamble/cJSON
-mkdir cJSON/build
-cd cJSON/build
-cmake ..
-make
-cd ../..
+cd .. # no need to build all we want is the raw c code
 ```
 
 ##### \\`netlib.dll`: `.\` [GitHub@univrsal/netlib](https://github.com/univrsal/netlib/releases) (extract)
 
 ```shell
 wget https://github.com/univrsal/netlib/releases/download/v0.2/netlib.0.2.win64.zip
-tar -zxvf netlib.0.2.win64.zip netlib.dll
+unzip netlib.0.2.win64.zip netlib.dll
 mv netlib.dll ..
 
 rm netlib.0.2.win64.zip # optional clean up
@@ -119,7 +115,7 @@ cd ..
 
 ### Linux
 
-Make sure you have `git`, `build-essentials`, `wget` and `tar` installed
+Make sure you have `git`, `build-essentials`, `wget` and `unzip` installed
 
 ```shell
 git clone https://github.com/BILLPC2684/TGR-PRTO-RAYLIB
@@ -165,7 +161,7 @@ rm -rf cJSON # optional clean up
 
 ```shell
 wget https://github.com/univrsal/netlib/releases/download/v0.2/netlib.0.2.linux64.zip
-tar -zxvf netlib.0.2.linux64.zip libnetlib.so
+unzip netlib.0.2.linux64.zip libnetlib.so
 sudo mv libnetlib.so /usr/lib/
 
 rm netlib.0.2.linux64.zip # optional clean up
@@ -185,7 +181,7 @@ i assume the same as linux, but i have no mac to test on...
 # just run
 ./build-mingw.sh
 
-# which should producde
+# which should produce
 ./TGR.exe
 ```
 
@@ -195,7 +191,7 @@ i assume the same as linux, but i have no mac to test on...
 # just run
 ./build.sh
 
-# which should producde
+# which should produce
 ./TGR
 ```
 
