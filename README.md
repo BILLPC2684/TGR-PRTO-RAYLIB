@@ -66,6 +66,8 @@ Yes for the most part, now people can charge or setup a donation system for thei
 
 
 
+
+
 # Before You Build
 
 Please make sure the following libraries are installed at:
@@ -74,7 +76,7 @@ Please make sure the following libraries are installed at:
 
 Make sure you have `git`, `wget`, `tar` and mingw's `make` and `gcc` installed,
 
-and have a bash supported terminal installed (like [git-cmd/bash](https://github.com/git-for-windows/git/releases) or [W64Devki [raylib recommends]](https://github.com/skeeto/w64devkit))
+and have a bash supported terminal installed (like [git-cmd/bash [recommended]](https://github.com/git-for-windows/git/releases) or [W64Devki](https://github.com/skeeto/w64devkit))
 
 ```shell
 git clone https://github.com/BILLPC2684/TGR-PRTO-RAYLIB
