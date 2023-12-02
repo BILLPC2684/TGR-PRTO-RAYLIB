@@ -8,17 +8,13 @@ TheGameRazer is a modern, retro styled 16-bit emulator(Fantasy Console) made in 
 
 Every little bit helps!! :3
 
-## Want to join our discord server? it's free
-
-### Invite link: [TheGameRazer Official Discord](https://discord.gg/PWAf8ek)
-
-
-
-# Websites:
+# Links:
 
 Official Website: [Koranva-Forest.com](https://Koranva-Forest.com)
 
 TGR Page: [Koranva-Forest/TheGameRazer](https://Koranva-Forest.com/TheGameRazer/)
+
+Discord Server: [TheGameRazer Official Discord](https://discord.gg/PWAf8ek)
 
 Offical ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRazer/ROMs)~~ Not setted up yet! [404]
 
@@ -70,7 +66,7 @@ Yes for the most part, now people can charge or setup a donation system for thei
 
 
 
-## Before You Build
+# Before You Build
 
 Please make sure the following libraries are installed at:
 
@@ -120,8 +116,6 @@ rm netlib.0.2.win64.zip # optional clean up
 
 cd ..
 ```
-
-
 
 ### Linux
 
@@ -173,16 +167,15 @@ rm -rf cJSON # optional clean up
 wget https://github.com/univrsal/netlib/releases/download/v0.2/netlib.0.2.linux64.zip
 tar -zxvf netlib.0.2.linux64.zip libnetlib.so
 sudo mv libnetlib.so /usr/lib/
-cd ..
 
 rm netlib.0.2.linux64.zip # optional clean up
+
+cd ..
 ```
 
 ### Mac
 
 i assume the same as linux, but i have no mac to test on...
-
-
 
 # Compiling TheGameRazer:
 
@@ -210,21 +203,15 @@ i assume the same as linux, but i have no mac to test on...
 
 i assume the same as linux, but i have no mac to test on...
 
-
-
 ## How to load a rom?
 
 The Open Menu currently not implemented yet but will be soon
 
 So until then, just drag and drop you `.tgr` files into it
 
-
-
 # How to make Programs Assembly Files and Compile ROMs:
 
-Check out the WorkingInProgress Tutorials... (this should have everything you need)
-
-## Note: not all links are ready
+Check out the WorkingInProgress Tutorials... (this should have everything you need)## Note: not all links are ready
 
 - Tutorials: ~~[Koranva-Forest/TGR Tutorials](http://Koranva-Forest.com/TheGameRazer/Tutorials)~~ [404]
 
@@ -234,7 +221,7 @@ Check out the WorkingInProgress Tutorials... (this should have everything you ne
 
 - 3. Compile Your Program: ~~[Koranva-Forest/TGR Tutorials/3_CompileProgram](http://Koranva-Forest.com/TheGameRazer/Tutorials/3_CompileProgram)~~ [404]
 
-- - Adding File To Program: ~~[Koranva-Forest/TGR Tutorials/4_AddingFiles](http://Koranva-Forest.com/TheGameRazer/Tutorials/4_AddingFiles)~~ [404]
+- 4. Adding File To Program: ~~[Koranva-Forest/TGR Tutorials/4_AddingFiles](http://Koranva-Forest.com/TheGameRazer/Tutorials/4_AddingFiles)~~ [404]
 
 - 5. Dealing with Errors: ~~[Koranva-Forest/TGR Tutorials/5_ErrorDealing](http://Koranva-Forest.com/TheGameRazer/Tutorials/5_ErrorDealing)~~ [404]
 
@@ -245,5 +232,3 @@ Check out the WorkingInProgress Tutorials... (this should have everything you ne
 - 8. Still Need Help?: ~~[Koranva-Forest/TGR Tutorials/8_NeedHelp](http://Koranva-Forest.com/TheGameRazer/Tutorials/8_NeedHelp)~~ [404]
 
 - Cheat Sheat: ~~[Koranva-Forest/TGR Tutorials/CheatSheat](http://Koranva-Forest.com/TheGameRazer/Tutorials/CheatSheat)~~ [404]
-
-
