@@ -4,7 +4,7 @@ if gcc src/main.c -o TGR -I./src/include -lraylib -lcjson -lGL -lm -lpthread -ld
 else
  echo -e "\n\e[31;1m[X] \e[33mBuild for TGR was \e[31;1mUnsuccessful\e[33m...\e[m"
  echo "Please make sure the following libraries are installed:"
- echo "\\raylib:                    https://github.com/raysan5/raylib/releases"
- echo "\\cJSON:                     https://github.com/DaveGamble/cJSON/releases"
+ echo "\\raylib:                    https://github.com/raysan5/raylib"
+ echo "\\cJSON:                     https://github.com/DaveGamble/cJSON"
  echo "\\libnetlib.so: at /usr/lib/ https://github.com/univrsal/netlib/releases"
 fi
