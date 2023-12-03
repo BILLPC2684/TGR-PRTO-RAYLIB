@@ -98,6 +98,7 @@ cd ../..
 
 ```shell
 git clone https://github.com/DaveGamble/cJSON
+cd cJSON
 make
 cd ..
 ```
