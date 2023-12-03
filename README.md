@@ -117,7 +117,7 @@ cd ..
 
 * if eny of these dependencies go missing run: `./get-deps-mingw.sh`
 
-this will automatticly grab amd acquire missing dependencies!
+this will automatticly grab and acquire missing dependencies!
 
 ### Linux
 
