@@ -85,6 +85,8 @@ cd TGR-PRTO-RAYLIB/bin
 
 And follow these steps for the following dependecies
 
+* If all these commands are scarry, you can just run `./get-deps-mingw.sh`!
+
 ##### \\`raylib` at `.\bin\raylib\` [GitHub@raysan5/raylib](https://github.com/raysan5/raylib/) (clone & compile)
 
 ```shell
