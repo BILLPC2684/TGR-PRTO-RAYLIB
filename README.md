@@ -94,11 +94,12 @@ mingw32-make PLATFORM=PLATFORM_DESKTOP
 cd ../..
 ```
 
-##### \\`cJSON`: `.\bin\cJSON\` [GitHub@DaveGamble/cJSON](https://github.com/DaveGamble/cJSON) (clone only)
+##### \\`cJSON`: `.\bin\cJSON\` [GitHub@DaveGamble/cJSON](https://github.com/DaveGamble/cJSON) (clone & compile)
 
 ```shell
 git clone https://github.com/DaveGamble/cJSON
-cd .. # no need to build all we want is the raw c code
+make
+cd ..
 ```
 
 ##### \\`netlib.dll`: `.\` [GitHub@univrsal/netlib](https://github.com/univrsal/netlib/releases) (extract)
