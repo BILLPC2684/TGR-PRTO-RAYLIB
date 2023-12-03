@@ -85,8 +85,6 @@ cd TGR-PRTO-RAYLIB/bin
 
 And follow these steps for the following dependecies
 
-* If all these commands are scarry, you can just run `./get-deps-mingw.sh`!
-
 ##### \\`raylib` at `.\bin\raylib\` [GitHub@raysan5/raylib](https://github.com/raysan5/raylib/) (clone & compile)
 
 ```shell
@@ -116,6 +114,10 @@ rm netlib.0.2.win64.zip # optional clean up
 
 cd ..
 ```
+
+* if eny of these dependencies go missing run: `./get-deps-mingw.sh`
+
+this will automatticly grab amd acquire missing dependencies!
 
 ### Linux
 
