@@ -20,9 +20,7 @@ Offical ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRaze
 
 3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
-
-
-## Current Build: v0.0.47c Alpha (goal: v0.0.50x Alpha)
+## Current Build: v0.0.47e Alpha Nightly (goal: v0.0.50x Alpha for Feb/2024)
 
 - Compile Errors: `No` Just some redudant warning from gcc
 
@@ -36,17 +34,15 @@ Offical ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRaze
 
 - Has Audio: `No` Requesting Help!!!
 
-- Has Inputs: `Yes`  Using raylib input | Check the [Settings.cfg](./Settings.cfg) File (if generated)
+- Has Inputs: `Yes`  Using raylib input | Check the [Settings.cfg]() File (if generated)
 
 - Has Network: `Somewhat` Networking is usable but not connected to Utilization
 
-- SAV-able data: `Yes` Note: all ROMs ran will generate 8MiB files
+- SAV-able data: `Somewhat` Yes, haven't tested | Note: all ROMs ran will generate 8MiB files
 
-- Compiler Status: `Inactive` This project is currently on hold, Please Wait...
+- Compiler Status: `Inactive` This project is currently on hold, Please Wait... Please use CustomASM for now
 
 ### NOTE: if theres emulation errors, crashes or glitch out, check your ROM before reporting... (if someone else made the ROM then contact them first)
-
-
 
 ## Why does GitHub updates take so long?
 
@@ -56,17 +52,11 @@ Offical ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRaze
 
 ### PLEASE BE PATIENT... Updates will come ASAP on schedule(hopefully)
 
-
-
 ## Are ROMs free?
 
 Yes for the most part, now people can charge or setup a donation system for their ROMs
 
 ### We have no responsibility if your ROM gets hacked/modded or republished without your permission
-
-
-
-
 
 # Before You Build
 
@@ -115,9 +105,9 @@ rm netlib.0.2.win64.zip # optional clean up
 cd ..
 ```
 
-* if eny of these dependencies go missing run: `./get-deps-mingw.sh`
+* If eny of these dependencies go missing run: `./get-deps-mingw.sh`
 
-this will automatticly grab and acquire missing dependencies!
+This will automatticly grab and acquire missing dependencies!
 
 ### Linux
 
@@ -131,7 +121,7 @@ cd TGR-PRTO-RAYLIB/bin
 ##### \\`raylib`: [GitHub@raysan5/raylib](https://github.com/raysan5/raylib/) (clone & compile)
 
 ```shell
-# for ubuntu
+# for debian/ubuntu
 sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev
 
 # for fedora
@@ -175,9 +165,15 @@ rm netlib.0.2.linux64.zip # optional clean up
 cd ..
 ```
 
+- If eny of these dependencies go missing run: `./get-deps.sh`
+
+This will automatticly grab and acquire missing dependencies!
+
+(If your distro is not supported, make a issue please)
+
 ### Mac
 
-i assume the same as linux, but i have no mac to test on...
+I assume the same as linux, but i have no mac to test on...
 
 # Compiling TheGameRazer:
 
@@ -205,9 +201,11 @@ i assume the same as linux, but i have no mac to test on...
 
 i assume the same as linux, but i have no mac to test on...
 
+# 
+
 ## How to load a rom?
 
-The Open Menu currently not implemented yet but will be soon
+The Open Menu and command opening are currently not implemented yet but will be soon
 
 So until then, just drag and drop you `.tgr` files into it
 

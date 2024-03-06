@@ -1,0 +1,45 @@
+TheGameRazer Change Log:
+! items marked (WIP) are currently in development
+
+# TGR-PROTO v0.0.47e.1 Nightly
+
+Firsts Change Log (idk why i never made eny before)
+
+Graphics Processing still in works
+ * functional Test ROM was made!!
+
+UI Improvements:
+ * Text displaying signifigantly improves/optimized
+ * Fading effect to banner when powered off or paused
+ * Working intro animation
+ * Added white(TV) noise and VCR blue screen
+
+New Tape Mechanic System:
+ * Tapes can contain up to 5 hours of video/savestates  (WIP)
+ * CommandLine PlayState "stop" or 0 will do nothing when loaded  (WIP)
+ * CommandLine PlayState "play" or 1 will automataticly play when loaded  (WIP)
+
+Working cursor detection:
+ * Inactivity fade out and activity fade in
+
+Settings Changes:
+ * Renamed config booling "FancyPrinting" to "AnsiPrinting"
+ * Added "Channel3", if true, when system is off, the screen will render like you tuned into your VCR, else static
+ * Added "SkipIntro" to the settings to stop the intro animation to start every time you start up TGR
+
+CommandLine Changes:
+ * Added "--cancelintro" or "-ci" to skip the intro (this does not effect the Setting "SkipIntro")  (WIP)
+ * Added "--tape <PlayState> <TapePath.grtp>" or "-tp <PlayState> <TapePath.grtp>" to load a tape as soon as posssible  (WIP)
+ 
+Keybind Changes:
+ * CTRL + G, opens and closes memory MAP
+ * CTRL + SHIFT + L, to load Tape  (WIP)
+ * CTRL + SHIFT + P, to Play Tape  (WIP)
+ * CTRL + SHIFT + S, to Stop Tape  (WIP)
+ * CTRL + SHIFT + R, to Rewind Tape  (WIP)
+ * CTRL + SHIFT + F, to FastForward Tape  (WIP)
+ * CTRL + SHIFT + E, to Eject Tape  (WIP)
+ * CTRL + SHIFT + C, to Continue from last Tape SaveState  (WIP)
+
+Minor fixes:
+ * Fixed Asni Printing for windows

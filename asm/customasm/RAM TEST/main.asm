@@ -23,7 +23,8 @@ main:
   jmp .loop
   
  .end:
-  cmpeq a,0x7F,2
+  break 0
+  cmpeqi a,0x7F,2
    load a,0xFF
    jmp .start
   disp a
