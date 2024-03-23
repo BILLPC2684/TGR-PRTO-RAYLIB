@@ -771,10 +771,10 @@ void*GPUCore(uint8_t ID) {
  bool frameflip = 0;
  sys.DebugTick[ID+2] = true;
  
- uint target_fps = 60;
- uint dat = 400000;
- uint max_loops_between_frames = dat/target_fps;
- uint loops_since_last_frame = 0;
+ uint32_t target_fps = 60;
+ uint32_t dat = 400000;
+ uint32_t max_loops_between_frames = dat/target_fps;
+ uint32_t loops_since_last_frame = 0;
  long sleep_time;
  
  printf("GPU Process #%d Started!\n",ID);
