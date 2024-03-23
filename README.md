@@ -4,7 +4,7 @@ TheGameRazer is a modern, retro styled 16-bit emulator(Fantasy Console) made in 
 
 ### Want to help Support this project?
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/billpc2684)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/BILLPC2684)
 
 Every little bit helps!! :3
 
@@ -12,15 +12,17 @@ Every little bit helps!! :3
 
 Official Website: [Koranva-Forest.com](https://Koranva-Forest.com)
 
-TGR Page: [Koranva-Forest/TheGameRazer](https://Koranva-Forest.com/TheGameRazer/)
+TGR Page: [Koranva-Forest/TheGameRazer](https://Koranva-Forest.com/TheGameRazer)
 
 Discord Server: [TheGameRazer Official Discord](https://discord.gg/PWAf8ek)
 
-Offical ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRazer/ROMs)~~ Not setted up yet! [404]
+Official Wiki Page: [FantasyConsole/TheGameRazer](https://fantasyconsoles.org/wiki/TheGameRazer)
+
+Official ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRazer/ROMs)~~ Not setted up yet! [404]
 
 3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
-## Current Build: v0.0.47e Alpha Nightly (goal: v0.0.50x Alpha for Feb/2024)
+## Current Build: v0.0.47e Alpha Nightly 2 (goal: v0.0.50x Alpha for Feb/2024)
 
 - Compile Errors: `No` Just some redudant warning from gcc
 
@@ -64,9 +66,19 @@ Please make sure the following libraries are installed at:
 
 ### Windows (Mingw)
 
-Make sure you have `git`, `wget`, `unzip` and mingw's `make` and `gcc` installed,
+#### Make sure you have `git`, `wget`, `unzip` and mingw's `make` and `gcc` installed,
 
 and have a bash supported terminal installed (like [git-cmd/bash [recommended]](https://github.com/git-for-windows/git/releases) or [W64Devki](https://github.com/skeeto/w64devkit))
+
+#### * Automattic
+
+Just run in your terminal:
+
+```shell
+./get-deps-mingw.sh
+```
+
+#### * Manual
 
 ```shell
 git clone https://github.com/BILLPC2684/TGR-PRTO-RAYLIB
@@ -111,6 +123,16 @@ This will automatticly grab and acquire missing dependencies!
 
 ### Linux
 
+#### * Automatic
+
+Just run in your terminal: (Currently only works for `Debian`/`Ubuntu`, `Fedora`, and `Arch`!)
+
+```shell
+./get-deps.sh
+```
+
+#### * Manual
+
 Make sure you have `git`, `build-essentials`, `wget` and `unzip` installed
 
 ```shell
@@ -132,7 +154,7 @@ sudo pacman -S alsa-lib mesa libx11 libxrandr libxi libxcursor libxinerama
 
 git clone https://github.com/raysan5/raylib.git raylib
 cd raylib/src/
-make PLATFORM=PLATFORM_DESKTOP
+make PLATFORM=PLATFORM_DESKTOP -j 8
 sudo make install
 cd ../..
 

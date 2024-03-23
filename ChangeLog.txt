@@ -1,12 +1,17 @@
 TheGameRazer Change Log:
 ! items marked (WIP) are currently in development
 
-# TGR-PROTO v0.0.47e.1 Nightly
+# TGR-PROTO v0.0.47e Nightly
 
 Firsts Change Log (idk why i never made eny before)
 
 Graphics Processing still in works
  * functional Test ROM was made!!
+ * Drawable Lines(fast), and Pixels(slow)
+ * Drawable Sprites, Strech and Rotatable
+
+Sound Added:
+ * Thunder sound now plays when TGR stikes the sky on the intro
 
 UI Improvements:
  * Text displaying signifigantly improves/optimized

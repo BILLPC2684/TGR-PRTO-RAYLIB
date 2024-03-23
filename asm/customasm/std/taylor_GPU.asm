@@ -15,9 +15,16 @@ GPU_I  = 13; \28-bit General Purpose Registers
 GPU_O  = 14; /
 GPU_U  = 15;/
 
+SPRITE_CP = 0x00
+SPRITE_RGB = 0x01
+SPRITE_RGBA = 0x02
+SPRITE_CP_CENTER = 0x03
+SPRITE_RGB_CENTER = 0x04
+SPRITE_RGBA_CENTER = 0x05
+
 CPLength = 0x5A0
 PtrLenth  = 40
-OAMObjects = 11*0xFFFF
+OAMObjects = 13*0xFFFF
 ProgramAddr = CPLength+PtrLenth+OAMObjects+1
 
 #ruledef taylor_GPU {
@@ -57,13 +64,13 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  GPU_not  {A} => 0x0C @ A`4 @ 0`28
  
  GPU_cmpeq  {A}, {B},   {C} => 0x0D @ A`4 @ B`4 @ C`4 @ 0`28
- GPU_cmpeqi {A}, {IMM}, {C} => 0x0D @ A`4 @ 0`4 @ C`4 @ IMM`28
+ GPU_cmpeqi {A}, {IMM}, {C} => 0x0D @ A`4 @ 0`4 @ C`4 @ (0x8000000|IMM)`28
  
  GPU_cmplt  {A}, {B},   {C} => 0x0E @ A`4 @ B`4 @ C`4 @ 0`28
- GPU_cmplti {A}, {IMM}, {C} => 0x0E @ A`4 @ 0`4 @ C`4 @ IMM`28
+ GPU_cmplti {A}, {IMM}, {C} => 0x0E @ A`4 @ 0`4 @ C`4 @ (0x8000000|IMM)`28
  
  GPU_cmpgt  {A}, {B},   {C} => 0x0F @ A`4 @ B`4 @ C`4 @ 0`28
- GPU_cmpgti {A}, {IMM}, {C} => 0x0F @ A`4 @ 0`4 @ C`4 @ IMM`28
+ GPU_cmpgti {A}, {IMM}, {C} => 0x0F @ A`4 @ 0`4 @ C`4 @ (0x8000000|IMM)`28
  
  GPU_split  {A}, {B}, {C}, 8 => 0x10 @ A`4 @ B`4 @ C`4 @ 0`28
  GPU_split  {A}, {B}, {C}, 4 => 0x10 @ A`4 @ B`4 @ C`4 @ 1`28
@@ -97,7 +104,7 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  GPU_swap => 0x1B @ 0`40
  
  GPU_led {IMM}         => 0x1C @ 0`12 @ IMM`28
- GPU_led {A}, {B}, {C} => 0x1C @ A`4 @ B`4 @ C`4 @ 2`28
+ GPU_led {A}, {B}, {C} => 0x1C @ A`4 @ B`4 @ C`4 @ 0`28
  
  GPU_clk {A},{RESET} => 0x1D @ A`4 @ 0`8 @ 0`27 @ RESET`1
  
@@ -127,6 +134,11 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  
  GPU_copy {A} => 0x78 @ A`4 @ 0`36
  
+ GPU_sprite {A}, {IMM} => 0x7D @ A`4 @ 0`8 @ IMM`28
+ GPU_sprite {A}        => 0x7D @ A`4 @ 0`36
+
+ GPU_setfps => 0x7E @ 0`40
+
  GPU_render => 0x7F @ 0`40
  
  GPU_nop => 0xFF @ 0`40

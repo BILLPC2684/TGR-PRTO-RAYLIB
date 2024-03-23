@@ -56,10 +56,10 @@ static const Color VOID = {0};
 #define LIME  CLITERAL(Color){0,158,47,255}
 
 typedef struct {
- bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,blockDisp,ROMloaded,SilentRun,EXTSAV,keepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync;
- uint8_t MF, MB, CursorDepth, HeaderSize, *MEM,PageID[2],ROMBANK[33][TGR_MEM_ROM_SIZE],ErrorType,LED[3],controller[2][32],controllerType[2],title[16],controllerDevice[2],GUIOpacity,
+ bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,BlockDisp,ROMloaded,SilentRun,EXTSAV,KeepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync,RapidDebug,Resetting;
+ uint8_t MF, MB, CursorDepth, HeaderSize, *MEM,PageID[2],ROMBANK[33][TGR_MEM_ROM_SIZE],ErrorType,LED[3],Controller[2][32],ControllerType[2],Title[16],ControllerDevice[2],GUIOpacity,
         *REG, *Error, *BN, *RN, *SN, NETWORK_IP[256], BoarderThiccness;
- uint16_t MFT, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],controllerKey[2][32],NETWORK_PORT, IntroductionCutscene;
+ uint16_t MFT, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],ControllerKey[2][32],NETWORK_PORT, IntroductionCutscene;
  uint32_t DebugPause[6], Clock, skip;
  uint64_t tmp[8];
  double IPS[2],MemUse,VMemUse;
@@ -108,7 +108,7 @@ typedef struct GPU_CORE {
 GPU_INIT GPUctl;
 typedef struct {
  bool running,Pause;
- uint8_t R,G,B,A,Layer,CP[15][3];
+ uint8_t R,G,B,A,Layer,CP[15][4];
  uint16_t X[4],Y[4];
  uint32_t IP,sp,cp,SP,BP,MP,IPS,E,I,O,U,Clock;
  uint64_t TI;
@@ -155,7 +155,7 @@ enum TapeState {
  TAPE_EJECT,
 };
 
-enum TGR_controller_type {
+enum TGR_Controller_type {
  TGR_CONTROLTYPE_NONE=0,
  TGR_CONTROLTYPE_STANDARD, // . . 14 BUTTON, 0 JOT
  TGR_CONTROLTYPE_ARCADE, // . . . 8  BUTTON, 1 JOY
