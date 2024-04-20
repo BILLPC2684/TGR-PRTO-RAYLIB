@@ -15,7 +15,7 @@ uint64_t zeroup(int64_t x);
 
 void CPU_ResetCore(bool ID);
 void CPU_LoadPage(bool SlotID, uint8_t PageID);
-void CPU_init();
+int8_t CPU_init();
 void CPU_silent(bool silent);
 void CPU_extsav(uint8_t recvbuf[]);
 void CPU_load(uint8_t recvbuf[]);

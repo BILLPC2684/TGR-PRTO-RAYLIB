@@ -1,6 +1,9 @@
 #!/bin/bash
 
 ID_LIKE=$(grep -w "ID_LIKE" /etc/os-release)
+if [[ "$ID_LIKE" == "" ]]; then
+ ID_LIKE=$(grep -w "ID" /etc/os-release)
+fi
 if [[ "$ID_LIKE" == *"debian"* ]]; then
  echo -e "\e[1;34mDebian Detected! Installing pre-dependencies via apt...\e[m"
  sudo apt install git gcc wget unzip cmake make libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev
@@ -67,6 +70,9 @@ else
  wget https://github.com/hlorenzi/customasm/archive/refs/tags/v0.13.4.zip
  unzip v0.13.4.zip
  cd customasm-0.13.4
+ if ! cargo -v &> /dev/null; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+ fi
  cargo build
  cd ..
  mv customasm-0.13.4/target/debug/customasm ../asm/customasm/customasm

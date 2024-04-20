@@ -39,10 +39,11 @@
 #define TGR_VMEM_VRAMEXT        0x2000000
 #define TGR_VMEM_TOTAL          0x4000000
 
-#define TGR_MEM_WRAM_FULL TGR_MEM_WRAM_SIZE+TGR_MEM_STACK_SIZE *2+TGR_MEM_IO_SIZE+TGR_MEM_SRAMEXT_SIZE
-#define TGR_MEM_VRAM_FULL TGR_MEM_VRAM_SIZE+TGR_MEM_VSTACK_SIZE*4+                TGR_MEM_VRAMEXT_SIZE
+static const uint32_t TGR_MEM_WRAM_FULL = TGR_MEM_WRAM_SIZE+TGR_MEM_STACK_SIZE *2+TGR_MEM_IO_SIZE+TGR_MEM_SRAMEXT_SIZE;
+static const uint32_t TGR_MEM_VRAM_FULL = TGR_MEM_VRAM_SIZE+TGR_MEM_VSTACK_SIZE*4+                TGR_MEM_VRAMEXT_SIZE;
 
-static const uint8_t* ErrorTexts[3] = {"Warning", "Error", "Fatal"};
+static const uint8_t*ErrorTexts[3] = {"Warning", "Error", "Fatal"};
+static const uint8_t*TypeHelpForHelp = "Use \"./TGR --help\" for help\n\n";
 static const Vector2 Vector2_ZERO = (Vector2){0,0};
 
 static const Color VOID = {0};
@@ -56,7 +57,7 @@ static const Color VOID = {0};
 #define LIME  CLITERAL(Color){0,158,47,255}
 
 typedef struct {
- bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,BlockDisp,ROMloaded,SilentRun,EXTSAV,KeepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync,RapidDebug,Resetting;
+ bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,BlockDisp,ROMloaded,SilentRun,EXTSAV,KeepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync,RapidDebug,Resetting,HelpOnError;
  uint8_t MF, MB, CursorDepth, HeaderSize, *MEM,PageID[2],ROMBANK[33][TGR_MEM_ROM_SIZE],ErrorType,LED[3],Controller[2][32],ControllerType[2],Title[16],ControllerDevice[2],GUIOpacity,
         *REG, *Error, *BN, *RN, *SN, NETWORK_IP[256], BoarderThiccness;
  uint16_t MFT, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],ControllerKey[2][32],NETWORK_PORT, IntroductionCutscene;
@@ -98,22 +99,36 @@ typedef struct CPU_INIT {
 } CPU_INIT;
 CPU_INIT CPU[2];
 
+
+/*
+typedef struct GPU_Worker { 
+ uint8_t GPUID, Layer;
+ int16_t X[4],Y[4];
+ uint8_t R,G,B,A,CP[256][4];
+ uint32_t sp,cp;
+} GPU_Worker;
+*/
 typedef struct GPU_CORE {
  bool CoreReady[4],FrameRendering,FrameSeen,ForceRender;
  uint8_t Rez,NewRez;
  uint16_t frames,RenderDelta;
  Image Sprites[0x10000],Layers[5];
  Texture Canvas[4];
+
+// bool      Workers_InUsed[16];
+// uint8_t   Workers_GPUID[16];
+// pthread_t call_GPU_Workers[16];
 } GPU_INIT;
 GPU_INIT GPUctl;
+
 typedef struct {
  bool running,Pause;
- uint8_t R,G,B,A,Layer,CP[15][4];
- uint16_t X[4],Y[4];
+ uint8_t R,G,B,A,Layer,CP[256][4];
+ int16_t X[4],Y[4];
  uint32_t IP,sp,cp,SP,BP,MP,IPS,E,I,O,U,Clock;
  uint64_t TI;
- // 0, 1, . . . X[2]:    16-bit X Position / X2/Width Position
- // 2, 3, . . . Y[2]:    16-bit Y Position / Y2/Height Position
+ // 0, 1, . . . X[2]:   s16-bit X Position / X2/Width Position
+ // 2, 3, . . . Y[2]:   s16-bit Y Position / Y2/Height Position
  // 4 . . . . . IP:      28-bit Instuction Pointer
  // 5 . . . . . SP:      28-bit StackPointer (Read Only)
  // 6 . . . . . sp:      28-bit Sprite Pointer (Address From)
@@ -133,9 +148,11 @@ typedef struct TapeFrame {
  uint8_t SaveState[TGR_MEM_TOTAL+1024]; // SaveState data
  Sound Audio; // 20 kHz; should contain for the whole frame
  Image Frame; // The Frame duh...
+ uint32_t seek; // the seek position for this frame
 } TapeFrame;
 
 typedef struct Tape {
+ FILE *fp; // The Tape's File
  bool Loaded, JustLoaded; // Is the Tape Loaded or did it Just get Loaded?
  uint8_t FramesPerSaveState, // How many Frames is there per SaveState
          FrameData[335*576*2], // The Current Frame's raw binary
@@ -150,6 +167,7 @@ static const uint16_t Tape_Resolution[2] = {335,576};
 enum TapeState {
  TAPE_STOP=0,
  TAPE_PLAY,
+ TAPE_RECORD,
  TAPE_REWIND,
  TAPE_FASTFORWARD,
  TAPE_EJECT,

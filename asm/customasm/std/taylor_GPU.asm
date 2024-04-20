@@ -15,12 +15,19 @@ GPU_I  = 13; \28-bit General Purpose Registers
 GPU_O  = 14; /
 GPU_U  = 15;/
 
+NULL = 0
+
 SPRITE_CP = 0x00
-SPRITE_RGB = 0x01
-SPRITE_RGBA = 0x02
-SPRITE_CP_CENTER = 0x03
-SPRITE_RGB_CENTER = 0x04
-SPRITE_RGBA_CENTER = 0x05
+SPRITE_CP8 = 0x01
+SPRITE_RGB = 0x02
+SPRITE_RGBA = 0x03
+SPRITE_CP_CENTER = 0x04
+SPRITE_CP8_CENTER = 0x05
+SPRITE_RGB_CENTER = 0x06
+SPRITE_RGBA_CENTER = 0x07
+
+PALETTE_WRITE = 0
+PALETTE_READ = 1
 
 CPLength = 0x5A0
 PtrLenth  = 40
@@ -63,14 +70,14 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  
  GPU_not  {A} => 0x0C @ A`4 @ 0`28
  
- GPU_cmpeq  {A}, {B},   {C} => 0x0D @ A`4 @ B`4 @ C`4 @ 0`28
- GPU_cmpeqi {A}, {IMM}, {C} => 0x0D @ A`4 @ 0`4 @ C`4 @ (0x8000000|IMM)`28
+ GPU_cmpeq  {A},  {B},   {C} => 0x0D @ A`4 @ B`4 @ C`4 @ 0`28
+ GPU_cmpeqi {A},  {IMM}, {C} => 0x0D @ A`4 @ 0`4 @ C`4 @ 1`1 @  IMM`27
  
- GPU_cmplt  {A}, {B},   {C} => 0x0E @ A`4 @ B`4 @ C`4 @ 0`28
- GPU_cmplti {A}, {IMM}, {C} => 0x0E @ A`4 @ 0`4 @ C`4 @ (0x8000000|IMM)`28
+ GPU_cmplt  {A},  {B},   {C} => 0x0E @ A`4 @ B`4 @ C`4 @ 0`28
+ GPU_cmplti {A},  {IMM}, {C} => 0x0E @ A`4 @ 0`4 @ C`4 @ 1`1 @  IMM`27
  
- GPU_cmpgt  {A}, {B},   {C} => 0x0F @ A`4 @ B`4 @ C`4 @ 0`28
- GPU_cmpgti {A}, {IMM}, {C} => 0x0F @ A`4 @ 0`4 @ C`4 @ (0x8000000|IMM)`28
+ GPU_cmpgt  {A},  {B},   {C} => 0x0F @ A`4 @ B`4 @ C`4 @ 0`28
+ GPU_cmpgti {A},  {IMM}, {C} => 0x0F @ A`4 @ 0`4 @ C`4 @ 1`1 @  IMM`27
  
  GPU_split  {A}, {B}, {C}, 8 => 0x10 @ A`4 @ B`4 @ C`4 @ 0`28
  GPU_split  {A}, {B}, {C}, 4 => 0x10 @ A`4 @ B`4 @ C`4 @ 1`28
@@ -96,8 +103,8 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  GPU_push {A}   => 0x17 @ A`4 @ 0`36
  GPU_pop  {A}   => 0x18 @ A`4 @ 0`36
  
- GPU_call {A}, {B} => 0x19 @ A`4 @ B`4 @ 0`32
- GPU_call {IMM}    => 0x19 @ 0`8 @ 1`4 @ IMM`28
+ GPU_call  {A}   => 0x19 @ A`4 @ 0`36
+ GPU_calli {IMM} => 0x19 @ 0`12 @ IMM`28
  
  GPU_ret  => 0x1A @ 0`40
  
@@ -111,7 +118,9 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  GPU_wait {A} => 0x1E @ A`4 @ 0`36
  
  GPU_break {IMM} => 0x1F @ 0`12 @ IMM`28
- 
+
+ GPU_rgba {IMM}  => 0x20 @ 0`8 @ IMM`32
+
  GPU_layer {A} => 0x6E @ A`4 @ 0`36
  
  GPU_resl {A} => 0x6F @ A`4 @ 0`36
@@ -134,6 +143,8 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  
  GPU_copy {A} => 0x78 @ A`4 @ 0`36
  
+ GPU_palt {A}, {IMM} => 0x7C @ A`4 @ 0`8 @ IMM`28
+
  GPU_sprite {A}, {IMM} => 0x7D @ A`4 @ 0`8 @ IMM`28
  GPU_sprite {A}        => 0x7D @ A`4 @ 0`36
 

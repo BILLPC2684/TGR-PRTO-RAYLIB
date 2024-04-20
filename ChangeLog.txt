@@ -9,6 +9,8 @@ Graphics Processing still in works
  * functional Test ROM was made!!
  * Drawable Lines(fast), and Pixels(slow)
  * Drawable Sprites, Strech and Rotatable
+ * Sprites can be rendered past the screen boarder
+ * Full 8-bit(256) ColorPalettes are now supported for Sprites
 
 Sound Added:
  * Thunder sound now plays when TGR stikes the sky on the intro
@@ -17,7 +19,7 @@ UI Improvements:
  * Text displaying signifigantly improves/optimized
  * Fading effect to banner when powered off or paused
  * Working intro animation
- * Added white(TV) noise and VCR blue screen
+ * Added VCR blue screen when system is off
 
 New Tape Mechanic System:
  * Tapes can contain up to 5 hours of video/savestates  (WIP)
@@ -33,11 +35,13 @@ Settings Changes:
  * Added "SkipIntro" to the settings to stop the intro animation to start every time you start up TGR
 
 CommandLine Changes:
- * Added "--cancelintro" or "-ci" to skip the intro (this does not effect the Setting "SkipIntro")  (WIP)
+ * Added "--help" or "-h", to list all the arguments
+ * Added "--cancelintro" or "-ci" to skip the intro (this does not effect the Setting "SkipIntro")
  * Added "--tape <PlayState> <TapePath.grtp>" or "-tp <PlayState> <TapePath.grtp>" to load a tape as soon as posssible  (WIP)
  
 Keybind Changes:
  * CTRL + G, opens and closes memory MAP
+ * CTRL +{SHIFT}+ R, restart system (shift for hard reset)
  * CTRL + SHIFT + L, to load Tape  (WIP)
  * CTRL + SHIFT + P, to Play Tape  (WIP)
  * CTRL + SHIFT + S, to Stop Tape  (WIP)
@@ -46,5 +50,8 @@ Keybind Changes:
  * CTRL + SHIFT + E, to Eject Tape  (WIP)
  * CTRL + SHIFT + C, to Continue from last Tape SaveState  (WIP)
 
-Minor fixes:
+Minor Small Fixes:
  * Fixed Asni Printing for windows
+
+Major Small Fixes:
+ * Stack System was fixed

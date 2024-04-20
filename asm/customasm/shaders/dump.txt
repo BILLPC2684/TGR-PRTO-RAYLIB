@@ -1,0 +1,4239 @@
+[90m[1m[91merror: no match found for instruction
+[0m[90m --> ./shader-02.asm:1:1:
+[0m[90m1 | [97mtheyCTRL#include "taylor_GPU.asm" 
+[90m  | [91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m2 | [97m#include "cavestory_tileset.asm" 
+[90m3 | [97m 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:19:2:
+[0m[90m17 | [97m#addr ProgramAddr  
+[90m18 | [97mmain: 
+[90m19 | [97m GPU_resl 0 ;sets resolution to default (480x360) 
+[90m   | [91m ^^^^^^^^^^                                        
+[90m20 | [97m GPU_layer 4 ; setting drawing layer to 0 
+[90m21 | [97m  
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:20:2:
+[0m[90m18 | [97mmain: 
+[90m19 | [97m GPU_resl 0 ;sets resolution to default (480x360) 
+[90m20 | [97m GPU_layer 4 ; setting drawing layer to 0 
+[90m   | [91m ^^^^^^^^^^^                               
+[90m21 | [97m  
+[90m22 | [97m GPU_load  GPU_O,  8 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:22:2:
+[0m[90m20 | [97m GPU_layer 4 ; setting drawing layer to 0 
+[90m21 | [97m  
+[90m22 | [97m GPU_load  GPU_O,  8 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m23 | [97m GPU_bsri  GPU_O,  8, GPU_U 
+[90m24 | [97m GPU_wmemi GPU_U,  CameraX 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:23:2:
+[0m[90m21 | [97m  
+[90m22 | [97m GPU_load  GPU_O,  8 
+[90m23 | [97m GPU_bsri  GPU_O,  8, GPU_U 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m24 | [97m GPU_wmemi GPU_U,  CameraX 
+[90m25 | [97m GPU_wmemi GPU_O,  CameraX+1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:24:2:
+[0m[90m22 | [97m GPU_load  GPU_O,  8 
+[90m23 | [97m GPU_bsri  GPU_O,  8, GPU_U 
+[90m24 | [97m GPU_wmemi GPU_U,  CameraX 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m25 | [97m GPU_wmemi GPU_O,  CameraX+1 
+[90m26 | [97m GPU_wmemi GPU_U,  CameraY 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:25:2:
+[0m[90m23 | [97m GPU_bsri  GPU_O,  8, GPU_U 
+[90m24 | [97m GPU_wmemi GPU_U,  CameraX 
+[90m25 | [97m GPU_wmemi GPU_O,  CameraX+1 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m26 | [97m GPU_wmemi GPU_U,  CameraY 
+[90m27 | [97m GPU_wmemi GPU_O,  CameraY+1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:26:2:
+[0m[90m24 | [97m GPU_wmemi GPU_U,  CameraX 
+[90m25 | [97m GPU_wmemi GPU_O,  CameraX+1 
+[90m26 | [97m GPU_wmemi GPU_U,  CameraY 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m27 | [97m GPU_wmemi GPU_O,  CameraY+1 
+[90m28 | [97m  
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:27:2:
+[0m[90m25 | [97m GPU_wmemi GPU_O,  CameraX+1 
+[90m26 | [97m GPU_wmemi GPU_U,  CameraY 
+[90m27 | [97m GPU_wmemi GPU_O,  CameraY+1 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m28 | [97m  
+[90m29 | [97m;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:31:2:
+[0m[90m29 | [97m;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+[90m30 | [97m .main_loop: 
+[90m31 | [97m GPU_calli Set256ColorPalette 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m32 | [97m  
+[90m33 | [97m GPU_calli loop0_resetX 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:33:2:
+[0m[90m31 | [97m GPU_calli Set256ColorPalette 
+[90m32 | [97m  
+[90m33 | [97m GPU_calli loop0_resetX 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^  
+[90m34 | [97m  
+[90m35 | [97m GPU_load  GPU_Y,     0 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:35:2:
+[0m[90m33 | [97m GPU_calli loop0_resetX 
+[90m34 | [97m  
+[90m35 | [97m GPU_load  GPU_Y,     0 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^  
+[90m36 | [97m GPU_rmemi GPU_U, CameraY 
+[90m37 | [97m GPU_rmemi GPU_O, CameraY+1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:36:2:
+[0m[90m34 | [97m  
+[90m35 | [97m GPU_load  GPU_Y,     0 
+[90m36 | [97m GPU_rmemi GPU_U, CameraY 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m37 | [97m GPU_rmemi GPU_O, CameraY+1 
+[90m38 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:37:2:
+[0m[90m35 | [97m GPU_load  GPU_Y,     0 
+[90m36 | [97m GPU_rmemi GPU_U, CameraY 
+[90m37 | [97m GPU_rmemi GPU_O, CameraY+1 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m38 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m39 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:38:2:
+[0m[90m36 | [97m GPU_rmemi GPU_U, CameraY 
+[90m37 | [97m GPU_rmemi GPU_O, CameraY+1 
+[90m38 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m39 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m40 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:39:2:
+[0m[90m37 | [97m GPU_rmemi GPU_O, CameraY+1 
+[90m38 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m39 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m40 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[90m41 | [97m GPU_sub   GPU_Y, GPU_O, GPU_Y 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:40:2:
+[0m[90m38 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m39 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m40 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m41 | [97m GPU_sub   GPU_Y, GPU_O, GPU_Y 
+[90m42 | [97m  
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:41:2:
+[0m[90m39 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m40 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[90m41 | [97m GPU_sub   GPU_Y, GPU_O, GPU_Y 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m42 | [97m  
+[90m43 | [97m ;GPU_rmemi GPU_U,  CPLength+4   ;grabbing resolution width 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:53:2:
+[0m[90m51 | [97m ;GPU_or    GPU_U,  GPU_Y2, GPU_Y2 
+[90m52 | [97m  
+[90m53 | [97m GPU_load  GPU_E,  RenderMap 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m54 | [97m .loop0: ; while true 
+[90m55 | [97m  .loop1: ; for x in range(16) 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:56:4:
+[0m[90m54 | [97m .loop0: ; while true 
+[90m55 | [97m  .loop1: ; for x in range(16) 
+[90m56 | [97m   GPU_rmem GPU_U, GPU_E 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^  
+[90m57 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[90m58 | [97m   GPU_rmem GPU_I, GPU_E 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:57:4:
+[0m[90m55 | [97m  .loop1: ; for x in range(16) 
+[90m56 | [97m   GPU_rmem GPU_U, GPU_E 
+[90m57 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m58 | [97m   GPU_rmem GPU_I, GPU_E 
+[90m59 | [97m   GPU_bsli GPU_U, 8,     GPU_U 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:58:4:
+[0m[90m56 | [97m   GPU_rmem GPU_U, GPU_E 
+[90m57 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[90m58 | [97m   GPU_rmem GPU_I, GPU_E 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^  
+[90m59 | [97m   GPU_bsli GPU_U, 8,     GPU_U 
+[90m60 | [97m   GPU_or   GPU_U, GPU_I, GPU_I 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:59:4:
+[0m[90m57 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[90m58 | [97m   GPU_rmem GPU_I, GPU_E 
+[90m59 | [97m   GPU_bsli GPU_U, 8,     GPU_U 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m60 | [97m   GPU_or   GPU_U, GPU_I, GPU_I 
+[90m61 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:60:4:
+[0m[90m58 | [97m   GPU_rmem GPU_I, GPU_E 
+[90m59 | [97m   GPU_bsli GPU_U, 8,     GPU_U 
+[90m60 | [97m   GPU_or   GPU_U, GPU_I, GPU_I 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m61 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[90m62 | [97m   ; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:61:4:
+[0m[90m59 | [97m   GPU_bsli GPU_U, 8,     GPU_U 
+[90m60 | [97m   GPU_or   GPU_U, GPU_I, GPU_I 
+[90m61 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m62 | [97m   ; 
+[90m63 | [97m   GPU_load GPU_sp, cavestory_tileset 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:63:4:
+[0m[90m61 | [97m   GPU_addi GPU_E, 1,     GPU_E 
+[90m62 | [97m   ; 
+[90m63 | [97m   GPU_load GPU_sp, cavestory_tileset 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m64 | [97m   GPU_muli GPU_I, 16*16, GPU_I 
+[90m65 | [97m   GPU_add  GPU_sp, GPU_I, GPU_sp 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:64:4:
+[0m[90m62 | [97m   ; 
+[90m63 | [97m   GPU_load GPU_sp, cavestory_tileset 
+[90m64 | [97m   GPU_muli GPU_I, 16*16, GPU_I 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m65 | [97m   GPU_add  GPU_sp, GPU_I, GPU_sp 
+[90m66 | [97m   ;GPU_disp GPU_sp 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:65:4:
+[0m[90m63 | [97m   GPU_load GPU_sp, cavestory_tileset 
+[90m64 | [97m   GPU_muli GPU_I, 16*16, GPU_I 
+[90m65 | [97m   GPU_add  GPU_sp, GPU_I, GPU_sp 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m66 | [97m   ;GPU_disp GPU_sp 
+[90m67 | [97m   GPU_calli DrawTile16x 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:67:4:
+[0m[90m65 | [97m   GPU_add  GPU_sp, GPU_I, GPU_sp 
+[90m66 | [97m   ;GPU_disp GPU_sp 
+[90m67 | [97m   GPU_calli DrawTile16x 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^  
+[90m68 | [97m   ; 
+[90m69 | [97m   ;GPU_modi   GPU_E, 24, GPU_I 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:71:4:
+[0m[90m69 | [97m   ;GPU_modi   GPU_E, 24, GPU_I 
+[90m70 | [97m   ;GPU_cmpeqi GPU_I, 0, 1 
+[90m71 | [97m   GPU_cmpgti GPU_X, 32*20, 1 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m72 | [97m    GPU_load GPU_IP, .loop1_end 
+[90m73 | [97m   GPU_addi GPU_X, 32, GPU_X 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:72:5:
+[0m[90m70 | [97m   ;GPU_cmpeqi GPU_I, 0, 1 
+[90m71 | [97m   GPU_cmpgti GPU_X, 32*20, 1 
+[90m72 | [97m    GPU_load GPU_IP, .loop1_end 
+[90m   | [91m    ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m73 | [97m   GPU_addi GPU_X, 32, GPU_X 
+[90m74 | [97m   GPU_load GPU_IP, .loop1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:73:4:
+[0m[90m71 | [97m   GPU_cmpgti GPU_X, 32*20, 1 
+[90m72 | [97m    GPU_load GPU_IP, .loop1_end 
+[90m73 | [97m   GPU_addi GPU_X, 32, GPU_X 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m74 | [97m   GPU_load GPU_IP, .loop1 
+[90m75 | [97m  ; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:74:4:
+[0m[90m72 | [97m    GPU_load GPU_IP, .loop1_end 
+[90m73 | [97m   GPU_addi GPU_X, 32, GPU_X 
+[90m74 | [97m   GPU_load GPU_IP, .loop1 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^  
+[90m75 | [97m  ; 
+[90m76 | [97m  .loop1_end: 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:77:3:
+[0m[90m75 | [97m  ; 
+[90m76 | [97m  .loop1_end: 
+[90m77 | [97m  GPU_addi  GPU_Y, 32, GPU_Y 
+[90m   | [91m  ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m78 | [97m  GPU_calli loop0_resetX 
+[90m79 | [97m  GPU_cmpgti GPU_Y, 32*16, 1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:78:3:
+[0m[90m76 | [97m  .loop1_end: 
+[90m77 | [97m  GPU_addi  GPU_Y, 32, GPU_Y 
+[90m78 | [97m  GPU_calli loop0_resetX 
+[90m   | [91m  ^^^^^^^^^^^^^^^^^^^^^^  
+[90m79 | [97m  GPU_cmpgti GPU_Y, 32*16, 1 
+[90m80 | [97m   GPU_load GPU_IP, .loop0_end 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:79:3:
+[0m[90m77 | [97m  GPU_addi  GPU_Y, 32, GPU_Y 
+[90m78 | [97m  GPU_calli loop0_resetX 
+[90m79 | [97m  GPU_cmpgti GPU_Y, 32*16, 1 
+[90m   | [91m  ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m80 | [97m   GPU_load GPU_IP, .loop0_end 
+[90m81 | [97m  GPU_load GPU_IP, .loop0 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:80:4:
+[0m[90m78 | [97m  GPU_calli loop0_resetX 
+[90m79 | [97m  GPU_cmpgti GPU_Y, 32*16, 1 
+[90m80 | [97m   GPU_load GPU_IP, .loop0_end 
+[90m   | [91m   ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m81 | [97m  GPU_load GPU_IP, .loop0 
+[90m82 | [97m  ; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:81:3:
+[0m[90m79 | [97m  GPU_cmpgti GPU_Y, 32*16, 1 
+[90m80 | [97m   GPU_load GPU_IP, .loop0_end 
+[90m81 | [97m  GPU_load GPU_IP, .loop0 
+[90m   | [91m  ^^^^^^^^^^^^^^^^^^^^^^^  
+[90m82 | [97m  ; 
+[90m83 | [97m .loop0_end: 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:85:2:
+[0m[90m83 | [97m .loop0_end: 
+[90m84 | [97m  
+[90m85 | [97m GPU_load GPU_X,   0 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m86 | [97m GPU_load GPU_Y,   0 
+[90m87 | [97m ; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:86:2:
+[0m[90m84 | [97m  
+[90m85 | [97m GPU_load GPU_X,   0 
+[90m86 | [97m GPU_load GPU_Y,   0 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m87 | [97m ; 
+[90m88 | [97m GPU_rmemi  GPU_U,  CPLength+4   ;grabbing resolution width 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:88:2:
+[0m[90m86 | [97m GPU_load GPU_Y,   0 
+[90m87 | [97m ; 
+[90m88 | [97m GPU_rmemi  GPU_U,  CPLength+4   ;grabbing resolution width 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                               
+[90m89 | [97m GPU_rmemi  GPU_X2, CPLength+4+1 
+[90m90 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:89:2:
+[0m[90m87 | [97m ; 
+[90m88 | [97m GPU_rmemi  GPU_U,  CPLength+4   ;grabbing resolution width 
+[90m89 | [97m GPU_rmemi  GPU_X2, CPLength+4+1 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m90 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[90m91 | [97m GPU_or     GPU_U,  GPU_X2, GPU_X2 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:90:2:
+[0m[90m88 | [97m GPU_rmemi  GPU_U,  CPLength+4   ;grabbing resolution width 
+[90m89 | [97m GPU_rmemi  GPU_X2, CPLength+4+1 
+[90m90 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m91 | [97m GPU_or     GPU_U,  GPU_X2, GPU_X2 
+[90m92 | [97m ; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:91:2:
+[0m[90m89 | [97m GPU_rmemi  GPU_X2, CPLength+4+1 
+[90m90 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[90m91 | [97m GPU_or     GPU_U,  GPU_X2, GPU_X2 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m92 | [97m ; 
+[90m93 | [97m GPU_rmemi  GPU_U,  CPLength+6    ;grabbing resolution height 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:93:2:
+[0m[90m91 | [97m GPU_or     GPU_U,  GPU_X2, GPU_X2 
+[90m92 | [97m ; 
+[90m93 | [97m GPU_rmemi  GPU_U,  CPLength+6    ;grabbing resolution height 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                 
+[90m94 | [97m GPU_rmemi  GPU_Y2, CPLength+6+1 
+[90m95 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:94:2:
+[0m[90m92 | [97m ; 
+[90m93 | [97m GPU_rmemi  GPU_U,  CPLength+6    ;grabbing resolution height 
+[90m94 | [97m GPU_rmemi  GPU_Y2, CPLength+6+1 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m95 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[90m96 | [97m GPU_or     GPU_U,  GPU_Y2, GPU_Y2 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:95:2:
+[0m[90m93 | [97m GPU_rmemi  GPU_U,  CPLength+6    ;grabbing resolution height 
+[90m94 | [97m GPU_rmemi  GPU_Y2, CPLength+6+1 
+[90m95 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m96 | [97m GPU_or     GPU_U,  GPU_Y2, GPU_Y2 
+[90m97 | [97m ; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m [90m --> ./shader-02.asm:96:2:
+[0m[90m94 | [97m GPU_rmemi  GPU_Y2, CPLength+6+1 
+[90m95 | [97m GPU_bsli   GPU_U,  8,      GPU_U 
+[90m96 | [97m GPU_or     GPU_U,  GPU_Y2, GPU_Y2 
+[90m   | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m97 | [97m ; 
+[90m98 | [97m GPU_setout 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:98:2:
+[0m[90m 96 | [97m GPU_or     GPU_U,  GPU_Y2, GPU_Y2 
+[90m 97 | [97m ; 
+[90m 98 | [97m GPU_setout 
+[90m    | [91m ^^^^^^^^^^  
+[90m 99 | [97m 
+[90m100 | [97m GPU_copy 4 ; coping data from layer 0 to layer 4 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:100:2:
+[0m[90m 98 | [97m GPU_setout 
+[90m 99 | [97m 
+[90m100 | [97m GPU_copy 4 ; coping data from layer 0 to layer 4 
+[90m    | [91m ^^^^^^^^^^                                        
+[90m101 | [97m GPU_render ; renders layer 4 to screen 
+[90m102 | [97m ;GPU_wait 1000000 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:101:2:
+[0m[90m 99 | [97m 
+[90m100 | [97m GPU_copy 4 ; coping data from layer 0 to layer 4 
+[90m101 | [97m GPU_render ; renders layer 4 to screen 
+[90m    | [91m ^^^^^^^^^^                              
+[90m102 | [97m ;GPU_wait 1000000 
+[90m103 | [97m ;GPU_break 1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:104:2:
+[0m[90m102 | [97m ;GPU_wait 1000000 
+[90m103 | [97m ;GPU_break 1 
+[90m104 | [97m GPU_load GPU_R, 0x1F 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^  
+[90m105 | [97m GPU_mov  GPU_G, GPU_R 
+[90m106 | [97m GPU_mov  GPU_B, GPU_R 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:105:2:
+[0m[90m103 | [97m ;GPU_break 1 
+[90m104 | [97m GPU_load GPU_R, 0x1F 
+[90m105 | [97m GPU_mov  GPU_G, GPU_R 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^  
+[90m106 | [97m GPU_mov  GPU_B, GPU_R 
+[90m107 | [97m GPU_frect ; clears the drawing layer 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:106:2:
+[0m[90m104 | [97m GPU_load GPU_R, 0x1F 
+[90m105 | [97m GPU_mov  GPU_G, GPU_R 
+[90m106 | [97m GPU_mov  GPU_B, GPU_R 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^  
+[90m107 | [97m GPU_frect ; clears the drawing layer 
+[90m108 | [97m  
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:107:2:
+[0m[90m105 | [97m GPU_mov  GPU_G, GPU_R 
+[90m106 | [97m GPU_mov  GPU_B, GPU_R 
+[90m107 | [97m GPU_frect ; clears the drawing layer 
+[90m    | [91m ^^^^^^^^^                             
+[90m108 | [97m  
+[90m109 | [97m GPU_load GPU_E,  0 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:109:2:
+[0m[90m107 | [97m GPU_frect ; clears the drawing layer 
+[90m108 | [97m  
+[90m109 | [97m GPU_load GPU_E,  0 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^  
+[90m110 | [97m GPU_load GPU_IP, .main_loop 
+[90m111 | [97m 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:110:2:
+[0m[90m108 | [97m  
+[90m109 | [97m GPU_load GPU_E,  0 
+[90m110 | [97m GPU_load GPU_IP, .main_loop 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m111 | [97m 
+[90m112 | [97mloop0_resetX: 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:113:2:
+[0m[90m111 | [97m 
+[90m112 | [97mloop0_resetX: 
+[90m113 | [97m GPU_load  GPU_X,     0 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^  
+[90m114 | [97m GPU_rmemi GPU_U, CameraX 
+[90m115 | [97m GPU_rmemi GPU_O, CameraX+1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:114:2:
+[0m[90m112 | [97mloop0_resetX: 
+[90m113 | [97m GPU_load  GPU_X,     0 
+[90m114 | [97m GPU_rmemi GPU_U, CameraX 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m115 | [97m GPU_rmemi GPU_O, CameraX+1 
+[90m116 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:115:2:
+[0m[90m113 | [97m GPU_load  GPU_X,     0 
+[90m114 | [97m GPU_rmemi GPU_U, CameraX 
+[90m115 | [97m GPU_rmemi GPU_O, CameraX+1 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m116 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m117 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:116:2:
+[0m[90m114 | [97m GPU_rmemi GPU_U, CameraX 
+[90m115 | [97m GPU_rmemi GPU_O, CameraX+1 
+[90m116 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m117 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m118 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:117:2:
+[0m[90m115 | [97m GPU_rmemi GPU_O, CameraX+1 
+[90m116 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m117 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m118 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[90m119 | [97m GPU_sub   GPU_X, GPU_O, GPU_X 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:118:2:
+[0m[90m116 | [97m GPU_bsli  GPU_U,     8, GPU_U 
+[90m117 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m118 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m119 | [97m GPU_sub   GPU_X, GPU_O, GPU_X 
+[90m120 | [97m 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:119:2:
+[0m[90m117 | [97m GPU_or    GPU_U, GPU_O, GPU_O 
+[90m118 | [97m GPU_mod   GPU_O,    16, GPU_O 
+[90m119 | [97m GPU_sub   GPU_X, GPU_O, GPU_X 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m120 | [97m 
+[90m121 | [97mDrawTile16x: ; requests SpritePointer, X and Y 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:122:2:
+[0m[90m120 | [97m 
+[90m121 | [97mDrawTile16x: ; requests SpritePointer, X and Y 
+[90m122 | [97m GPU_push GPU_X2 
+[90m    | [91m ^^^^^^^^^^^^^^^  
+[90m123 | [97m GPU_push GPU_Y2 
+[90m124 | [97m GPU_push GPU_X 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:123:2:
+[0m[90m121 | [97mDrawTile16x: ; requests SpritePointer, X and Y 
+[90m122 | [97m GPU_push GPU_X2 
+[90m123 | [97m GPU_push GPU_Y2 
+[90m    | [91m ^^^^^^^^^^^^^^^  
+[90m124 | [97m GPU_push GPU_X 
+[90m125 | [97m GPU_push GPU_Y 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:124:2:
+[0m[90m122 | [97m GPU_push GPU_X2 
+[90m123 | [97m GPU_push GPU_Y2 
+[90m124 | [97m GPU_push GPU_X 
+[90m    | [91m ^^^^^^^^^^^^^^  
+[90m125 | [97m GPU_push GPU_Y 
+[90m126 | [97m GPU_load GPU_X,    0 ;X[2] = Rotation[1/2] 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:125:2:
+[0m[90m123 | [97m GPU_push GPU_Y2 
+[90m124 | [97m GPU_push GPU_X 
+[90m125 | [97m GPU_push GPU_Y 
+[90m    | [91m ^^^^^^^^^^^^^^  
+[90m126 | [97m GPU_load GPU_X,    0 ;X[2] = Rotation[1/2] 
+[90m127 | [97m GPU_load GPU_Y,    0 ;Y[2] = Rotation[2/2] 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:126:2:
+[0m[90m124 | [97m GPU_push GPU_X 
+[90m125 | [97m GPU_push GPU_Y 
+[90m126 | [97m GPU_load GPU_X,    0 ;X[2] = Rotation[1/2] 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^                        
+[90m127 | [97m GPU_load GPU_Y,    0 ;Y[2] = Rotation[2/2] 
+[90m128 | [97m GPU_load GPU_X2,  32 ;X[3] = Resize Width 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:127:2:
+[0m[90m125 | [97m GPU_push GPU_Y 
+[90m126 | [97m GPU_load GPU_X,    0 ;X[2] = Rotation[1/2] 
+[90m127 | [97m GPU_load GPU_Y,    0 ;Y[2] = Rotation[2/2] 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^                        
+[90m128 | [97m GPU_load GPU_X2,  32 ;X[3] = Resize Width 
+[90m129 | [97m GPU_load GPU_Y2,  32 ;Y[3] = Resize Height 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:128:2:
+[0m[90m126 | [97m GPU_load GPU_X,    0 ;X[2] = Rotation[1/2] 
+[90m127 | [97m GPU_load GPU_Y,    0 ;Y[2] = Rotation[2/2] 
+[90m128 | [97m GPU_load GPU_X2,  32 ;X[3] = Resize Width 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^                       
+[90m129 | [97m GPU_load GPU_Y2,  32 ;Y[3] = Resize Height 
+[90m130 | [97m GPU_setout 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:129:2:
+[0m[90m127 | [97m GPU_load GPU_Y,    0 ;Y[2] = Rotation[2/2] 
+[90m128 | [97m GPU_load GPU_X2,  32 ;X[3] = Resize Width 
+[90m129 | [97m GPU_load GPU_Y2,  32 ;Y[3] = Resize Height 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^                        
+[90m130 | [97m GPU_setout 
+[90m131 | [97m ; 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:130:2:
+[0m[90m128 | [97m GPU_load GPU_X2,  32 ;X[3] = Resize Width 
+[90m129 | [97m GPU_load GPU_Y2,  32 ;Y[3] = Resize Height 
+[90m130 | [97m GPU_setout 
+[90m    | [91m ^^^^^^^^^^  
+[90m131 | [97m ; 
+[90m132 | [97m GPU_pop GPU_Y 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:132:2:
+[0m[90m130 | [97m GPU_setout 
+[90m131 | [97m ; 
+[90m132 | [97m GPU_pop GPU_Y 
+[90m    | [91m ^^^^^^^^^^^^^  
+[90m133 | [97m GPU_pop GPU_X 
+[90m134 | [97m GPU_load GPU_X2,  16 ;X[1] = Width 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:133:2:
+[0m[90m131 | [97m ; 
+[90m132 | [97m GPU_pop GPU_Y 
+[90m133 | [97m GPU_pop GPU_X 
+[90m    | [91m ^^^^^^^^^^^^^  
+[90m134 | [97m GPU_load GPU_X2,  16 ;X[1] = Width 
+[90m135 | [97m GPU_load GPU_Y2,  16 ;Y[1] = Height 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:134:2:
+[0m[90m132 | [97m GPU_pop GPU_Y 
+[90m133 | [97m GPU_pop GPU_X 
+[90m134 | [97m GPU_load GPU_X2,  16 ;X[1] = Width 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^                
+[90m135 | [97m GPU_load GPU_Y2,  16 ;Y[1] = Height 
+[90m136 | [97m GPU_sprite SPRITE_CP8, NULL ; uses SpritePointer instead of IMM 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:135:2:
+[0m[90m133 | [97m GPU_pop GPU_X 
+[90m134 | [97m GPU_load GPU_X2,  16 ;X[1] = Width 
+[90m135 | [97m GPU_load GPU_Y2,  16 ;Y[1] = Height 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^                 
+[90m136 | [97m GPU_sprite SPRITE_CP8, NULL ; uses SpritePointer instead of IMM 
+[90m137 | [97m GPU_pop GPU_Y2 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:136:2:
+[0m[90m134 | [97m GPU_load GPU_X2,  16 ;X[1] = Width 
+[90m135 | [97m GPU_load GPU_Y2,  16 ;Y[1] = Height 
+[90m136 | [97m GPU_sprite SPRITE_CP8, NULL ; uses SpritePointer instead of IMM 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^                                      
+[90m137 | [97m GPU_pop GPU_Y2 
+[90m138 | [97m GPU_pop GPU_X2 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:137:2:
+[0m[90m135 | [97m GPU_load GPU_Y2,  16 ;Y[1] = Height 
+[90m136 | [97m GPU_sprite SPRITE_CP8, NULL ; uses SpritePointer instead of IMM 
+[90m137 | [97m GPU_pop GPU_Y2 
+[90m    | [91m ^^^^^^^^^^^^^^  
+[90m138 | [97m GPU_pop GPU_X2 
+[90m139 | [97m GPU_ret 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:138:2:
+[0m[90m136 | [97m GPU_sprite SPRITE_CP8, NULL ; uses SpritePointer instead of IMM 
+[90m137 | [97m GPU_pop GPU_Y2 
+[90m138 | [97m GPU_pop GPU_X2 
+[90m    | [91m ^^^^^^^^^^^^^^  
+[90m139 | [97m GPU_ret 
+[90m140 | [97m 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:139:2:
+[0m[90m137 | [97m GPU_pop GPU_Y2 
+[90m138 | [97m GPU_pop GPU_X2 
+[90m139 | [97m GPU_ret 
+[90m    | [91m ^^^^^^^  
+[90m140 | [97m 
+[90m141 | [97mSet256ColorPalette: 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:142:2:
+[0m[90m140 | [97m 
+[90m141 | [97mSet256ColorPalette: 
+[90m142 | [97m GPU_rgba 0x000000FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m143 | [97m GPU_palt PALETTE_WRITE, 0 
+[90m144 | [97m GPU_rgba 0xC7A7AFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:143:2:
+[0m[90m141 | [97mSet256ColorPalette: 
+[90m142 | [97m GPU_rgba 0x000000FF 
+[90m143 | [97m GPU_palt PALETTE_WRITE, 0 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m144 | [97m GPU_rgba 0xC7A7AFFF 
+[90m145 | [97m GPU_palt PALETTE_WRITE, 1 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:144:2:
+[0m[90m142 | [97m GPU_rgba 0x000000FF 
+[90m143 | [97m GPU_palt PALETTE_WRITE, 0 
+[90m144 | [97m GPU_rgba 0xC7A7AFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m145 | [97m GPU_palt PALETTE_WRITE, 1 
+[90m146 | [97m GPU_rgba 0x9F8797FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:145:2:
+[0m[90m143 | [97m GPU_palt PALETTE_WRITE, 0 
+[90m144 | [97m GPU_rgba 0xC7A7AFFF 
+[90m145 | [97m GPU_palt PALETTE_WRITE, 1 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m146 | [97m GPU_rgba 0x9F8797FF 
+[90m147 | [97m GPU_palt PALETTE_WRITE, 2 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:146:2:
+[0m[90m144 | [97m GPU_rgba 0xC7A7AFFF 
+[90m145 | [97m GPU_palt PALETTE_WRITE, 1 
+[90m146 | [97m GPU_rgba 0x9F8797FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m147 | [97m GPU_palt PALETTE_WRITE, 2 
+[90m148 | [97m GPU_rgba 0x77677FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:147:2:
+[0m[90m145 | [97m GPU_palt PALETTE_WRITE, 1 
+[90m146 | [97m GPU_rgba 0x9F8797FF 
+[90m147 | [97m GPU_palt PALETTE_WRITE, 2 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m148 | [97m GPU_rgba 0x77677FFF 
+[90m149 | [97m GPU_palt PALETTE_WRITE, 3 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:148:2:
+[0m[90m146 | [97m GPU_rgba 0x9F8797FF 
+[90m147 | [97m GPU_palt PALETTE_WRITE, 2 
+[90m148 | [97m GPU_rgba 0x77677FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m149 | [97m GPU_palt PALETTE_WRITE, 3 
+[90m150 | [97m GPU_rgba 0x272F47FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:149:2:
+[0m[90m147 | [97m GPU_palt PALETTE_WRITE, 2 
+[90m148 | [97m GPU_rgba 0x77677FFF 
+[90m149 | [97m GPU_palt PALETTE_WRITE, 3 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m150 | [97m GPU_rgba 0x272F47FF 
+[90m151 | [97m GPU_palt PALETTE_WRITE, 4 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:150:2:
+[0m[90m148 | [97m GPU_rgba 0x77677FFF 
+[90m149 | [97m GPU_palt PALETTE_WRITE, 3 
+[90m150 | [97m GPU_rgba 0x272F47FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m151 | [97m GPU_palt PALETTE_WRITE, 4 
+[90m152 | [97m GPU_rgba 0x4F4F67FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:151:2:
+[0m[90m149 | [97m GPU_palt PALETTE_WRITE, 3 
+[90m150 | [97m GPU_rgba 0x272F47FF 
+[90m151 | [97m GPU_palt PALETTE_WRITE, 4 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m152 | [97m GPU_rgba 0x4F4F67FF 
+[90m153 | [97m GPU_palt PALETTE_WRITE, 5 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:152:2:
+[0m[90m150 | [97m GPU_rgba 0x272F47FF 
+[90m151 | [97m GPU_palt PALETTE_WRITE, 4 
+[90m152 | [97m GPU_rgba 0x4F4F67FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m153 | [97m GPU_palt PALETTE_WRITE, 5 
+[90m154 | [97m GPU_rgba 0x00172FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:153:2:
+[0m[90m151 | [97m GPU_palt PALETTE_WRITE, 4 
+[90m152 | [97m GPU_rgba 0x4F4F67FF 
+[90m153 | [97m GPU_palt PALETTE_WRITE, 5 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m154 | [97m GPU_rgba 0x00172FFF 
+[90m155 | [97m GPU_palt PALETTE_WRITE, 6 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:154:2:
+[0m[90m152 | [97m GPU_rgba 0x4F4F67FF 
+[90m153 | [97m GPU_palt PALETTE_WRITE, 5 
+[90m154 | [97m GPU_rgba 0x00172FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m155 | [97m GPU_palt PALETTE_WRITE, 6 
+[90m156 | [97m GPU_rgba 0xCFD7CFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:155:2:
+[0m[90m153 | [97m GPU_palt PALETTE_WRITE, 5 
+[90m154 | [97m GPU_rgba 0x00172FFF 
+[90m155 | [97m GPU_palt PALETTE_WRITE, 6 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m156 | [97m GPU_rgba 0xCFD7CFFF 
+[90m157 | [97m GPU_palt PALETTE_WRITE, 7 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:156:2:
+[0m[90m154 | [97m GPU_rgba 0x00172FFF 
+[90m155 | [97m GPU_palt PALETTE_WRITE, 6 
+[90m156 | [97m GPU_rgba 0xCFD7CFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m157 | [97m GPU_palt PALETTE_WRITE, 7 
+[90m158 | [97m GPU_rgba 0x5F779FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:157:2:
+[0m[90m155 | [97m GPU_palt PALETTE_WRITE, 6 
+[90m156 | [97m GPU_rgba 0xCFD7CFFF 
+[90m157 | [97m GPU_palt PALETTE_WRITE, 7 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m158 | [97m GPU_rgba 0x5F779FFF 
+[90m159 | [97m GPU_palt PALETTE_WRITE, 8 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:158:2:
+[0m[90m156 | [97m GPU_rgba 0xCFD7CFFF 
+[90m157 | [97m GPU_palt PALETTE_WRITE, 7 
+[90m158 | [97m GPU_rgba 0x5F779FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m159 | [97m GPU_palt PALETTE_WRITE, 8 
+[90m160 | [97m GPU_rgba 0x272F2FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:159:2:
+[0m[90m157 | [97m GPU_palt PALETTE_WRITE, 7 
+[90m158 | [97m GPU_rgba 0x5F779FFF 
+[90m159 | [97m GPU_palt PALETTE_WRITE, 8 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m160 | [97m GPU_rgba 0x272F2FFF 
+[90m161 | [97m GPU_palt PALETTE_WRITE, 9 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:160:2:
+[0m[90m158 | [97m GPU_rgba 0x5F779FFF 
+[90m159 | [97m GPU_palt PALETTE_WRITE, 8 
+[90m160 | [97m GPU_rgba 0x272F2FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m161 | [97m GPU_palt PALETTE_WRITE, 9 
+[90m162 | [97m GPU_rgba 0x00000FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:161:2:
+[0m[90m159 | [97m GPU_palt PALETTE_WRITE, 8 
+[90m160 | [97m GPU_rgba 0x272F2FFF 
+[90m161 | [97m GPU_palt PALETTE_WRITE, 9 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m162 | [97m GPU_rgba 0x00000FFF 
+[90m163 | [97m GPU_palt PALETTE_WRITE, 10 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:162:2:
+[0m[90m160 | [97m GPU_rgba 0x272F2FFF 
+[90m161 | [97m GPU_palt PALETTE_WRITE, 9 
+[90m162 | [97m GPU_rgba 0x00000FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m163 | [97m GPU_palt PALETTE_WRITE, 10 
+[90m164 | [97m GPU_rgba 0x0F376FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:163:2:
+[0m[90m161 | [97m GPU_palt PALETTE_WRITE, 9 
+[90m162 | [97m GPU_rgba 0x00000FFF 
+[90m163 | [97m GPU_palt PALETTE_WRITE, 10 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m164 | [97m GPU_rgba 0x0F376FFF 
+[90m165 | [97m GPU_palt PALETTE_WRITE, 11 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:164:2:
+[0m[90m162 | [97m GPU_rgba 0x00000FFF 
+[90m163 | [97m GPU_palt PALETTE_WRITE, 10 
+[90m164 | [97m GPU_rgba 0x0F376FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m165 | [97m GPU_palt PALETTE_WRITE, 11 
+[90m166 | [97m GPU_rgba 0x570000FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:165:2:
+[0m[90m163 | [97m GPU_palt PALETTE_WRITE, 10 
+[90m164 | [97m GPU_rgba 0x0F376FFF 
+[90m165 | [97m GPU_palt PALETTE_WRITE, 11 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m166 | [97m GPU_rgba 0x570000FF 
+[90m167 | [97m GPU_palt PALETTE_WRITE, 12 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:166:2:
+[0m[90m164 | [97m GPU_rgba 0x0F376FFF 
+[90m165 | [97m GPU_palt PALETTE_WRITE, 11 
+[90m166 | [97m GPU_rgba 0x570000FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m167 | [97m GPU_palt PALETTE_WRITE, 12 
+[90m168 | [97m GPU_rgba 0xFF0000FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:167:2:
+[0m[90m165 | [97m GPU_palt PALETTE_WRITE, 11 
+[90m166 | [97m GPU_rgba 0x570000FF 
+[90m167 | [97m GPU_palt PALETTE_WRITE, 12 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m168 | [97m GPU_rgba 0xFF0000FF 
+[90m169 | [97m GPU_palt PALETTE_WRITE, 13 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:168:2:
+[0m[90m166 | [97m GPU_rgba 0x570000FF 
+[90m167 | [97m GPU_palt PALETTE_WRITE, 12 
+[90m168 | [97m GPU_rgba 0xFF0000FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m169 | [97m GPU_palt PALETTE_WRITE, 13 
+[90m170 | [97m GPU_rgba 0x270F07FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:169:2:
+[0m[90m167 | [97m GPU_palt PALETTE_WRITE, 12 
+[90m168 | [97m GPU_rgba 0xFF0000FF 
+[90m169 | [97m GPU_palt PALETTE_WRITE, 13 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m170 | [97m GPU_rgba 0x270F07FF 
+[90m171 | [97m GPU_palt PALETTE_WRITE, 14 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:170:2:
+[0m[90m168 | [97m GPU_rgba 0xFF0000FF 
+[90m169 | [97m GPU_palt PALETTE_WRITE, 13 
+[90m170 | [97m GPU_rgba 0x270F07FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m171 | [97m GPU_palt PALETTE_WRITE, 14 
+[90m172 | [97m GPU_rgba 0x2F1F17FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:171:2:
+[0m[90m169 | [97m GPU_palt PALETTE_WRITE, 13 
+[90m170 | [97m GPU_rgba 0x270F07FF 
+[90m171 | [97m GPU_palt PALETTE_WRITE, 14 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m172 | [97m GPU_rgba 0x2F1F17FF 
+[90m173 | [97m GPU_palt PALETTE_WRITE, 15 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:172:2:
+[0m[90m170 | [97m GPU_rgba 0x270F07FF 
+[90m171 | [97m GPU_palt PALETTE_WRITE, 14 
+[90m172 | [97m GPU_rgba 0x2F1F17FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m173 | [97m GPU_palt PALETTE_WRITE, 15 
+[90m174 | [97m GPU_rgba 0x373727FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:173:2:
+[0m[90m171 | [97m GPU_palt PALETTE_WRITE, 14 
+[90m172 | [97m GPU_rgba 0x2F1F17FF 
+[90m173 | [97m GPU_palt PALETTE_WRITE, 15 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m174 | [97m GPU_rgba 0x373727FF 
+[90m175 | [97m GPU_palt PALETTE_WRITE, 16 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:174:2:
+[0m[90m172 | [97m GPU_rgba 0x2F1F17FF 
+[90m173 | [97m GPU_palt PALETTE_WRITE, 15 
+[90m174 | [97m GPU_rgba 0x373727FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m175 | [97m GPU_palt PALETTE_WRITE, 16 
+[90m176 | [97m GPU_rgba 0xB7AF87FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:175:2:
+[0m[90m173 | [97m GPU_palt PALETTE_WRITE, 15 
+[90m174 | [97m GPU_rgba 0x373727FF 
+[90m175 | [97m GPU_palt PALETTE_WRITE, 16 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m176 | [97m GPU_rgba 0xB7AF87FF 
+[90m177 | [97m GPU_palt PALETTE_WRITE, 17 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:176:2:
+[0m[90m174 | [97m GPU_rgba 0x373727FF 
+[90m175 | [97m GPU_palt PALETTE_WRITE, 16 
+[90m176 | [97m GPU_rgba 0xB7AF87FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m177 | [97m GPU_palt PALETTE_WRITE, 17 
+[90m178 | [97m GPU_rgba 0x8F8F6FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:177:2:
+[0m[90m175 | [97m GPU_palt PALETTE_WRITE, 16 
+[90m176 | [97m GPU_rgba 0xB7AF87FF 
+[90m177 | [97m GPU_palt PALETTE_WRITE, 17 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m178 | [97m GPU_rgba 0x8F8F6FFF 
+[90m179 | [97m GPU_palt PALETTE_WRITE, 18 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:178:2:
+[0m[90m176 | [97m GPU_rgba 0xB7AF87FF 
+[90m177 | [97m GPU_palt PALETTE_WRITE, 17 
+[90m178 | [97m GPU_rgba 0x8F8F6FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m179 | [97m GPU_palt PALETTE_WRITE, 18 
+[90m180 | [97m GPU_rgba 0x475747FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:179:2:
+[0m[90m177 | [97m GPU_palt PALETTE_WRITE, 17 
+[90m178 | [97m GPU_rgba 0x8F8F6FFF 
+[90m179 | [97m GPU_palt PALETTE_WRITE, 18 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m180 | [97m GPU_rgba 0x475747FF 
+[90m181 | [97m GPU_palt PALETTE_WRITE, 19 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:180:2:
+[0m[90m178 | [97m GPU_rgba 0x8F8F6FFF 
+[90m179 | [97m GPU_palt PALETTE_WRITE, 18 
+[90m180 | [97m GPU_rgba 0x475747FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m181 | [97m GPU_palt PALETTE_WRITE, 19 
+[90m182 | [97m GPU_rgba 0x001717FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:181:2:
+[0m[90m179 | [97m GPU_palt PALETTE_WRITE, 18 
+[90m180 | [97m GPU_rgba 0x475747FF 
+[90m181 | [97m GPU_palt PALETTE_WRITE, 19 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m182 | [97m GPU_rgba 0x001717FF 
+[90m183 | [97m GPU_palt PALETTE_WRITE, 20 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:182:2:
+[0m[90m180 | [97m GPU_rgba 0x475747FF 
+[90m181 | [97m GPU_palt PALETTE_WRITE, 19 
+[90m182 | [97m GPU_rgba 0x001717FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m183 | [97m GPU_palt PALETTE_WRITE, 20 
+[90m184 | [97m GPU_rgba 0x6F6F57FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:183:2:
+[0m[90m181 | [97m GPU_palt PALETTE_WRITE, 19 
+[90m182 | [97m GPU_rgba 0x001717FF 
+[90m183 | [97m GPU_palt PALETTE_WRITE, 20 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m184 | [97m GPU_rgba 0x6F6F57FF 
+[90m185 | [97m GPU_palt PALETTE_WRITE, 21 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:184:2:
+[0m[90m182 | [97m GPU_rgba 0x001717FF 
+[90m183 | [97m GPU_palt PALETTE_WRITE, 20 
+[90m184 | [97m GPU_rgba 0x6F6F57FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m185 | [97m GPU_palt PALETTE_WRITE, 21 
+[90m186 | [97m GPU_rgba 0x1F372FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:185:2:
+[0m[90m183 | [97m GPU_palt PALETTE_WRITE, 20 
+[90m184 | [97m GPU_rgba 0x6F6F57FF 
+[90m185 | [97m GPU_palt PALETTE_WRITE, 21 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m186 | [97m GPU_rgba 0x1F372FFF 
+[90m187 | [97m GPU_palt PALETTE_WRITE, 22 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:186:2:
+[0m[90m184 | [97m GPU_rgba 0x6F6F57FF 
+[90m185 | [97m GPU_palt PALETTE_WRITE, 21 
+[90m186 | [97m GPU_rgba 0x1F372FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m187 | [97m GPU_palt PALETTE_WRITE, 22 
+[90m188 | [97m GPU_rgba 0xFFF7DFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:187:2:
+[0m[90m185 | [97m GPU_palt PALETTE_WRITE, 21 
+[90m186 | [97m GPU_rgba 0x1F372FFF 
+[90m187 | [97m GPU_palt PALETTE_WRITE, 22 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m188 | [97m GPU_rgba 0xFFF7DFFF 
+[90m189 | [97m GPU_palt PALETTE_WRITE, 23 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:188:2:
+[0m[90m186 | [97m GPU_rgba 0x1F372FFF 
+[90m187 | [97m GPU_palt PALETTE_WRITE, 22 
+[90m188 | [97m GPU_rgba 0xFFF7DFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m189 | [97m GPU_palt PALETTE_WRITE, 23 
+[90m190 | [97m GPU_rgba 0x677F97FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:189:2:
+[0m[90m187 | [97m GPU_palt PALETTE_WRITE, 22 
+[90m188 | [97m GPU_rgba 0xFFF7DFFF 
+[90m189 | [97m GPU_palt PALETTE_WRITE, 23 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m190 | [97m GPU_rgba 0x677F97FF 
+[90m191 | [97m GPU_palt PALETTE_WRITE, 24 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:190:2:
+[0m[90m188 | [97m GPU_rgba 0xFFF7DFFF 
+[90m189 | [97m GPU_palt PALETTE_WRITE, 23 
+[90m190 | [97m GPU_rgba 0x677F97FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m191 | [97m GPU_palt PALETTE_WRITE, 24 
+[90m192 | [97m GPU_rgba 0x37475FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:191:2:
+[0m[90m189 | [97m GPU_palt PALETTE_WRITE, 23 
+[90m190 | [97m GPU_rgba 0x677F97FF 
+[90m191 | [97m GPU_palt PALETTE_WRITE, 24 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m192 | [97m GPU_rgba 0x37475FFF 
+[90m193 | [97m GPU_palt PALETTE_WRITE, 25 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:192:2:
+[0m[90m190 | [97m GPU_rgba 0x677F97FF 
+[90m191 | [97m GPU_palt PALETTE_WRITE, 24 
+[90m192 | [97m GPU_rgba 0x37475FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m193 | [97m GPU_palt PALETTE_WRITE, 25 
+[90m194 | [97m GPU_rgba 0x0F1727FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:193:2:
+[0m[90m191 | [97m GPU_palt PALETTE_WRITE, 24 
+[90m192 | [97m GPU_rgba 0x37475FFF 
+[90m193 | [97m GPU_palt PALETTE_WRITE, 25 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m194 | [97m GPU_rgba 0x0F1727FF 
+[90m195 | [97m GPU_palt PALETTE_WRITE, 26 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:194:2:
+[0m[90m192 | [97m GPU_rgba 0x37475FFF 
+[90m193 | [97m GPU_palt PALETTE_WRITE, 25 
+[90m194 | [97m GPU_rgba 0x0F1727FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m195 | [97m GPU_palt PALETTE_WRITE, 26 
+[90m196 | [97m GPU_rgba 0x272F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:195:2:
+[0m[90m193 | [97m GPU_palt PALETTE_WRITE, 25 
+[90m194 | [97m GPU_rgba 0x0F1727FF 
+[90m195 | [97m GPU_palt PALETTE_WRITE, 26 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m196 | [97m GPU_rgba 0x272F3FFF 
+[90m197 | [97m GPU_palt PALETTE_WRITE, 27 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:196:2:
+[0m[90m194 | [97m GPU_rgba 0x0F1727FF 
+[90m195 | [97m GPU_palt PALETTE_WRITE, 26 
+[90m196 | [97m GPU_rgba 0x272F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m197 | [97m GPU_palt PALETTE_WRITE, 27 
+[90m198 | [97m GPU_rgba 0x4F5F77FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:197:2:
+[0m[90m195 | [97m GPU_palt PALETTE_WRITE, 26 
+[90m196 | [97m GPU_rgba 0x272F3FFF 
+[90m197 | [97m GPU_palt PALETTE_WRITE, 27 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m198 | [97m GPU_rgba 0x4F5F77FF 
+[90m199 | [97m GPU_palt PALETTE_WRITE, 28 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:198:2:
+[0m[90m196 | [97m GPU_rgba 0x272F3FFF 
+[90m197 | [97m GPU_palt PALETTE_WRITE, 27 
+[90m198 | [97m GPU_rgba 0x4F5F77FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m199 | [97m GPU_palt PALETTE_WRITE, 28 
+[90m200 | [97m GPU_rgba 0x2F5FA7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:199:2:
+[0m[90m197 | [97m GPU_palt PALETTE_WRITE, 27 
+[90m198 | [97m GPU_rgba 0x4F5F77FF 
+[90m199 | [97m GPU_palt PALETTE_WRITE, 28 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m200 | [97m GPU_rgba 0x2F5FA7FF 
+[90m201 | [97m GPU_palt PALETTE_WRITE, 29 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:200:2:
+[0m[90m198 | [97m GPU_rgba 0x4F5F77FF 
+[90m199 | [97m GPU_palt PALETTE_WRITE, 28 
+[90m200 | [97m GPU_rgba 0x2F5FA7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m201 | [97m GPU_palt PALETTE_WRITE, 29 
+[90m202 | [97m GPU_rgba 0x001F97FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:201:2:
+[0m[90m199 | [97m GPU_palt PALETTE_WRITE, 28 
+[90m200 | [97m GPU_rgba 0x2F5FA7FF 
+[90m201 | [97m GPU_palt PALETTE_WRITE, 29 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m202 | [97m GPU_rgba 0x001F97FF 
+[90m203 | [97m GPU_palt PALETTE_WRITE, 30 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:202:2:
+[0m[90m200 | [97m GPU_rgba 0x2F5FA7FF 
+[90m201 | [97m GPU_palt PALETTE_WRITE, 29 
+[90m202 | [97m GPU_rgba 0x001F97FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m203 | [97m GPU_palt PALETTE_WRITE, 30 
+[90m204 | [97m GPU_rgba 0xBFCFDFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:203:2:
+[0m[90m201 | [97m GPU_palt PALETTE_WRITE, 29 
+[90m202 | [97m GPU_rgba 0x001F97FF 
+[90m203 | [97m GPU_palt PALETTE_WRITE, 30 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m204 | [97m GPU_rgba 0xBFCFDFFF 
+[90m205 | [97m GPU_palt PALETTE_WRITE, 31 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:204:2:
+[0m[90m202 | [97m GPU_rgba 0x001F97FF 
+[90m203 | [97m GPU_palt PALETTE_WRITE, 30 
+[90m204 | [97m GPU_rgba 0xBFCFDFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m205 | [97m GPU_palt PALETTE_WRITE, 31 
+[90m206 | [97m GPU_rgba 0x1F7747FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:205:2:
+[0m[90m203 | [97m GPU_palt PALETTE_WRITE, 30 
+[90m204 | [97m GPU_rgba 0xBFCFDFFF 
+[90m205 | [97m GPU_palt PALETTE_WRITE, 31 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m206 | [97m GPU_rgba 0x1F7747FF 
+[90m207 | [97m GPU_palt PALETTE_WRITE, 32 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:206:2:
+[0m[90m204 | [97m GPU_rgba 0xBFCFDFFF 
+[90m205 | [97m GPU_palt PALETTE_WRITE, 31 
+[90m206 | [97m GPU_rgba 0x1F7747FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m207 | [97m GPU_palt PALETTE_WRITE, 32 
+[90m208 | [97m GPU_rgba 0x000017FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:207:2:
+[0m[90m205 | [97m GPU_palt PALETTE_WRITE, 31 
+[90m206 | [97m GPU_rgba 0x1F7747FF 
+[90m207 | [97m GPU_palt PALETTE_WRITE, 32 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m208 | [97m GPU_rgba 0x000017FF 
+[90m209 | [97m GPU_palt PALETTE_WRITE, 33 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:208:2:
+[0m[90m206 | [97m GPU_rgba 0x1F7747FF 
+[90m207 | [97m GPU_palt PALETTE_WRITE, 32 
+[90m208 | [97m GPU_rgba 0x000017FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m209 | [97m GPU_palt PALETTE_WRITE, 33 
+[90m210 | [97m GPU_rgba 0x074F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:209:2:
+[0m[90m207 | [97m GPU_palt PALETTE_WRITE, 32 
+[90m208 | [97m GPU_rgba 0x000017FF 
+[90m209 | [97m GPU_palt PALETTE_WRITE, 33 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m210 | [97m GPU_rgba 0x074F37FF 
+[90m211 | [97m GPU_palt PALETTE_WRITE, 34 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:210:2:
+[0m[90m208 | [97m GPU_rgba 0x000017FF 
+[90m209 | [97m GPU_palt PALETTE_WRITE, 33 
+[90m210 | [97m GPU_rgba 0x074F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m211 | [97m GPU_palt PALETTE_WRITE, 34 
+[90m212 | [97m GPU_rgba 0xD7C77FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:211:2:
+[0m[90m209 | [97m GPU_palt PALETTE_WRITE, 33 
+[90m210 | [97m GPU_rgba 0x074F37FF 
+[90m211 | [97m GPU_palt PALETTE_WRITE, 34 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m212 | [97m GPU_rgba 0xD7C77FFF 
+[90m213 | [97m GPU_palt PALETTE_WRITE, 35 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:212:2:
+[0m[90m210 | [97m GPU_rgba 0x074F37FF 
+[90m211 | [97m GPU_palt PALETTE_WRITE, 34 
+[90m212 | [97m GPU_rgba 0xD7C77FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m213 | [97m GPU_palt PALETTE_WRITE, 35 
+[90m214 | [97m GPU_rgba 0xBFAF6FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:213:2:
+[0m[90m211 | [97m GPU_palt PALETTE_WRITE, 34 
+[90m212 | [97m GPU_rgba 0xD7C77FFF 
+[90m213 | [97m GPU_palt PALETTE_WRITE, 35 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m214 | [97m GPU_rgba 0xBFAF6FFF 
+[90m215 | [97m GPU_palt PALETTE_WRITE, 36 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:214:2:
+[0m[90m212 | [97m GPU_rgba 0xD7C77FFF 
+[90m213 | [97m GPU_palt PALETTE_WRITE, 35 
+[90m214 | [97m GPU_rgba 0xBFAF6FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m215 | [97m GPU_palt PALETTE_WRITE, 36 
+[90m216 | [97m GPU_rgba 0x877F57FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:215:2:
+[0m[90m213 | [97m GPU_palt PALETTE_WRITE, 35 
+[90m214 | [97m GPU_rgba 0xBFAF6FFF 
+[90m215 | [97m GPU_palt PALETTE_WRITE, 36 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m216 | [97m GPU_rgba 0x877F57FF 
+[90m217 | [97m GPU_palt PALETTE_WRITE, 37 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:216:2:
+[0m[90m214 | [97m GPU_rgba 0xBFAF6FFF 
+[90m215 | [97m GPU_palt PALETTE_WRITE, 36 
+[90m216 | [97m GPU_rgba 0x877F57FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m217 | [97m GPU_palt PALETTE_WRITE, 37 
+[90m218 | [97m GPU_rgba 0x6F6747FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:217:2:
+[0m[90m215 | [97m GPU_palt PALETTE_WRITE, 36 
+[90m216 | [97m GPU_rgba 0x877F57FF 
+[90m217 | [97m GPU_palt PALETTE_WRITE, 37 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m218 | [97m GPU_rgba 0x6F6747FF 
+[90m219 | [97m GPU_palt PALETTE_WRITE, 38 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:218:2:
+[0m[90m216 | [97m GPU_rgba 0x877F57FF 
+[90m217 | [97m GPU_palt PALETTE_WRITE, 37 
+[90m218 | [97m GPU_rgba 0x6F6747FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m219 | [97m GPU_palt PALETTE_WRITE, 38 
+[90m220 | [97m GPU_rgba 0x372F27FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:219:2:
+[0m[90m217 | [97m GPU_palt PALETTE_WRITE, 37 
+[90m218 | [97m GPU_rgba 0x6F6747FF 
+[90m219 | [97m GPU_palt PALETTE_WRITE, 38 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m220 | [97m GPU_rgba 0x372F27FF 
+[90m221 | [97m GPU_palt PALETTE_WRITE, 39 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:220:2:
+[0m[90m218 | [97m GPU_rgba 0x6F6747FF 
+[90m219 | [97m GPU_palt PALETTE_WRITE, 38 
+[90m220 | [97m GPU_rgba 0x372F27FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m221 | [97m GPU_palt PALETTE_WRITE, 39 
+[90m222 | [97m GPU_rgba 0x171717FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:221:2:
+[0m[90m219 | [97m GPU_palt PALETTE_WRITE, 38 
+[90m220 | [97m GPU_rgba 0x372F27FF 
+[90m221 | [97m GPU_palt PALETTE_WRITE, 39 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m222 | [97m GPU_rgba 0x171717FF 
+[90m223 | [97m GPU_palt PALETTE_WRITE, 40 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:222:2:
+[0m[90m220 | [97m GPU_rgba 0x372F27FF 
+[90m221 | [97m GPU_palt PALETTE_WRITE, 39 
+[90m222 | [97m GPU_rgba 0x171717FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m223 | [97m GPU_palt PALETTE_WRITE, 40 
+[90m224 | [97m GPU_rgba 0x9F9767FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:223:2:
+[0m[90m221 | [97m GPU_palt PALETTE_WRITE, 39 
+[90m222 | [97m GPU_rgba 0x171717FF 
+[90m223 | [97m GPU_palt PALETTE_WRITE, 40 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m224 | [97m GPU_rgba 0x9F9767FF 
+[90m225 | [97m GPU_palt PALETTE_WRITE, 41 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:224:2:
+[0m[90m222 | [97m GPU_rgba 0x171717FF 
+[90m223 | [97m GPU_palt PALETTE_WRITE, 40 
+[90m224 | [97m GPU_rgba 0x9F9767FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m225 | [97m GPU_palt PALETTE_WRITE, 41 
+[90m226 | [97m GPU_rgba 0x4F4737FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:225:2:
+[0m[90m223 | [97m GPU_palt PALETTE_WRITE, 40 
+[90m224 | [97m GPU_rgba 0x9F9767FF 
+[90m225 | [97m GPU_palt PALETTE_WRITE, 41 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m226 | [97m GPU_rgba 0x4F4737FF 
+[90m227 | [97m GPU_palt PALETTE_WRITE, 42 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:226:2:
+[0m[90m224 | [97m GPU_rgba 0x9F9767FF 
+[90m225 | [97m GPU_palt PALETTE_WRITE, 41 
+[90m226 | [97m GPU_rgba 0x4F4737FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m227 | [97m GPU_palt PALETTE_WRITE, 42 
+[90m228 | [97m GPU_rgba 0xB7BFBFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:227:2:
+[0m[90m225 | [97m GPU_palt PALETTE_WRITE, 41 
+[90m226 | [97m GPU_rgba 0x4F4737FF 
+[90m227 | [97m GPU_palt PALETTE_WRITE, 42 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m228 | [97m GPU_rgba 0xB7BFBFFF 
+[90m229 | [97m GPU_palt PALETTE_WRITE, 43 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:228:2:
+[0m[90m226 | [97m GPU_rgba 0x4F4737FF 
+[90m227 | [97m GPU_palt PALETTE_WRITE, 42 
+[90m228 | [97m GPU_rgba 0xB7BFBFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m229 | [97m GPU_palt PALETTE_WRITE, 43 
+[90m230 | [97m GPU_rgba 0x778F97FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:229:2:
+[0m[90m227 | [97m GPU_palt PALETTE_WRITE, 42 
+[90m228 | [97m GPU_rgba 0xB7BFBFFF 
+[90m229 | [97m GPU_palt PALETTE_WRITE, 43 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m230 | [97m GPU_rgba 0x778F97FF 
+[90m231 | [97m GPU_palt PALETTE_WRITE, 44 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:230:2:
+[0m[90m228 | [97m GPU_rgba 0xB7BFBFFF 
+[90m229 | [97m GPU_palt PALETTE_WRITE, 43 
+[90m230 | [97m GPU_rgba 0x778F97FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m231 | [97m GPU_palt PALETTE_WRITE, 44 
+[90m232 | [97m GPU_rgba 0x3F576FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:231:2:
+[0m[90m229 | [97m GPU_palt PALETTE_WRITE, 43 
+[90m230 | [97m GPU_rgba 0x778F97FF 
+[90m231 | [97m GPU_palt PALETTE_WRITE, 44 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m232 | [97m GPU_rgba 0x3F576FFF 
+[90m233 | [97m GPU_palt PALETTE_WRITE, 45 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:232:2:
+[0m[90m230 | [97m GPU_rgba 0x778F97FF 
+[90m231 | [97m GPU_palt PALETTE_WRITE, 44 
+[90m232 | [97m GPU_rgba 0x3F576FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m233 | [97m GPU_palt PALETTE_WRITE, 45 
+[90m234 | [97m GPU_rgba 0x001F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:233:2:
+[0m[90m231 | [97m GPU_palt PALETTE_WRITE, 44 
+[90m232 | [97m GPU_rgba 0x3F576FFF 
+[90m233 | [97m GPU_palt PALETTE_WRITE, 45 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m234 | [97m GPU_rgba 0x001F3FFF 
+[90m235 | [97m GPU_palt PALETTE_WRITE, 46 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:234:2:
+[0m[90m232 | [97m GPU_rgba 0x3F576FFF 
+[90m233 | [97m GPU_palt PALETTE_WRITE, 45 
+[90m234 | [97m GPU_rgba 0x001F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m235 | [97m GPU_palt PALETTE_WRITE, 46 
+[90m236 | [97m GPU_rgba 0x7F0000FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:235:2:
+[0m[90m233 | [97m GPU_palt PALETTE_WRITE, 45 
+[90m234 | [97m GPU_rgba 0x001F3FFF 
+[90m235 | [97m GPU_palt PALETTE_WRITE, 46 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m236 | [97m GPU_rgba 0x7F0000FF 
+[90m237 | [97m GPU_palt PALETTE_WRITE, 47 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:236:2:
+[0m[90m234 | [97m GPU_rgba 0x001F3FFF 
+[90m235 | [97m GPU_palt PALETTE_WRITE, 46 
+[90m236 | [97m GPU_rgba 0x7F0000FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m237 | [97m GPU_palt PALETTE_WRITE, 47 
+[90m238 | [97m GPU_rgba 0x8F9787FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:237:2:
+[0m[90m235 | [97m GPU_palt PALETTE_WRITE, 46 
+[90m236 | [97m GPU_rgba 0x7F0000FF 
+[90m237 | [97m GPU_palt PALETTE_WRITE, 47 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m238 | [97m GPU_rgba 0x8F9787FF 
+[90m239 | [97m GPU_palt PALETTE_WRITE, 48 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:238:2:
+[0m[90m236 | [97m GPU_rgba 0x7F0000FF 
+[90m237 | [97m GPU_palt PALETTE_WRITE, 47 
+[90m238 | [97m GPU_rgba 0x8F9787FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m239 | [97m GPU_palt PALETTE_WRITE, 48 
+[90m240 | [97m GPU_rgba 0xBFC7BFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:239:2:
+[0m[90m237 | [97m GPU_palt PALETTE_WRITE, 47 
+[90m238 | [97m GPU_rgba 0x8F9787FF 
+[90m239 | [97m GPU_palt PALETTE_WRITE, 48 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m240 | [97m GPU_rgba 0xBFC7BFFF 
+[90m241 | [97m GPU_palt PALETTE_WRITE, 49 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:240:2:
+[0m[90m238 | [97m GPU_rgba 0x8F9787FF 
+[90m239 | [97m GPU_palt PALETTE_WRITE, 48 
+[90m240 | [97m GPU_rgba 0xBFC7BFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m241 | [97m GPU_palt PALETTE_WRITE, 49 
+[90m242 | [97m GPU_rgba 0xDFE7DFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:241:2:
+[0m[90m239 | [97m GPU_palt PALETTE_WRITE, 48 
+[90m240 | [97m GPU_rgba 0xBFC7BFFF 
+[90m241 | [97m GPU_palt PALETTE_WRITE, 49 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m242 | [97m GPU_rgba 0xDFE7DFFF 
+[90m243 | [97m GPU_palt PALETTE_WRITE, 50 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:242:2:
+[0m[90m240 | [97m GPU_rgba 0xBFC7BFFF 
+[90m241 | [97m GPU_palt PALETTE_WRITE, 49 
+[90m242 | [97m GPU_rgba 0xDFE7DFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m243 | [97m GPU_palt PALETTE_WRITE, 50 
+[90m244 | [97m GPU_rgba 0xA7AFA7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:243:2:
+[0m[90m241 | [97m GPU_palt PALETTE_WRITE, 49 
+[90m242 | [97m GPU_rgba 0xDFE7DFFF 
+[90m243 | [97m GPU_palt PALETTE_WRITE, 50 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m244 | [97m GPU_rgba 0xA7AFA7FF 
+[90m245 | [97m GPU_palt PALETTE_WRITE, 51 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:244:2:
+[0m[90m242 | [97m GPU_rgba 0xDFE7DFFF 
+[90m243 | [97m GPU_palt PALETTE_WRITE, 50 
+[90m244 | [97m GPU_rgba 0xA7AFA7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m245 | [97m GPU_palt PALETTE_WRITE, 51 
+[90m246 | [97m GPU_rgba 0xAFA77FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:245:2:
+[0m[90m243 | [97m GPU_palt PALETTE_WRITE, 50 
+[90m244 | [97m GPU_rgba 0xA7AFA7FF 
+[90m245 | [97m GPU_palt PALETTE_WRITE, 51 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m246 | [97m GPU_rgba 0xAFA77FFF 
+[90m247 | [97m GPU_palt PALETTE_WRITE, 52 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:246:2:
+[0m[90m244 | [97m GPU_rgba 0xA7AFA7FF 
+[90m245 | [97m GPU_palt PALETTE_WRITE, 51 
+[90m246 | [97m GPU_rgba 0xAFA77FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m247 | [97m GPU_palt PALETTE_WRITE, 52 
+[90m248 | [97m GPU_rgba 0x4F4F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:247:2:
+[0m[90m245 | [97m GPU_palt PALETTE_WRITE, 51 
+[90m246 | [97m GPU_rgba 0xAFA77FFF 
+[90m247 | [97m GPU_palt PALETTE_WRITE, 52 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m248 | [97m GPU_rgba 0x4F4F37FF 
+[90m249 | [97m GPU_palt PALETTE_WRITE, 53 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:248:2:
+[0m[90m246 | [97m GPU_rgba 0xAFA77FFF 
+[90m247 | [97m GPU_palt PALETTE_WRITE, 52 
+[90m248 | [97m GPU_rgba 0x4F4F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m249 | [97m GPU_palt PALETTE_WRITE, 53 
+[90m250 | [97m GPU_rgba 0x776F57FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:249:2:
+[0m[90m247 | [97m GPU_palt PALETTE_WRITE, 52 
+[90m248 | [97m GPU_rgba 0x4F4F37FF 
+[90m249 | [97m GPU_palt PALETTE_WRITE, 53 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m250 | [97m GPU_rgba 0x776F57FF 
+[90m251 | [97m GPU_palt PALETTE_WRITE, 54 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:250:2:
+[0m[90m248 | [97m GPU_rgba 0x4F4F37FF 
+[90m249 | [97m GPU_palt PALETTE_WRITE, 53 
+[90m250 | [97m GPU_rgba 0x776F57FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m251 | [97m GPU_palt PALETTE_WRITE, 54 
+[90m252 | [97m GPU_rgba 0xDFD7B7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:251:2:
+[0m[90m249 | [97m GPU_palt PALETTE_WRITE, 53 
+[90m250 | [97m GPU_rgba 0x776F57FF 
+[90m251 | [97m GPU_palt PALETTE_WRITE, 54 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m252 | [97m GPU_rgba 0xDFD7B7FF 
+[90m253 | [97m GPU_palt PALETTE_WRITE, 55 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:252:2:
+[0m[90m250 | [97m GPU_rgba 0x776F57FF 
+[90m251 | [97m GPU_palt PALETTE_WRITE, 54 
+[90m252 | [97m GPU_rgba 0xDFD7B7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m253 | [97m GPU_palt PALETTE_WRITE, 55 
+[90m254 | [97m GPU_rgba 0xF7F7DFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:253:2:
+[0m[90m251 | [97m GPU_palt PALETTE_WRITE, 54 
+[90m252 | [97m GPU_rgba 0xDFD7B7FF 
+[90m253 | [97m GPU_palt PALETTE_WRITE, 55 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m254 | [97m GPU_rgba 0xF7F7DFFF 
+[90m255 | [97m GPU_palt PALETTE_WRITE, 56 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:254:2:
+[0m[90m252 | [97m GPU_rgba 0xDFD7B7FF 
+[90m253 | [97m GPU_palt PALETTE_WRITE, 55 
+[90m254 | [97m GPU_rgba 0xF7F7DFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m255 | [97m GPU_palt PALETTE_WRITE, 56 
+[90m256 | [97m GPU_rgba 0x6F7767FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:255:2:
+[0m[90m253 | [97m GPU_palt PALETTE_WRITE, 55 
+[90m254 | [97m GPU_rgba 0xF7F7DFFF 
+[90m255 | [97m GPU_palt PALETTE_WRITE, 56 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m256 | [97m GPU_rgba 0x6F7767FF 
+[90m257 | [97m GPU_palt PALETTE_WRITE, 57 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:256:2:
+[0m[90m254 | [97m GPU_rgba 0xF7F7DFFF 
+[90m255 | [97m GPU_palt PALETTE_WRITE, 56 
+[90m256 | [97m GPU_rgba 0x6F7767FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m257 | [97m GPU_palt PALETTE_WRITE, 57 
+[90m258 | [97m GPU_rgba 0x272727FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:257:2:
+[0m[90m255 | [97m GPU_palt PALETTE_WRITE, 56 
+[90m256 | [97m GPU_rgba 0x6F7767FF 
+[90m257 | [97m GPU_palt PALETTE_WRITE, 57 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m258 | [97m GPU_rgba 0x272727FF 
+[90m259 | [97m GPU_palt PALETTE_WRITE, 58 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:258:2:
+[0m[90m256 | [97m GPU_rgba 0x6F7767FF 
+[90m257 | [97m GPU_palt PALETTE_WRITE, 57 
+[90m258 | [97m GPU_rgba 0x272727FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m259 | [97m GPU_palt PALETTE_WRITE, 58 
+[90m260 | [97m GPU_rgba 0xFF3707FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:259:2:
+[0m[90m257 | [97m GPU_palt PALETTE_WRITE, 57 
+[90m258 | [97m GPU_rgba 0x272727FF 
+[90m259 | [97m GPU_palt PALETTE_WRITE, 58 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m260 | [97m GPU_rgba 0xFF3707FF 
+[90m261 | [97m GPU_palt PALETTE_WRITE, 59 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:260:2:
+[0m[90m258 | [97m GPU_rgba 0x272727FF 
+[90m259 | [97m GPU_palt PALETTE_WRITE, 58 
+[90m260 | [97m GPU_rgba 0xFF3707FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m261 | [97m GPU_palt PALETTE_WRITE, 59 
+[90m262 | [97m GPU_rgba 0x97377FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:261:2:
+[0m[90m259 | [97m GPU_palt PALETTE_WRITE, 58 
+[90m260 | [97m GPU_rgba 0xFF3707FF 
+[90m261 | [97m GPU_palt PALETTE_WRITE, 59 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m262 | [97m GPU_rgba 0x97377FFF 
+[90m263 | [97m GPU_palt PALETTE_WRITE, 60 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:262:2:
+[0m[90m260 | [97m GPU_rgba 0xFF3707FF 
+[90m261 | [97m GPU_palt PALETTE_WRITE, 59 
+[90m262 | [97m GPU_rgba 0x97377FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m263 | [97m GPU_palt PALETTE_WRITE, 60 
+[90m264 | [97m GPU_rgba 0xD7C787FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:263:2:
+[0m[90m261 | [97m GPU_palt PALETTE_WRITE, 59 
+[90m262 | [97m GPU_rgba 0x97377FFF 
+[90m263 | [97m GPU_palt PALETTE_WRITE, 60 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m264 | [97m GPU_rgba 0xD7C787FF 
+[90m265 | [97m GPU_palt PALETTE_WRITE, 61 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:264:2:
+[0m[90m262 | [97m GPU_rgba 0x97377FFF 
+[90m263 | [97m GPU_palt PALETTE_WRITE, 60 
+[90m264 | [97m GPU_rgba 0xD7C787FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m265 | [97m GPU_palt PALETTE_WRITE, 61 
+[90m266 | [97m GPU_rgba 0xAF9767FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:265:2:
+[0m[90m263 | [97m GPU_palt PALETTE_WRITE, 60 
+[90m264 | [97m GPU_rgba 0xD7C787FF 
+[90m265 | [97m GPU_palt PALETTE_WRITE, 61 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m266 | [97m GPU_rgba 0xAF9767FF 
+[90m267 | [97m GPU_palt PALETTE_WRITE, 62 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:266:2:
+[0m[90m264 | [97m GPU_rgba 0xD7C787FF 
+[90m265 | [97m GPU_palt PALETTE_WRITE, 61 
+[90m266 | [97m GPU_rgba 0xAF9767FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m267 | [97m GPU_palt PALETTE_WRITE, 62 
+[90m268 | [97m GPU_rgba 0x7F6F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:267:2:
+[0m[90m265 | [97m GPU_palt PALETTE_WRITE, 61 
+[90m266 | [97m GPU_rgba 0xAF9767FF 
+[90m267 | [97m GPU_palt PALETTE_WRITE, 62 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m268 | [97m GPU_rgba 0x7F6F3FFF 
+[90m269 | [97m GPU_palt PALETTE_WRITE, 63 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:268:2:
+[0m[90m266 | [97m GPU_rgba 0xAF9767FF 
+[90m267 | [97m GPU_palt PALETTE_WRITE, 62 
+[90m268 | [97m GPU_rgba 0x7F6F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m269 | [97m GPU_palt PALETTE_WRITE, 63 
+[90m270 | [97m GPU_rgba 0x271F0FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:269:2:
+[0m[90m267 | [97m GPU_palt PALETTE_WRITE, 62 
+[90m268 | [97m GPU_rgba 0x7F6F3FFF 
+[90m269 | [97m GPU_palt PALETTE_WRITE, 63 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m270 | [97m GPU_rgba 0x271F0FFF 
+[90m271 | [97m GPU_palt PALETTE_WRITE, 64 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:270:2:
+[0m[90m268 | [97m GPU_rgba 0x7F6F3FFF 
+[90m269 | [97m GPU_palt PALETTE_WRITE, 63 
+[90m270 | [97m GPU_rgba 0x271F0FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m271 | [97m GPU_palt PALETTE_WRITE, 64 
+[90m272 | [97m GPU_rgba 0x573F1FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:271:2:
+[0m[90m269 | [97m GPU_palt PALETTE_WRITE, 63 
+[90m270 | [97m GPU_rgba 0x271F0FFF 
+[90m271 | [97m GPU_palt PALETTE_WRITE, 64 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m272 | [97m GPU_rgba 0x573F1FFF 
+[90m273 | [97m GPU_palt PALETTE_WRITE, 65 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:272:2:
+[0m[90m270 | [97m GPU_rgba 0x271F0FFF 
+[90m271 | [97m GPU_palt PALETTE_WRITE, 64 
+[90m272 | [97m GPU_rgba 0x573F1FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m273 | [97m GPU_palt PALETTE_WRITE, 65 
+[90m274 | [97m GPU_rgba 0x77877FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:273:2:
+[0m[90m271 | [97m GPU_palt PALETTE_WRITE, 64 
+[90m272 | [97m GPU_rgba 0x573F1FFF 
+[90m273 | [97m GPU_palt PALETTE_WRITE, 65 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m274 | [97m GPU_rgba 0x77877FFF 
+[90m275 | [97m GPU_palt PALETTE_WRITE, 66 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:274:2:
+[0m[90m272 | [97m GPU_rgba 0x573F1FFF 
+[90m273 | [97m GPU_palt PALETTE_WRITE, 65 
+[90m274 | [97m GPU_rgba 0x77877FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m275 | [97m GPU_palt PALETTE_WRITE, 66 
+[90m276 | [97m GPU_rgba 0xB7C7BFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:275:2:
+[0m[90m273 | [97m GPU_palt PALETTE_WRITE, 65 
+[90m274 | [97m GPU_rgba 0x77877FFF 
+[90m275 | [97m GPU_palt PALETTE_WRITE, 66 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m276 | [97m GPU_rgba 0xB7C7BFFF 
+[90m277 | [97m GPU_palt PALETTE_WRITE, 67 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:276:2:
+[0m[90m274 | [97m GPU_rgba 0x77877FFF 
+[90m275 | [97m GPU_palt PALETTE_WRITE, 66 
+[90m276 | [97m GPU_rgba 0xB7C7BFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m277 | [97m GPU_palt PALETTE_WRITE, 67 
+[90m278 | [97m GPU_rgba 0xD7E7DFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:277:2:
+[0m[90m275 | [97m GPU_palt PALETTE_WRITE, 66 
+[90m276 | [97m GPU_rgba 0xB7C7BFFF 
+[90m277 | [97m GPU_palt PALETTE_WRITE, 67 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m278 | [97m GPU_rgba 0xD7E7DFFF 
+[90m279 | [97m GPU_palt PALETTE_WRITE, 68 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:278:2:
+[0m[90m276 | [97m GPU_rgba 0xB7C7BFFF 
+[90m277 | [97m GPU_palt PALETTE_WRITE, 67 
+[90m278 | [97m GPU_rgba 0xD7E7DFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m279 | [97m GPU_palt PALETTE_WRITE, 68 
+[90m280 | [97m GPU_rgba 0x97A79FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:279:2:
+[0m[90m277 | [97m GPU_palt PALETTE_WRITE, 67 
+[90m278 | [97m GPU_rgba 0xD7E7DFFF 
+[90m279 | [97m GPU_palt PALETTE_WRITE, 68 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m280 | [97m GPU_rgba 0x97A79FFF 
+[90m281 | [97m GPU_palt PALETTE_WRITE, 69 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:280:2:
+[0m[90m278 | [97m GPU_rgba 0xD7E7DFFF 
+[90m279 | [97m GPU_palt PALETTE_WRITE, 68 
+[90m280 | [97m GPU_rgba 0x97A79FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m281 | [97m GPU_palt PALETTE_WRITE, 69 
+[90m282 | [97m GPU_rgba 0x576F5FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:281:2:
+[0m[90m279 | [97m GPU_palt PALETTE_WRITE, 68 
+[90m280 | [97m GPU_rgba 0x97A79FFF 
+[90m281 | [97m GPU_palt PALETTE_WRITE, 69 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m282 | [97m GPU_rgba 0x576F5FFF 
+[90m283 | [97m GPU_palt PALETTE_WRITE, 70 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:282:2:
+[0m[90m280 | [97m GPU_rgba 0x97A79FFF 
+[90m281 | [97m GPU_palt PALETTE_WRITE, 69 
+[90m282 | [97m GPU_rgba 0x576F5FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m283 | [97m GPU_palt PALETTE_WRITE, 70 
+[90m284 | [97m GPU_rgba 0x2F4F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:283:2:
+[0m[90m281 | [97m GPU_palt PALETTE_WRITE, 69 
+[90m282 | [97m GPU_rgba 0x576F5FFF 
+[90m283 | [97m GPU_palt PALETTE_WRITE, 70 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m284 | [97m GPU_rgba 0x2F4F3FFF 
+[90m285 | [97m GPU_palt PALETTE_WRITE, 71 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:284:2:
+[0m[90m282 | [97m GPU_rgba 0x576F5FFF 
+[90m283 | [97m GPU_palt PALETTE_WRITE, 70 
+[90m284 | [97m GPU_rgba 0x2F4F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m285 | [97m GPU_palt PALETTE_WRITE, 71 
+[90m286 | [97m GPU_rgba 0xDFDFDFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:285:2:
+[0m[90m283 | [97m GPU_palt PALETTE_WRITE, 70 
+[90m284 | [97m GPU_rgba 0x2F4F3FFF 
+[90m285 | [97m GPU_palt PALETTE_WRITE, 71 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m286 | [97m GPU_rgba 0xDFDFDFFF 
+[90m287 | [97m GPU_palt PALETTE_WRITE, 72 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:286:2:
+[0m[90m284 | [97m GPU_rgba 0x2F4F3FFF 
+[90m285 | [97m GPU_palt PALETTE_WRITE, 71 
+[90m286 | [97m GPU_rgba 0xDFDFDFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m287 | [97m GPU_palt PALETTE_WRITE, 72 
+[90m288 | [97m GPU_rgba 0xA73700FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:287:2:
+[0m[90m285 | [97m GPU_palt PALETTE_WRITE, 71 
+[90m286 | [97m GPU_rgba 0xDFDFDFFF 
+[90m287 | [97m GPU_palt PALETTE_WRITE, 72 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m288 | [97m GPU_rgba 0xA73700FF 
+[90m289 | [97m GPU_palt PALETTE_WRITE, 73 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:288:2:
+[0m[90m286 | [97m GPU_rgba 0xDFDFDFFF 
+[90m287 | [97m GPU_palt PALETTE_WRITE, 72 
+[90m288 | [97m GPU_rgba 0xA73700FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m289 | [97m GPU_palt PALETTE_WRITE, 73 
+[90m290 | [97m GPU_rgba 0x676F67FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:289:2:
+[0m[90m287 | [97m GPU_palt PALETTE_WRITE, 72 
+[90m288 | [97m GPU_rgba 0xA73700FF 
+[90m289 | [97m GPU_palt PALETTE_WRITE, 73 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m290 | [97m GPU_rgba 0x676F67FF 
+[90m291 | [97m GPU_palt PALETTE_WRITE, 74 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:290:2:
+[0m[90m288 | [97m GPU_rgba 0xA73700FF 
+[90m289 | [97m GPU_palt PALETTE_WRITE, 73 
+[90m290 | [97m GPU_rgba 0x676F67FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m291 | [97m GPU_palt PALETTE_WRITE, 74 
+[90m292 | [97m GPU_rgba 0x87877FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:291:2:
+[0m[90m289 | [97m GPU_palt PALETTE_WRITE, 73 
+[90m290 | [97m GPU_rgba 0x676F67FF 
+[90m291 | [97m GPU_palt PALETTE_WRITE, 74 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m292 | [97m GPU_rgba 0x87877FFF 
+[90m293 | [97m GPU_palt PALETTE_WRITE, 75 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:292:2:
+[0m[90m290 | [97m GPU_rgba 0x676F67FF 
+[90m291 | [97m GPU_palt PALETTE_WRITE, 74 
+[90m292 | [97m GPU_rgba 0x87877FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m293 | [97m GPU_palt PALETTE_WRITE, 75 
+[90m294 | [97m GPU_rgba 0x4F4F57FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:293:2:
+[0m[90m291 | [97m GPU_palt PALETTE_WRITE, 74 
+[90m292 | [97m GPU_rgba 0x87877FFF 
+[90m293 | [97m GPU_palt PALETTE_WRITE, 75 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m294 | [97m GPU_rgba 0x4F4F57FF 
+[90m295 | [97m GPU_palt PALETTE_WRITE, 76 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:294:2:
+[0m[90m292 | [97m GPU_rgba 0x87877FFF 
+[90m293 | [97m GPU_palt PALETTE_WRITE, 75 
+[90m294 | [97m GPU_rgba 0x4F4F57FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m295 | [97m GPU_palt PALETTE_WRITE, 76 
+[90m296 | [97m GPU_rgba 0x2F373FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:295:2:
+[0m[90m293 | [97m GPU_palt PALETTE_WRITE, 75 
+[90m294 | [97m GPU_rgba 0x4F4F57FF 
+[90m295 | [97m GPU_palt PALETTE_WRITE, 76 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m296 | [97m GPU_rgba 0x2F373FFF 
+[90m297 | [97m GPU_palt PALETTE_WRITE, 77 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:296:2:
+[0m[90m294 | [97m GPU_rgba 0x4F4F57FF 
+[90m295 | [97m GPU_palt PALETTE_WRITE, 76 
+[90m296 | [97m GPU_rgba 0x2F373FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m297 | [97m GPU_palt PALETTE_WRITE, 77 
+[90m298 | [97m GPU_rgba 0x17172FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:297:2:
+[0m[90m295 | [97m GPU_palt PALETTE_WRITE, 76 
+[90m296 | [97m GPU_rgba 0x2F373FFF 
+[90m297 | [97m GPU_palt PALETTE_WRITE, 77 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m298 | [97m GPU_rgba 0x17172FFF 
+[90m299 | [97m GPU_palt PALETTE_WRITE, 78 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:298:2:
+[0m[90m296 | [97m GPU_rgba 0x2F373FFF 
+[90m297 | [97m GPU_palt PALETTE_WRITE, 77 
+[90m298 | [97m GPU_rgba 0x17172FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m299 | [97m GPU_palt PALETTE_WRITE, 78 
+[90m300 | [97m GPU_rgba 0xD7DFBFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:299:2:
+[0m[90m297 | [97m GPU_palt PALETTE_WRITE, 77 
+[90m298 | [97m GPU_rgba 0x17172FFF 
+[90m299 | [97m GPU_palt PALETTE_WRITE, 78 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m300 | [97m GPU_rgba 0xD7DFBFFF 
+[90m301 | [97m GPU_palt PALETTE_WRITE, 79 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:300:2:
+[0m[90m298 | [97m GPU_rgba 0x17172FFF 
+[90m299 | [97m GPU_palt PALETTE_WRITE, 78 
+[90m300 | [97m GPU_rgba 0xD7DFBFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m301 | [97m GPU_palt PALETTE_WRITE, 79 
+[90m302 | [97m GPU_rgba 0xB7BFA7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:301:2:
+[0m[90m299 | [97m GPU_palt PALETTE_WRITE, 78 
+[90m300 | [97m GPU_rgba 0xD7DFBFFF 
+[90m301 | [97m GPU_palt PALETTE_WRITE, 79 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m302 | [97m GPU_rgba 0xB7BFA7FF 
+[90m303 | [97m GPU_palt PALETTE_WRITE, 80 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:302:2:
+[0m[90m300 | [97m GPU_rgba 0xD7DFBFFF 
+[90m301 | [97m GPU_palt PALETTE_WRITE, 79 
+[90m302 | [97m GPU_rgba 0xB7BFA7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m303 | [97m GPU_palt PALETTE_WRITE, 80 
+[90m304 | [97m GPU_rgba 0x9FA797FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:303:2:
+[0m[90m301 | [97m GPU_palt PALETTE_WRITE, 79 
+[90m302 | [97m GPU_rgba 0xB7BFA7FF 
+[90m303 | [97m GPU_palt PALETTE_WRITE, 80 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m304 | [97m GPU_rgba 0x9FA797FF 
+[90m305 | [97m GPU_palt PALETTE_WRITE, 81 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:304:2:
+[0m[90m302 | [97m GPU_rgba 0xB7BFA7FF 
+[90m303 | [97m GPU_palt PALETTE_WRITE, 80 
+[90m304 | [97m GPU_rgba 0x9FA797FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m305 | [97m GPU_palt PALETTE_WRITE, 81 
+[90m306 | [97m GPU_rgba 0xEFF7CFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:305:2:
+[0m[90m303 | [97m GPU_palt PALETTE_WRITE, 80 
+[90m304 | [97m GPU_rgba 0x9FA797FF 
+[90m305 | [97m GPU_palt PALETTE_WRITE, 81 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m306 | [97m GPU_rgba 0xEFF7CFFF 
+[90m307 | [97m GPU_palt PALETTE_WRITE, 82 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:306:2:
+[0m[90m304 | [97m GPU_rgba 0x9FA797FF 
+[90m305 | [97m GPU_palt PALETTE_WRITE, 81 
+[90m306 | [97m GPU_rgba 0xEFF7CFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m307 | [97m GPU_palt PALETTE_WRITE, 82 
+[90m308 | [97m GPU_rgba 0x000F00FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:307:2:
+[0m[90m305 | [97m GPU_palt PALETTE_WRITE, 81 
+[90m306 | [97m GPU_rgba 0xEFF7CFFF 
+[90m307 | [97m GPU_palt PALETTE_WRITE, 82 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m308 | [97m GPU_rgba 0x000F00FF 
+[90m309 | [97m GPU_palt PALETTE_WRITE, 83 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:308:2:
+[0m[90m306 | [97m GPU_rgba 0xEFF7CFFF 
+[90m307 | [97m GPU_palt PALETTE_WRITE, 82 
+[90m308 | [97m GPU_rgba 0x000F00FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m309 | [97m GPU_palt PALETTE_WRITE, 83 
+[90m310 | [97m GPU_rgba 0xEFF7FFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:309:2:
+[0m[90m307 | [97m GPU_palt PALETTE_WRITE, 82 
+[90m308 | [97m GPU_rgba 0x000F00FF 
+[90m309 | [97m GPU_palt PALETTE_WRITE, 83 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m310 | [97m GPU_rgba 0xEFF7FFFF 
+[90m311 | [97m GPU_palt PALETTE_WRITE, 84 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:310:2:
+[0m[90m308 | [97m GPU_rgba 0x000F00FF 
+[90m309 | [97m GPU_palt PALETTE_WRITE, 83 
+[90m310 | [97m GPU_rgba 0xEFF7FFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m311 | [97m GPU_palt PALETTE_WRITE, 84 
+[90m312 | [97m GPU_rgba 0x5F6F2FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:311:2:
+[0m[90m309 | [97m GPU_palt PALETTE_WRITE, 83 
+[90m310 | [97m GPU_rgba 0xEFF7FFFF 
+[90m311 | [97m GPU_palt PALETTE_WRITE, 84 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m312 | [97m GPU_rgba 0x5F6F2FFF 
+[90m313 | [97m GPU_palt PALETTE_WRITE, 85 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:312:2:
+[0m[90m310 | [97m GPU_rgba 0xEFF7FFFF 
+[90m311 | [97m GPU_palt PALETTE_WRITE, 84 
+[90m312 | [97m GPU_rgba 0x5F6F2FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m313 | [97m GPU_palt PALETTE_WRITE, 85 
+[90m314 | [97m GPU_rgba 0x97C777FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:313:2:
+[0m[90m311 | [97m GPU_palt PALETTE_WRITE, 84 
+[90m312 | [97m GPU_rgba 0x5F6F2FFF 
+[90m313 | [97m GPU_palt PALETTE_WRITE, 85 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m314 | [97m GPU_rgba 0x97C777FF 
+[90m315 | [97m GPU_palt PALETTE_WRITE, 86 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:314:2:
+[0m[90m312 | [97m GPU_rgba 0x5F6F2FFF 
+[90m313 | [97m GPU_palt PALETTE_WRITE, 85 
+[90m314 | [97m GPU_rgba 0x97C777FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m315 | [97m GPU_palt PALETTE_WRITE, 86 
+[90m316 | [97m GPU_rgba 0x97C7AFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:315:2:
+[0m[90m313 | [97m GPU_palt PALETTE_WRITE, 85 
+[90m314 | [97m GPU_rgba 0x97C777FF 
+[90m315 | [97m GPU_palt PALETTE_WRITE, 86 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m316 | [97m GPU_rgba 0x97C7AFFF 
+[90m317 | [97m GPU_palt PALETTE_WRITE, 87 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:316:2:
+[0m[90m314 | [97m GPU_rgba 0x97C777FF 
+[90m315 | [97m GPU_palt PALETTE_WRITE, 86 
+[90m316 | [97m GPU_rgba 0x97C7AFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m317 | [97m GPU_palt PALETTE_WRITE, 87 
+[90m318 | [97m GPU_rgba 0xBFFFC7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:317:2:
+[0m[90m315 | [97m GPU_palt PALETTE_WRITE, 86 
+[90m316 | [97m GPU_rgba 0x97C7AFFF 
+[90m317 | [97m GPU_palt PALETTE_WRITE, 87 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m318 | [97m GPU_rgba 0xBFFFC7FF 
+[90m319 | [97m GPU_palt PALETTE_WRITE, 88 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:318:2:
+[0m[90m316 | [97m GPU_rgba 0x97C7AFFF 
+[90m317 | [97m GPU_palt PALETTE_WRITE, 87 
+[90m318 | [97m GPU_rgba 0xBFFFC7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m319 | [97m GPU_palt PALETTE_WRITE, 88 
+[90m320 | [97m GPU_rgba 0x678F97FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:319:2:
+[0m[90m317 | [97m GPU_palt PALETTE_WRITE, 87 
+[90m318 | [97m GPU_rgba 0xBFFFC7FF 
+[90m319 | [97m GPU_palt PALETTE_WRITE, 88 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m320 | [97m GPU_rgba 0x678F97FF 
+[90m321 | [97m GPU_palt PALETTE_WRITE, 89 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:320:2:
+[0m[90m318 | [97m GPU_rgba 0xBFFFC7FF 
+[90m319 | [97m GPU_palt PALETTE_WRITE, 88 
+[90m320 | [97m GPU_rgba 0x678F97FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m321 | [97m GPU_palt PALETTE_WRITE, 89 
+[90m322 | [97m GPU_rgba 0x4F6F87FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:321:2:
+[0m[90m319 | [97m GPU_palt PALETTE_WRITE, 88 
+[90m320 | [97m GPU_rgba 0x678F97FF 
+[90m321 | [97m GPU_palt PALETTE_WRITE, 89 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m322 | [97m GPU_rgba 0x4F6F87FF 
+[90m323 | [97m GPU_palt PALETTE_WRITE, 90 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:322:2:
+[0m[90m320 | [97m GPU_rgba 0x678F97FF 
+[90m321 | [97m GPU_palt PALETTE_WRITE, 89 
+[90m322 | [97m GPU_rgba 0x4F6F87FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m323 | [97m GPU_palt PALETTE_WRITE, 90 
+[90m324 | [97m GPU_rgba 0xA7D7AFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:323:2:
+[0m[90m321 | [97m GPU_palt PALETTE_WRITE, 89 
+[90m322 | [97m GPU_rgba 0x4F6F87FF 
+[90m323 | [97m GPU_palt PALETTE_WRITE, 90 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m324 | [97m GPU_rgba 0xA7D7AFFF 
+[90m325 | [97m GPU_palt PALETTE_WRITE, 91 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:324:2:
+[0m[90m322 | [97m GPU_rgba 0x4F6F87FF 
+[90m323 | [97m GPU_palt PALETTE_WRITE, 90 
+[90m324 | [97m GPU_rgba 0xA7D7AFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m325 | [97m GPU_palt PALETTE_WRITE, 91 
+[90m326 | [97m GPU_rgba 0x8FA77FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:325:2:
+[0m[90m323 | [97m GPU_palt PALETTE_WRITE, 90 
+[90m324 | [97m GPU_rgba 0xA7D7AFFF 
+[90m325 | [97m GPU_palt PALETTE_WRITE, 91 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m326 | [97m GPU_rgba 0x8FA77FFF 
+[90m327 | [97m GPU_palt PALETTE_WRITE, 92 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:326:2:
+[0m[90m324 | [97m GPU_rgba 0xA7D7AFFF 
+[90m325 | [97m GPU_palt PALETTE_WRITE, 91 
+[90m326 | [97m GPU_rgba 0x8FA77FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m327 | [97m GPU_palt PALETTE_WRITE, 92 
+[90m328 | [97m GPU_rgba 0x677F5FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:327:2:
+[0m[90m325 | [97m GPU_palt PALETTE_WRITE, 91 
+[90m326 | [97m GPU_rgba 0x8FA77FFF 
+[90m327 | [97m GPU_palt PALETTE_WRITE, 92 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m328 | [97m GPU_rgba 0x677F5FFF 
+[90m329 | [97m GPU_palt PALETTE_WRITE, 93 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:328:2:
+[0m[90m326 | [97m GPU_rgba 0x8FA77FFF 
+[90m327 | [97m GPU_palt PALETTE_WRITE, 92 
+[90m328 | [97m GPU_rgba 0x677F5FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m329 | [97m GPU_palt PALETTE_WRITE, 93 
+[90m330 | [97m GPU_rgba 0x474F47FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:329:2:
+[0m[90m327 | [97m GPU_palt PALETTE_WRITE, 92 
+[90m328 | [97m GPU_rgba 0x677F5FFF 
+[90m329 | [97m GPU_palt PALETTE_WRITE, 93 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m330 | [97m GPU_rgba 0x474F47FF 
+[90m331 | [97m GPU_palt PALETTE_WRITE, 94 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:330:2:
+[0m[90m328 | [97m GPU_rgba 0x677F5FFF 
+[90m329 | [97m GPU_palt PALETTE_WRITE, 93 
+[90m330 | [97m GPU_rgba 0x474F47FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m331 | [97m GPU_palt PALETTE_WRITE, 94 
+[90m332 | [97m GPU_rgba 0x1F2727FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:331:2:
+[0m[90m329 | [97m GPU_palt PALETTE_WRITE, 93 
+[90m330 | [97m GPU_rgba 0x474F47FF 
+[90m331 | [97m GPU_palt PALETTE_WRITE, 94 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m332 | [97m GPU_rgba 0x1F2727FF 
+[90m333 | [97m GPU_palt PALETTE_WRITE, 95 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:332:2:
+[0m[90m330 | [97m GPU_rgba 0x474F47FF 
+[90m331 | [97m GPU_palt PALETTE_WRITE, 94 
+[90m332 | [97m GPU_rgba 0x1F2727FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m333 | [97m GPU_palt PALETTE_WRITE, 95 
+[90m334 | [97m GPU_rgba 0xBF270FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:333:2:
+[0m[90m331 | [97m GPU_palt PALETTE_WRITE, 94 
+[90m332 | [97m GPU_rgba 0x1F2727FF 
+[90m333 | [97m GPU_palt PALETTE_WRITE, 95 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m334 | [97m GPU_rgba 0xBF270FFF 
+[90m335 | [97m GPU_palt PALETTE_WRITE, 96 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:334:2:
+[0m[90m332 | [97m GPU_rgba 0x1F2727FF 
+[90m333 | [97m GPU_palt PALETTE_WRITE, 95 
+[90m334 | [97m GPU_rgba 0xBF270FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m335 | [97m GPU_palt PALETTE_WRITE, 96 
+[90m336 | [97m GPU_rgba 0x470700FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:335:2:
+[0m[90m333 | [97m GPU_palt PALETTE_WRITE, 95 
+[90m334 | [97m GPU_rgba 0xBF270FFF 
+[90m335 | [97m GPU_palt PALETTE_WRITE, 96 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m336 | [97m GPU_rgba 0x470700FF 
+[90m337 | [97m GPU_palt PALETTE_WRITE, 97 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:336:2:
+[0m[90m334 | [97m GPU_rgba 0xBF270FFF 
+[90m335 | [97m GPU_palt PALETTE_WRITE, 96 
+[90m336 | [97m GPU_rgba 0x470700FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m337 | [97m GPU_palt PALETTE_WRITE, 97 
+[90m338 | [97m GPU_rgba 0x971F0FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:337:2:
+[0m[90m335 | [97m GPU_palt PALETTE_WRITE, 96 
+[90m336 | [97m GPU_rgba 0x470700FF 
+[90m337 | [97m GPU_palt PALETTE_WRITE, 97 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m338 | [97m GPU_rgba 0x971F0FFF 
+[90m339 | [97m GPU_palt PALETTE_WRITE, 98 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:338:2:
+[0m[90m336 | [97m GPU_rgba 0x470700FF 
+[90m337 | [97m GPU_palt PALETTE_WRITE, 97 
+[90m338 | [97m GPU_rgba 0x971F0FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m339 | [97m GPU_palt PALETTE_WRITE, 98 
+[90m340 | [97m GPU_rgba 0x001727FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:339:2:
+[0m[90m337 | [97m GPU_palt PALETTE_WRITE, 97 
+[90m338 | [97m GPU_rgba 0x971F0FFF 
+[90m339 | [97m GPU_palt PALETTE_WRITE, 98 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m340 | [97m GPU_rgba 0x001727FF 
+[90m341 | [97m GPU_palt PALETTE_WRITE, 99 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:340:2:
+[0m[90m338 | [97m GPU_rgba 0x971F0FFF 
+[90m339 | [97m GPU_palt PALETTE_WRITE, 98 
+[90m340 | [97m GPU_rgba 0x001727FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m341 | [97m GPU_palt PALETTE_WRITE, 99 
+[90m342 | [97m GPU_rgba 0x002700FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:341:2:
+[0m[90m339 | [97m GPU_palt PALETTE_WRITE, 98 
+[90m340 | [97m GPU_rgba 0x001727FF 
+[90m341 | [97m GPU_palt PALETTE_WRITE, 99 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m342 | [97m GPU_rgba 0x002700FF 
+[90m343 | [97m GPU_palt PALETTE_WRITE, 100 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:342:2:
+[0m[90m340 | [97m GPU_rgba 0x001727FF 
+[90m341 | [97m GPU_palt PALETTE_WRITE, 99 
+[90m342 | [97m GPU_rgba 0x002700FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m343 | [97m GPU_palt PALETTE_WRITE, 100 
+[90m344 | [97m GPU_rgba 0x006F00FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:343:2:
+[0m[90m341 | [97m GPU_palt PALETTE_WRITE, 99 
+[90m342 | [97m GPU_rgba 0x002700FF 
+[90m343 | [97m GPU_palt PALETTE_WRITE, 100 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m344 | [97m GPU_rgba 0x006F00FF 
+[90m345 | [97m GPU_palt PALETTE_WRITE, 101 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:344:2:
+[0m[90m342 | [97m GPU_rgba 0x002700FF 
+[90m343 | [97m GPU_palt PALETTE_WRITE, 100 
+[90m344 | [97m GPU_rgba 0x006F00FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m345 | [97m GPU_palt PALETTE_WRITE, 101 
+[90m346 | [97m GPU_rgba 0xFFBF4FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:345:2:
+[0m[90m343 | [97m GPU_palt PALETTE_WRITE, 100 
+[90m344 | [97m GPU_rgba 0x006F00FF 
+[90m345 | [97m GPU_palt PALETTE_WRITE, 101 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m346 | [97m GPU_rgba 0xFFBF4FFF 
+[90m347 | [97m GPU_palt PALETTE_WRITE, 102 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:346:2:
+[0m[90m344 | [97m GPU_rgba 0x006F00FF 
+[90m345 | [97m GPU_palt PALETTE_WRITE, 101 
+[90m346 | [97m GPU_rgba 0xFFBF4FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m347 | [97m GPU_palt PALETTE_WRITE, 102 
+[90m348 | [97m GPU_rgba 0xE7973FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:347:2:
+[0m[90m345 | [97m GPU_palt PALETTE_WRITE, 101 
+[90m346 | [97m GPU_rgba 0xFFBF4FFF 
+[90m347 | [97m GPU_palt PALETTE_WRITE, 102 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m348 | [97m GPU_rgba 0xE7973FFF 
+[90m349 | [97m GPU_palt PALETTE_WRITE, 103 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:348:2:
+[0m[90m346 | [97m GPU_rgba 0xFFBF4FFF 
+[90m347 | [97m GPU_palt PALETTE_WRITE, 102 
+[90m348 | [97m GPU_rgba 0xE7973FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m349 | [97m GPU_palt PALETTE_WRITE, 103 
+[90m350 | [97m GPU_rgba 0xCF772FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:349:2:
+[0m[90m347 | [97m GPU_palt PALETTE_WRITE, 102 
+[90m348 | [97m GPU_rgba 0xE7973FFF 
+[90m349 | [97m GPU_palt PALETTE_WRITE, 103 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m350 | [97m GPU_rgba 0xCF772FFF 
+[90m351 | [97m GPU_palt PALETTE_WRITE, 104 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:350:2:
+[0m[90m348 | [97m GPU_rgba 0xE7973FFF 
+[90m349 | [97m GPU_palt PALETTE_WRITE, 103 
+[90m350 | [97m GPU_rgba 0xCF772FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m351 | [97m GPU_palt PALETTE_WRITE, 104 
+[90m352 | [97m GPU_rgba 0x7F371FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:351:2:
+[0m[90m349 | [97m GPU_palt PALETTE_WRITE, 103 
+[90m350 | [97m GPU_rgba 0xCF772FFF 
+[90m351 | [97m GPU_palt PALETTE_WRITE, 104 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m352 | [97m GPU_rgba 0x7F371FFF 
+[90m353 | [97m GPU_palt PALETTE_WRITE, 105 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:352:2:
+[0m[90m350 | [97m GPU_rgba 0xCF772FFF 
+[90m351 | [97m GPU_palt PALETTE_WRITE, 104 
+[90m352 | [97m GPU_rgba 0x7F371FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m353 | [97m GPU_palt PALETTE_WRITE, 105 
+[90m354 | [97m GPU_rgba 0x471F17FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:353:2:
+[0m[90m351 | [97m GPU_palt PALETTE_WRITE, 104 
+[90m352 | [97m GPU_rgba 0x7F371FFF 
+[90m353 | [97m GPU_palt PALETTE_WRITE, 105 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m354 | [97m GPU_rgba 0x471F17FF 
+[90m355 | [97m GPU_palt PALETTE_WRITE, 106 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:354:2:
+[0m[90m352 | [97m GPU_rgba 0x7F371FFF 
+[90m353 | [97m GPU_palt PALETTE_WRITE, 105 
+[90m354 | [97m GPU_rgba 0x471F17FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m355 | [97m GPU_palt PALETTE_WRITE, 106 
+[90m356 | [97m GPU_rgba 0xBF4F27FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:355:2:
+[0m[90m353 | [97m GPU_palt PALETTE_WRITE, 105 
+[90m354 | [97m GPU_rgba 0x471F17FF 
+[90m355 | [97m GPU_palt PALETTE_WRITE, 106 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m356 | [97m GPU_rgba 0xBF4F27FF 
+[90m357 | [97m GPU_palt PALETTE_WRITE, 107 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:356:2:
+[0m[90m354 | [97m GPU_rgba 0x471F17FF 
+[90m355 | [97m GPU_palt PALETTE_WRITE, 106 
+[90m356 | [97m GPU_rgba 0xBF4F27FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m357 | [97m GPU_palt PALETTE_WRITE, 107 
+[90m358 | [97m GPU_rgba 0xA78767FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:357:2:
+[0m[90m355 | [97m GPU_palt PALETTE_WRITE, 106 
+[90m356 | [97m GPU_rgba 0xBF4F27FF 
+[90m357 | [97m GPU_palt PALETTE_WRITE, 107 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m358 | [97m GPU_rgba 0xA78767FF 
+[90m359 | [97m GPU_palt PALETTE_WRITE, 108 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:358:2:
+[0m[90m356 | [97m GPU_rgba 0xBF4F27FF 
+[90m357 | [97m GPU_palt PALETTE_WRITE, 107 
+[90m358 | [97m GPU_rgba 0xA78767FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m359 | [97m GPU_palt PALETTE_WRITE, 108 
+[90m360 | [97m GPU_rgba 0xCFA777FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:359:2:
+[0m[90m357 | [97m GPU_palt PALETTE_WRITE, 107 
+[90m358 | [97m GPU_rgba 0xA78767FF 
+[90m359 | [97m GPU_palt PALETTE_WRITE, 108 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m360 | [97m GPU_rgba 0xCFA777FF 
+[90m361 | [97m GPU_palt PALETTE_WRITE, 109 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:360:2:
+[0m[90m358 | [97m GPU_rgba 0xA78767FF 
+[90m359 | [97m GPU_palt PALETTE_WRITE, 108 
+[90m360 | [97m GPU_rgba 0xCFA777FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m361 | [97m GPU_palt PALETTE_WRITE, 109 
+[90m362 | [97m GPU_rgba 0x4F373FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:361:2:
+[0m[90m359 | [97m GPU_palt PALETTE_WRITE, 108 
+[90m360 | [97m GPU_rgba 0xCFA777FF 
+[90m361 | [97m GPU_palt PALETTE_WRITE, 109 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m362 | [97m GPU_rgba 0x4F373FFF 
+[90m363 | [97m GPU_palt PALETTE_WRITE, 110 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:362:2:
+[0m[90m360 | [97m GPU_rgba 0xCFA777FF 
+[90m361 | [97m GPU_palt PALETTE_WRITE, 109 
+[90m362 | [97m GPU_rgba 0x4F373FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m363 | [97m GPU_palt PALETTE_WRITE, 110 
+[90m364 | [97m GPU_rgba 0x77674FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:363:2:
+[0m[90m361 | [97m GPU_palt PALETTE_WRITE, 109 
+[90m362 | [97m GPU_rgba 0x4F373FFF 
+[90m363 | [97m GPU_palt PALETTE_WRITE, 110 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m364 | [97m GPU_rgba 0x77674FFF 
+[90m365 | [97m GPU_palt PALETTE_WRITE, 111 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:364:2:
+[0m[90m362 | [97m GPU_rgba 0x4F373FFF 
+[90m363 | [97m GPU_palt PALETTE_WRITE, 110 
+[90m364 | [97m GPU_rgba 0x77674FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m365 | [97m GPU_palt PALETTE_WRITE, 111 
+[90m366 | [97m GPU_rgba 0xFFC78FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:365:2:
+[0m[90m363 | [97m GPU_palt PALETTE_WRITE, 110 
+[90m364 | [97m GPU_rgba 0x77674FFF 
+[90m365 | [97m GPU_palt PALETTE_WRITE, 111 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m366 | [97m GPU_rgba 0xFFC78FFF 
+[90m367 | [97m GPU_palt PALETTE_WRITE, 112 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:366:2:
+[0m[90m364 | [97m GPU_rgba 0x77674FFF 
+[90m365 | [97m GPU_palt PALETTE_WRITE, 111 
+[90m366 | [97m GPU_rgba 0xFFC78FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m367 | [97m GPU_palt PALETTE_WRITE, 112 
+[90m368 | [97m GPU_rgba 0xFF1700FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:367:2:
+[0m[90m365 | [97m GPU_palt PALETTE_WRITE, 111 
+[90m366 | [97m GPU_rgba 0xFFC78FFF 
+[90m367 | [97m GPU_palt PALETTE_WRITE, 112 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m368 | [97m GPU_rgba 0xFF1700FF 
+[90m369 | [97m GPU_palt PALETTE_WRITE, 113 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:368:2:
+[0m[90m366 | [97m GPU_rgba 0xFFC78FFF 
+[90m367 | [97m GPU_palt PALETTE_WRITE, 112 
+[90m368 | [97m GPU_rgba 0xFF1700FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m369 | [97m GPU_palt PALETTE_WRITE, 113 
+[90m370 | [97m GPU_rgba 0x7F1F00FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:369:2:
+[0m[90m367 | [97m GPU_palt PALETTE_WRITE, 112 
+[90m368 | [97m GPU_rgba 0xFF1700FF 
+[90m369 | [97m GPU_palt PALETTE_WRITE, 113 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m370 | [97m GPU_rgba 0x7F1F00FF 
+[90m371 | [97m GPU_palt PALETTE_WRITE, 114 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:370:2:
+[0m[90m368 | [97m GPU_rgba 0xFF1700FF 
+[90m369 | [97m GPU_palt PALETTE_WRITE, 113 
+[90m370 | [97m GPU_rgba 0x7F1F00FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m371 | [97m GPU_palt PALETTE_WRITE, 114 
+[90m372 | [97m GPU_rgba 0xFFFFFFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:371:2:
+[0m[90m369 | [97m GPU_palt PALETTE_WRITE, 113 
+[90m370 | [97m GPU_rgba 0x7F1F00FF 
+[90m371 | [97m GPU_palt PALETTE_WRITE, 114 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m372 | [97m GPU_rgba 0xFFFFFFFF 
+[90m373 | [97m GPU_palt PALETTE_WRITE, 115 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:372:2:
+[0m[90m370 | [97m GPU_rgba 0x7F1F00FF 
+[90m371 | [97m GPU_palt PALETTE_WRITE, 114 
+[90m372 | [97m GPU_rgba 0xFFFFFFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m373 | [97m GPU_palt PALETTE_WRITE, 115 
+[90m374 | [97m GPU_rgba 0x274F6FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:373:2:
+[0m[90m371 | [97m GPU_palt PALETTE_WRITE, 114 
+[90m372 | [97m GPU_rgba 0xFFFFFFFF 
+[90m373 | [97m GPU_palt PALETTE_WRITE, 115 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m374 | [97m GPU_rgba 0x274F6FFF 
+[90m375 | [97m GPU_palt PALETTE_WRITE, 116 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:374:2:
+[0m[90m372 | [97m GPU_rgba 0xFFFFFFFF 
+[90m373 | [97m GPU_palt PALETTE_WRITE, 115 
+[90m374 | [97m GPU_rgba 0x274F6FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m375 | [97m GPU_palt PALETTE_WRITE, 116 
+[90m376 | [97m GPU_rgba 0x1F3F5FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:375:2:
+[0m[90m373 | [97m GPU_palt PALETTE_WRITE, 115 
+[90m374 | [97m GPU_rgba 0x274F6FFF 
+[90m375 | [97m GPU_palt PALETTE_WRITE, 116 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m376 | [97m GPU_rgba 0x1F3F5FFF 
+[90m377 | [97m GPU_palt PALETTE_WRITE, 117 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:376:2:
+[0m[90m374 | [97m GPU_rgba 0x274F6FFF 
+[90m375 | [97m GPU_palt PALETTE_WRITE, 116 
+[90m376 | [97m GPU_rgba 0x1F3F5FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m377 | [97m GPU_palt PALETTE_WRITE, 117 
+[90m378 | [97m GPU_rgba 0x172F4FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:377:2:
+[0m[90m375 | [97m GPU_palt PALETTE_WRITE, 116 
+[90m376 | [97m GPU_rgba 0x1F3F5FFF 
+[90m377 | [97m GPU_palt PALETTE_WRITE, 117 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m378 | [97m GPU_rgba 0x172F4FFF 
+[90m379 | [97m GPU_palt PALETTE_WRITE, 118 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:378:2:
+[0m[90m376 | [97m GPU_rgba 0x1F3F5FFF 
+[90m377 | [97m GPU_palt PALETTE_WRITE, 117 
+[90m378 | [97m GPU_rgba 0x172F4FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m379 | [97m GPU_palt PALETTE_WRITE, 118 
+[90m380 | [97m GPU_rgba 0x0F1F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:379:2:
+[0m[90m377 | [97m GPU_palt PALETTE_WRITE, 117 
+[90m378 | [97m GPU_rgba 0x172F4FFF 
+[90m379 | [97m GPU_palt PALETTE_WRITE, 118 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m380 | [97m GPU_rgba 0x0F1F37FF 
+[90m381 | [97m GPU_palt PALETTE_WRITE, 119 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:380:2:
+[0m[90m378 | [97m GPU_rgba 0x172F4FFF 
+[90m379 | [97m GPU_palt PALETTE_WRITE, 118 
+[90m380 | [97m GPU_rgba 0x0F1F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m381 | [97m GPU_palt PALETTE_WRITE, 119 
+[90m382 | [97m GPU_rgba 0x070F27FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:381:2:
+[0m[90m379 | [97m GPU_palt PALETTE_WRITE, 118 
+[90m380 | [97m GPU_rgba 0x0F1F37FF 
+[90m381 | [97m GPU_palt PALETTE_WRITE, 119 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m382 | [97m GPU_rgba 0x070F27FF 
+[90m383 | [97m GPU_palt PALETTE_WRITE, 120 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:382:2:
+[0m[90m380 | [97m GPU_rgba 0x0F1F37FF 
+[90m381 | [97m GPU_palt PALETTE_WRITE, 119 
+[90m382 | [97m GPU_rgba 0x070F27FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m383 | [97m GPU_palt PALETTE_WRITE, 120 
+[90m384 | [97m GPU_rgba 0x8F0000FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:383:2:
+[0m[90m381 | [97m GPU_palt PALETTE_WRITE, 119 
+[90m382 | [97m GPU_rgba 0x070F27FF 
+[90m383 | [97m GPU_palt PALETTE_WRITE, 120 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m384 | [97m GPU_rgba 0x8F0000FF 
+[90m385 | [97m GPU_palt PALETTE_WRITE, 121 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:384:2:
+[0m[90m382 | [97m GPU_rgba 0x070F27FF 
+[90m383 | [97m GPU_palt PALETTE_WRITE, 120 
+[90m384 | [97m GPU_rgba 0x8F0000FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m385 | [97m GPU_palt PALETTE_WRITE, 121 
+[90m386 | [97m GPU_rgba 0xB7AFBFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:385:2:
+[0m[90m383 | [97m GPU_palt PALETTE_WRITE, 120 
+[90m384 | [97m GPU_rgba 0x8F0000FF 
+[90m385 | [97m GPU_palt PALETTE_WRITE, 121 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m386 | [97m GPU_rgba 0xB7AFBFFF 
+[90m387 | [97m GPU_palt PALETTE_WRITE, 122 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:386:2:
+[0m[90m384 | [97m GPU_rgba 0x8F0000FF 
+[90m385 | [97m GPU_palt PALETTE_WRITE, 121 
+[90m386 | [97m GPU_rgba 0xB7AFBFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m387 | [97m GPU_palt PALETTE_WRITE, 122 
+[90m388 | [97m GPU_rgba 0x3F5767FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:387:2:
+[0m[90m385 | [97m GPU_palt PALETTE_WRITE, 121 
+[90m386 | [97m GPU_rgba 0xB7AFBFFF 
+[90m387 | [97m GPU_palt PALETTE_WRITE, 122 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m388 | [97m GPU_rgba 0x3F5767FF 
+[90m389 | [97m GPU_palt PALETTE_WRITE, 123 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:388:2:
+[0m[90m386 | [97m GPU_rgba 0xB7AFBFFF 
+[90m387 | [97m GPU_palt PALETTE_WRITE, 122 
+[90m388 | [97m GPU_rgba 0x3F5767FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m389 | [97m GPU_palt PALETTE_WRITE, 123 
+[90m390 | [97m GPU_rgba 0x77878FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:389:2:
+[0m[90m387 | [97m GPU_palt PALETTE_WRITE, 122 
+[90m388 | [97m GPU_rgba 0x3F5767FF 
+[90m389 | [97m GPU_palt PALETTE_WRITE, 123 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m390 | [97m GPU_rgba 0x77878FFF 
+[90m391 | [97m GPU_palt PALETTE_WRITE, 124 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:390:2:
+[0m[90m388 | [97m GPU_rgba 0x3F5767FF 
+[90m389 | [97m GPU_palt PALETTE_WRITE, 123 
+[90m390 | [97m GPU_rgba 0x77878FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m391 | [97m GPU_palt PALETTE_WRITE, 124 
+[90m392 | [97m GPU_rgba 0x002737FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:391:2:
+[0m[90m389 | [97m GPU_palt PALETTE_WRITE, 123 
+[90m390 | [97m GPU_rgba 0x77878FFF 
+[90m391 | [97m GPU_palt PALETTE_WRITE, 124 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m392 | [97m GPU_rgba 0x002737FF 
+[90m393 | [97m GPU_palt PALETTE_WRITE, 125 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:392:2:
+[0m[90m390 | [97m GPU_rgba 0x77878FFF 
+[90m391 | [97m GPU_palt PALETTE_WRITE, 124 
+[90m392 | [97m GPU_rgba 0x002737FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m393 | [97m GPU_palt PALETTE_WRITE, 125 
+[90m394 | [97m GPU_rgba 0x475F77FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:393:2:
+[0m[90m391 | [97m GPU_palt PALETTE_WRITE, 124 
+[90m392 | [97m GPU_rgba 0x002737FF 
+[90m393 | [97m GPU_palt PALETTE_WRITE, 125 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m394 | [97m GPU_rgba 0x475F77FF 
+[90m395 | [97m GPU_palt PALETTE_WRITE, 126 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:394:2:
+[0m[90m392 | [97m GPU_rgba 0x002737FF 
+[90m393 | [97m GPU_palt PALETTE_WRITE, 125 
+[90m394 | [97m GPU_rgba 0x475F77FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m395 | [97m GPU_palt PALETTE_WRITE, 126 
+[90m396 | [97m GPU_rgba 0x0F1F47FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:395:2:
+[0m[90m393 | [97m GPU_palt PALETTE_WRITE, 125 
+[90m394 | [97m GPU_rgba 0x475F77FF 
+[90m395 | [97m GPU_palt PALETTE_WRITE, 126 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m396 | [97m GPU_rgba 0x0F1F47FF 
+[90m397 | [97m GPU_palt PALETTE_WRITE, 127 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:396:2:
+[0m[90m394 | [97m GPU_rgba 0x475F77FF 
+[90m395 | [97m GPU_palt PALETTE_WRITE, 126 
+[90m396 | [97m GPU_rgba 0x0F1F47FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m397 | [97m GPU_palt PALETTE_WRITE, 127 
+[90m398 | [97m GPU_rgba 0x6797F7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:397:2:
+[0m[90m395 | [97m GPU_palt PALETTE_WRITE, 126 
+[90m396 | [97m GPU_rgba 0x0F1F47FF 
+[90m397 | [97m GPU_palt PALETTE_WRITE, 127 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m398 | [97m GPU_rgba 0x6797F7FF 
+[90m399 | [97m GPU_palt PALETTE_WRITE, 128 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:398:2:
+[0m[90m396 | [97m GPU_rgba 0x0F1F47FF 
+[90m397 | [97m GPU_palt PALETTE_WRITE, 127 
+[90m398 | [97m GPU_rgba 0x6797F7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m399 | [97m GPU_palt PALETTE_WRITE, 128 
+[90m400 | [97m GPU_rgba 0x677F87FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:399:2:
+[0m[90m397 | [97m GPU_palt PALETTE_WRITE, 127 
+[90m398 | [97m GPU_rgba 0x6797F7FF 
+[90m399 | [97m GPU_palt PALETTE_WRITE, 128 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m400 | [97m GPU_rgba 0x677F87FF 
+[90m401 | [97m GPU_palt PALETTE_WRITE, 129 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:400:2:
+[0m[90m398 | [97m GPU_rgba 0x6797F7FF 
+[90m399 | [97m GPU_palt PALETTE_WRITE, 128 
+[90m400 | [97m GPU_rgba 0x677F87FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m401 | [97m GPU_palt PALETTE_WRITE, 129 
+[90m402 | [97m GPU_rgba 0x2F3F5FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:401:2:
+[0m[90m399 | [97m GPU_palt PALETTE_WRITE, 128 
+[90m400 | [97m GPU_rgba 0x677F87FF 
+[90m401 | [97m GPU_palt PALETTE_WRITE, 129 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m402 | [97m GPU_rgba 0x2F3F5FFF 
+[90m403 | [97m GPU_palt PALETTE_WRITE, 130 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:402:2:
+[0m[90m400 | [97m GPU_rgba 0x677F87FF 
+[90m401 | [97m GPU_palt PALETTE_WRITE, 129 
+[90m402 | [97m GPU_rgba 0x2F3F5FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m403 | [97m GPU_palt PALETTE_WRITE, 130 
+[90m404 | [97m GPU_rgba 0x4F4F4FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:403:2:
+[0m[90m401 | [97m GPU_palt PALETTE_WRITE, 129 
+[90m402 | [97m GPU_rgba 0x2F3F5FFF 
+[90m403 | [97m GPU_palt PALETTE_WRITE, 130 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m404 | [97m GPU_rgba 0x4F4F4FFF 
+[90m405 | [97m GPU_palt PALETTE_WRITE, 131 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:404:2:
+[0m[90m402 | [97m GPU_rgba 0x2F3F5FFF 
+[90m403 | [97m GPU_palt PALETTE_WRITE, 130 
+[90m404 | [97m GPU_rgba 0x4F4F4FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m405 | [97m GPU_palt PALETTE_WRITE, 131 
+[90m406 | [97m GPU_rgba 0x6F6F77FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:405:2:
+[0m[90m403 | [97m GPU_palt PALETTE_WRITE, 130 
+[90m404 | [97m GPU_rgba 0x4F4F4FFF 
+[90m405 | [97m GPU_palt PALETTE_WRITE, 131 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m406 | [97m GPU_rgba 0x6F6F77FF 
+[90m407 | [97m GPU_palt PALETTE_WRITE, 132 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:406:2:
+[0m[90m404 | [97m GPU_rgba 0x4F4F4FFF 
+[90m405 | [97m GPU_palt PALETTE_WRITE, 131 
+[90m406 | [97m GPU_rgba 0x6F6F77FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m407 | [97m GPU_palt PALETTE_WRITE, 132 
+[90m408 | [97m GPU_rgba 0x97979FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:407:2:
+[0m[90m405 | [97m GPU_palt PALETTE_WRITE, 131 
+[90m406 | [97m GPU_rgba 0x6F6F77FF 
+[90m407 | [97m GPU_palt PALETTE_WRITE, 132 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m408 | [97m GPU_rgba 0x97979FFF 
+[90m409 | [97m GPU_palt PALETTE_WRITE, 133 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:408:2:
+[0m[90m406 | [97m GPU_rgba 0x6F6F77FF 
+[90m407 | [97m GPU_palt PALETTE_WRITE, 132 
+[90m408 | [97m GPU_rgba 0x97979FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m409 | [97m GPU_palt PALETTE_WRITE, 133 
+[90m410 | [97m GPU_rgba 0x7F7747FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:409:2:
+[0m[90m407 | [97m GPU_palt PALETTE_WRITE, 132 
+[90m408 | [97m GPU_rgba 0x97979FFF 
+[90m409 | [97m GPU_palt PALETTE_WRITE, 133 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m410 | [97m GPU_rgba 0x7F7747FF 
+[90m411 | [97m GPU_palt PALETTE_WRITE, 134 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:410:2:
+[0m[90m408 | [97m GPU_rgba 0x97979FFF 
+[90m409 | [97m GPU_palt PALETTE_WRITE, 133 
+[90m410 | [97m GPU_rgba 0x7F7747FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m411 | [97m GPU_palt PALETTE_WRITE, 134 
+[90m412 | [97m GPU_rgba 0x473F27FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:411:2:
+[0m[90m409 | [97m GPU_palt PALETTE_WRITE, 133 
+[90m410 | [97m GPU_rgba 0x7F7747FF 
+[90m411 | [97m GPU_palt PALETTE_WRITE, 134 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m412 | [97m GPU_rgba 0x473F27FF 
+[90m413 | [97m GPU_palt PALETTE_WRITE, 135 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:412:2:
+[0m[90m410 | [97m GPU_rgba 0x7F7747FF 
+[90m411 | [97m GPU_palt PALETTE_WRITE, 134 
+[90m412 | [97m GPU_rgba 0x473F27FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m413 | [97m GPU_palt PALETTE_WRITE, 135 
+[90m414 | [97m GPU_rgba 0x2F2717FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:413:2:
+[0m[90m411 | [97m GPU_palt PALETTE_WRITE, 134 
+[90m412 | [97m GPU_rgba 0x473F27FF 
+[90m413 | [97m GPU_palt PALETTE_WRITE, 135 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m414 | [97m GPU_rgba 0x2F2717FF 
+[90m415 | [97m GPU_palt PALETTE_WRITE, 136 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:414:2:
+[0m[90m412 | [97m GPU_rgba 0x473F27FF 
+[90m413 | [97m GPU_palt PALETTE_WRITE, 135 
+[90m414 | [97m GPU_rgba 0x2F2717FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m415 | [97m GPU_palt PALETTE_WRITE, 136 
+[90m416 | [97m GPU_rgba 0x675F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:415:2:
+[0m[90m413 | [97m GPU_palt PALETTE_WRITE, 135 
+[90m414 | [97m GPU_rgba 0x2F2717FF 
+[90m415 | [97m GPU_palt PALETTE_WRITE, 136 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m416 | [97m GPU_rgba 0x675F37FF 
+[90m417 | [97m GPU_palt PALETTE_WRITE, 137 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:416:2:
+[0m[90m414 | [97m GPU_rgba 0x2F2717FF 
+[90m415 | [97m GPU_palt PALETTE_WRITE, 136 
+[90m416 | [97m GPU_rgba 0x675F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m417 | [97m GPU_palt PALETTE_WRITE, 137 
+[90m418 | [97m GPU_rgba 0x4F3F2FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:417:2:
+[0m[90m415 | [97m GPU_palt PALETTE_WRITE, 136 
+[90m416 | [97m GPU_rgba 0x675F37FF 
+[90m417 | [97m GPU_palt PALETTE_WRITE, 137 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m418 | [97m GPU_rgba 0x4F3F2FFF 
+[90m419 | [97m GPU_palt PALETTE_WRITE, 138 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:418:2:
+[0m[90m416 | [97m GPU_rgba 0x675F37FF 
+[90m417 | [97m GPU_palt PALETTE_WRITE, 137 
+[90m418 | [97m GPU_rgba 0x4F3F2FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m419 | [97m GPU_palt PALETTE_WRITE, 138 
+[90m420 | [97m GPU_rgba 0x67572FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:419:2:
+[0m[90m417 | [97m GPU_palt PALETTE_WRITE, 137 
+[90m418 | [97m GPU_rgba 0x4F3F2FFF 
+[90m419 | [97m GPU_palt PALETTE_WRITE, 138 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m420 | [97m GPU_rgba 0x67572FFF 
+[90m421 | [97m GPU_palt PALETTE_WRITE, 139 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:420:2:
+[0m[90m418 | [97m GPU_rgba 0x4F3F2FFF 
+[90m419 | [97m GPU_palt PALETTE_WRITE, 138 
+[90m420 | [97m GPU_rgba 0x67572FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m421 | [97m GPU_palt PALETTE_WRITE, 139 
+[90m422 | [97m GPU_rgba 0x876F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:421:2:
+[0m[90m419 | [97m GPU_palt PALETTE_WRITE, 138 
+[90m420 | [97m GPU_rgba 0x67572FFF 
+[90m421 | [97m GPU_palt PALETTE_WRITE, 139 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m422 | [97m GPU_rgba 0x876F37FF 
+[90m423 | [97m GPU_palt PALETTE_WRITE, 140 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:422:2:
+[0m[90m420 | [97m GPU_rgba 0x67572FFF 
+[90m421 | [97m GPU_palt PALETTE_WRITE, 139 
+[90m422 | [97m GPU_rgba 0x876F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m423 | [97m GPU_palt PALETTE_WRITE, 140 
+[90m424 | [97m GPU_rgba 0xA78737FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:423:2:
+[0m[90m421 | [97m GPU_palt PALETTE_WRITE, 139 
+[90m422 | [97m GPU_rgba 0x876F37FF 
+[90m423 | [97m GPU_palt PALETTE_WRITE, 140 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m424 | [97m GPU_rgba 0xA78737FF 
+[90m425 | [97m GPU_palt PALETTE_WRITE, 141 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:424:2:
+[0m[90m422 | [97m GPU_rgba 0x876F37FF 
+[90m423 | [97m GPU_palt PALETTE_WRITE, 140 
+[90m424 | [97m GPU_rgba 0xA78737FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m425 | [97m GPU_palt PALETTE_WRITE, 141 
+[90m426 | [97m GPU_rgba 0x170F2FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:425:2:
+[0m[90m423 | [97m GPU_palt PALETTE_WRITE, 140 
+[90m424 | [97m GPU_rgba 0xA78737FF 
+[90m425 | [97m GPU_palt PALETTE_WRITE, 141 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m426 | [97m GPU_rgba 0x170F2FFF 
+[90m427 | [97m GPU_palt PALETTE_WRITE, 142 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:426:2:
+[0m[90m424 | [97m GPU_rgba 0xA78737FF 
+[90m425 | [97m GPU_palt PALETTE_WRITE, 141 
+[90m426 | [97m GPU_rgba 0x170F2FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m427 | [97m GPU_palt PALETTE_WRITE, 142 
+[90m428 | [97m GPU_rgba 0x372F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:427:2:
+[0m[90m425 | [97m GPU_palt PALETTE_WRITE, 141 
+[90m426 | [97m GPU_rgba 0x170F2FFF 
+[90m427 | [97m GPU_palt PALETTE_WRITE, 142 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m428 | [97m GPU_rgba 0x372F37FF 
+[90m429 | [97m GPU_palt PALETTE_WRITE, 143 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:428:2:
+[0m[90m426 | [97m GPU_rgba 0x170F2FFF 
+[90m427 | [97m GPU_palt PALETTE_WRITE, 142 
+[90m428 | [97m GPU_rgba 0x372F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m429 | [97m GPU_palt PALETTE_WRITE, 143 
+[90m430 | [97m GPU_rgba 0x3F97BFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:429:2:
+[0m[90m427 | [97m GPU_palt PALETTE_WRITE, 142 
+[90m428 | [97m GPU_rgba 0x372F37FF 
+[90m429 | [97m GPU_palt PALETTE_WRITE, 143 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m430 | [97m GPU_rgba 0x3F97BFFF 
+[90m431 | [97m GPU_palt PALETTE_WRITE, 144 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:430:2:
+[0m[90m428 | [97m GPU_rgba 0x372F37FF 
+[90m429 | [97m GPU_palt PALETTE_WRITE, 143 
+[90m430 | [97m GPU_rgba 0x3F97BFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m431 | [97m GPU_palt PALETTE_WRITE, 144 
+[90m432 | [97m GPU_rgba 0x0F4777FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:431:2:
+[0m[90m429 | [97m GPU_palt PALETTE_WRITE, 143 
+[90m430 | [97m GPU_rgba 0x3F97BFFF 
+[90m431 | [97m GPU_palt PALETTE_WRITE, 144 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m432 | [97m GPU_rgba 0x0F4777FF 
+[90m433 | [97m GPU_palt PALETTE_WRITE, 145 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:432:2:
+[0m[90m430 | [97m GPU_rgba 0x3F97BFFF 
+[90m431 | [97m GPU_palt PALETTE_WRITE, 144 
+[90m432 | [97m GPU_rgba 0x0F4777FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m433 | [97m GPU_palt PALETTE_WRITE, 145 
+[90m434 | [97m GPU_rgba 0xE7F7FFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:433:2:
+[0m[90m431 | [97m GPU_palt PALETTE_WRITE, 144 
+[90m432 | [97m GPU_rgba 0x0F4777FF 
+[90m433 | [97m GPU_palt PALETTE_WRITE, 145 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m434 | [97m GPU_rgba 0xE7F7FFFF 
+[90m435 | [97m GPU_palt PALETTE_WRITE, 146 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:434:2:
+[0m[90m432 | [97m GPU_rgba 0x0F4777FF 
+[90m433 | [97m GPU_palt PALETTE_WRITE, 145 
+[90m434 | [97m GPU_rgba 0xE7F7FFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m435 | [97m GPU_palt PALETTE_WRITE, 146 
+[90m436 | [97m GPU_rgba 0x770000FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:435:2:
+[0m[90m433 | [97m GPU_palt PALETTE_WRITE, 145 
+[90m434 | [97m GPU_rgba 0xE7F7FFFF 
+[90m435 | [97m GPU_palt PALETTE_WRITE, 146 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m436 | [97m GPU_rgba 0x770000FF 
+[90m437 | [97m GPU_palt PALETTE_WRITE, 147 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:436:2:
+[0m[90m434 | [97m GPU_rgba 0xE7F7FFFF 
+[90m435 | [97m GPU_palt PALETTE_WRITE, 146 
+[90m436 | [97m GPU_rgba 0x770000FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m437 | [97m GPU_palt PALETTE_WRITE, 147 
+[90m438 | [97m GPU_rgba 0x473F47FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:437:2:
+[0m[90m435 | [97m GPU_palt PALETTE_WRITE, 146 
+[90m436 | [97m GPU_rgba 0x770000FF 
+[90m437 | [97m GPU_palt PALETTE_WRITE, 147 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m438 | [97m GPU_rgba 0x473F47FF 
+[90m439 | [97m GPU_palt PALETTE_WRITE, 148 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:438:2:
+[0m[90m436 | [97m GPU_rgba 0x770000FF 
+[90m437 | [97m GPU_palt PALETTE_WRITE, 147 
+[90m438 | [97m GPU_rgba 0x473F47FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m439 | [97m GPU_palt PALETTE_WRITE, 148 
+[90m440 | [97m GPU_rgba 0x876F57FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:439:2:
+[0m[90m437 | [97m GPU_palt PALETTE_WRITE, 147 
+[90m438 | [97m GPU_rgba 0x473F47FF 
+[90m439 | [97m GPU_palt PALETTE_WRITE, 148 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m440 | [97m GPU_rgba 0x876F57FF 
+[90m441 | [97m GPU_palt PALETTE_WRITE, 149 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:440:2:
+[0m[90m438 | [97m GPU_rgba 0x473F47FF 
+[90m439 | [97m GPU_palt PALETTE_WRITE, 148 
+[90m440 | [97m GPU_rgba 0x876F57FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m441 | [97m GPU_palt PALETTE_WRITE, 149 
+[90m442 | [97m GPU_rgba 0xC7C77FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:441:2:
+[0m[90m439 | [97m GPU_palt PALETTE_WRITE, 148 
+[90m440 | [97m GPU_rgba 0x876F57FF 
+[90m441 | [97m GPU_palt PALETTE_WRITE, 149 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m442 | [97m GPU_rgba 0xC7C77FFF 
+[90m443 | [97m GPU_palt PALETTE_WRITE, 150 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:442:2:
+[0m[90m440 | [97m GPU_rgba 0x876F57FF 
+[90m441 | [97m GPU_palt PALETTE_WRITE, 149 
+[90m442 | [97m GPU_rgba 0xC7C77FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m443 | [97m GPU_palt PALETTE_WRITE, 150 
+[90m444 | [97m GPU_rgba 0x0F0F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:443:2:
+[0m[90m441 | [97m GPU_palt PALETTE_WRITE, 149 
+[90m442 | [97m GPU_rgba 0xC7C77FFF 
+[90m443 | [97m GPU_palt PALETTE_WRITE, 150 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m444 | [97m GPU_rgba 0x0F0F37FF 
+[90m445 | [97m GPU_palt PALETTE_WRITE, 151 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:444:2:
+[0m[90m442 | [97m GPU_rgba 0xC7C77FFF 
+[90m443 | [97m GPU_palt PALETTE_WRITE, 150 
+[90m444 | [97m GPU_rgba 0x0F0F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m445 | [97m GPU_palt PALETTE_WRITE, 151 
+[90m446 | [97m GPU_rgba 0xA79F67FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:445:2:
+[0m[90m443 | [97m GPU_palt PALETTE_WRITE, 150 
+[90m444 | [97m GPU_rgba 0x0F0F37FF 
+[90m445 | [97m GPU_palt PALETTE_WRITE, 151 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m446 | [97m GPU_rgba 0xA79F67FF 
+[90m447 | [97m GPU_palt PALETTE_WRITE, 152 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:446:2:
+[0m[90m444 | [97m GPU_rgba 0x0F0F37FF 
+[90m445 | [97m GPU_palt PALETTE_WRITE, 151 
+[90m446 | [97m GPU_rgba 0xA79F67FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m447 | [97m GPU_palt PALETTE_WRITE, 152 
+[90m448 | [97m GPU_rgba 0x4FA74FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:447:2:
+[0m[90m445 | [97m GPU_palt PALETTE_WRITE, 151 
+[90m446 | [97m GPU_rgba 0xA79F67FF 
+[90m447 | [97m GPU_palt PALETTE_WRITE, 152 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m448 | [97m GPU_rgba 0x4FA74FFF 
+[90m449 | [97m GPU_palt PALETTE_WRITE, 153 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:448:2:
+[0m[90m446 | [97m GPU_rgba 0xA79F67FF 
+[90m447 | [97m GPU_palt PALETTE_WRITE, 152 
+[90m448 | [97m GPU_rgba 0x4FA74FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m449 | [97m GPU_palt PALETTE_WRITE, 153 
+[90m450 | [97m GPU_rgba 0xEFEF97FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:449:2:
+[0m[90m447 | [97m GPU_palt PALETTE_WRITE, 152 
+[90m448 | [97m GPU_rgba 0x4FA74FFF 
+[90m449 | [97m GPU_palt PALETTE_WRITE, 153 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m450 | [97m GPU_rgba 0xEFEF97FF 
+[90m451 | [97m GPU_palt PALETTE_WRITE, 154 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:450:2:
+[0m[90m448 | [97m GPU_rgba 0x4FA74FFF 
+[90m449 | [97m GPU_palt PALETTE_WRITE, 153 
+[90m450 | [97m GPU_rgba 0xEFEF97FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m451 | [97m GPU_palt PALETTE_WRITE, 154 
+[90m452 | [97m GPU_rgba 0x001707FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:451:2:
+[0m[90m449 | [97m GPU_palt PALETTE_WRITE, 153 
+[90m450 | [97m GPU_rgba 0xEFEF97FF 
+[90m451 | [97m GPU_palt PALETTE_WRITE, 154 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m452 | [97m GPU_rgba 0x001707FF 
+[90m453 | [97m GPU_palt PALETTE_WRITE, 155 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:452:2:
+[0m[90m450 | [97m GPU_rgba 0xEFEF97FF 
+[90m451 | [97m GPU_palt PALETTE_WRITE, 154 
+[90m452 | [97m GPU_rgba 0x001707FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m453 | [97m GPU_palt PALETTE_WRITE, 155 
+[90m454 | [97m GPU_rgba 0x4F576FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:453:2:
+[0m[90m451 | [97m GPU_palt PALETTE_WRITE, 154 
+[90m452 | [97m GPU_rgba 0x001707FF 
+[90m453 | [97m GPU_palt PALETTE_WRITE, 155 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m454 | [97m GPU_rgba 0x4F576FFF 
+[90m455 | [97m GPU_palt PALETTE_WRITE, 156 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:454:2:
+[0m[90m452 | [97m GPU_rgba 0x001707FF 
+[90m453 | [97m GPU_palt PALETTE_WRITE, 155 
+[90m454 | [97m GPU_rgba 0x4F576FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m455 | [97m GPU_palt PALETTE_WRITE, 156 
+[90m456 | [97m GPU_rgba 0x373F4FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:455:2:
+[0m[90m453 | [97m GPU_palt PALETTE_WRITE, 155 
+[90m454 | [97m GPU_rgba 0x4F576FFF 
+[90m455 | [97m GPU_palt PALETTE_WRITE, 156 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m456 | [97m GPU_rgba 0x373F4FFF 
+[90m457 | [97m GPU_palt PALETTE_WRITE, 157 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:456:2:
+[0m[90m454 | [97m GPU_rgba 0x4F576FFF 
+[90m455 | [97m GPU_palt PALETTE_WRITE, 156 
+[90m456 | [97m GPU_rgba 0x373F4FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m457 | [97m GPU_palt PALETTE_WRITE, 157 
+[90m458 | [97m GPU_rgba 0x5F6F8FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:457:2:
+[0m[90m455 | [97m GPU_palt PALETTE_WRITE, 156 
+[90m456 | [97m GPU_rgba 0x373F4FFF 
+[90m457 | [97m GPU_palt PALETTE_WRITE, 157 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m458 | [97m GPU_rgba 0x5F6F8FFF 
+[90m459 | [97m GPU_palt PALETTE_WRITE, 158 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:458:2:
+[0m[90m456 | [97m GPU_rgba 0x373F4FFF 
+[90m457 | [97m GPU_palt PALETTE_WRITE, 157 
+[90m458 | [97m GPU_rgba 0x5F6F8FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m459 | [97m GPU_palt PALETTE_WRITE, 158 
+[90m460 | [97m GPU_rgba 0x6F87A7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:459:2:
+[0m[90m457 | [97m GPU_palt PALETTE_WRITE, 157 
+[90m458 | [97m GPU_rgba 0x5F6F8FFF 
+[90m459 | [97m GPU_palt PALETTE_WRITE, 158 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m460 | [97m GPU_rgba 0x6F87A7FF 
+[90m461 | [97m GPU_palt PALETTE_WRITE, 159 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:460:2:
+[0m[90m458 | [97m GPU_rgba 0x5F6F8FFF 
+[90m459 | [97m GPU_palt PALETTE_WRITE, 158 
+[90m460 | [97m GPU_rgba 0x6F87A7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m461 | [97m GPU_palt PALETTE_WRITE, 159 
+[90m462 | [97m GPU_rgba 0xE7E7DFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:461:2:
+[0m[90m459 | [97m GPU_palt PALETTE_WRITE, 158 
+[90m460 | [97m GPU_rgba 0x6F87A7FF 
+[90m461 | [97m GPU_palt PALETTE_WRITE, 159 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m462 | [97m GPU_rgba 0xE7E7DFFF 
+[90m463 | [97m GPU_palt PALETTE_WRITE, 160 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:462:2:
+[0m[90m460 | [97m GPU_rgba 0x6F87A7FF 
+[90m461 | [97m GPU_palt PALETTE_WRITE, 159 
+[90m462 | [97m GPU_rgba 0xE7E7DFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m463 | [97m GPU_palt PALETTE_WRITE, 160 
+[90m464 | [97m GPU_rgba 0x2F3747FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:463:2:
+[0m[90m461 | [97m GPU_palt PALETTE_WRITE, 159 
+[90m462 | [97m GPU_rgba 0xE7E7DFFF 
+[90m463 | [97m GPU_palt PALETTE_WRITE, 160 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m464 | [97m GPU_rgba 0x2F3747FF 
+[90m465 | [97m GPU_palt PALETTE_WRITE, 161 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:464:2:
+[0m[90m462 | [97m GPU_rgba 0xE7E7DFFF 
+[90m463 | [97m GPU_palt PALETTE_WRITE, 160 
+[90m464 | [97m GPU_rgba 0x2F3747FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m465 | [97m GPU_palt PALETTE_WRITE, 161 
+[90m466 | [97m GPU_rgba 0x4F575FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:465:2:
+[0m[90m463 | [97m GPU_palt PALETTE_WRITE, 160 
+[90m464 | [97m GPU_rgba 0x2F3747FF 
+[90m465 | [97m GPU_palt PALETTE_WRITE, 161 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m466 | [97m GPU_rgba 0x4F575FFF 
+[90m467 | [97m GPU_palt PALETTE_WRITE, 162 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:466:2:
+[0m[90m464 | [97m GPU_rgba 0x2F3747FF 
+[90m465 | [97m GPU_palt PALETTE_WRITE, 161 
+[90m466 | [97m GPU_rgba 0x4F575FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m467 | [97m GPU_palt PALETTE_WRITE, 162 
+[90m468 | [97m GPU_rgba 0x8F9F87FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:467:2:
+[0m[90m465 | [97m GPU_palt PALETTE_WRITE, 161 
+[90m466 | [97m GPU_rgba 0x4F575FFF 
+[90m467 | [97m GPU_palt PALETTE_WRITE, 162 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m468 | [97m GPU_rgba 0x8F9F87FF 
+[90m469 | [97m GPU_palt PALETTE_WRITE, 163 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:468:2:
+[0m[90m466 | [97m GPU_rgba 0x4F575FFF 
+[90m467 | [97m GPU_palt PALETTE_WRITE, 162 
+[90m468 | [97m GPU_rgba 0x8F9F87FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m469 | [97m GPU_palt PALETTE_WRITE, 163 
+[90m470 | [97m GPU_rgba 0x272737FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:469:2:
+[0m[90m467 | [97m GPU_palt PALETTE_WRITE, 162 
+[90m468 | [97m GPU_rgba 0x8F9F87FF 
+[90m469 | [97m GPU_palt PALETTE_WRITE, 163 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m470 | [97m GPU_rgba 0x272737FF 
+[90m471 | [97m GPU_palt PALETTE_WRITE, 164 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:470:2:
+[0m[90m468 | [97m GPU_rgba 0x8F9F87FF 
+[90m469 | [97m GPU_palt PALETTE_WRITE, 163 
+[90m470 | [97m GPU_rgba 0x272737FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m471 | [97m GPU_palt PALETTE_WRITE, 164 
+[90m472 | [97m GPU_rgba 0x6F776FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:471:2:
+[0m[90m469 | [97m GPU_palt PALETTE_WRITE, 163 
+[90m470 | [97m GPU_rgba 0x272737FF 
+[90m471 | [97m GPU_palt PALETTE_WRITE, 164 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m472 | [97m GPU_rgba 0x6F776FFF 
+[90m473 | [97m GPU_palt PALETTE_WRITE, 165 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:472:2:
+[0m[90m470 | [97m GPU_rgba 0x272737FF 
+[90m471 | [97m GPU_palt PALETTE_WRITE, 164 
+[90m472 | [97m GPU_rgba 0x6F776FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m473 | [97m GPU_palt PALETTE_WRITE, 165 
+[90m474 | [97m GPU_rgba 0x0F1717FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:473:2:
+[0m[90m471 | [97m GPU_palt PALETTE_WRITE, 164 
+[90m472 | [97m GPU_rgba 0x6F776FFF 
+[90m473 | [97m GPU_palt PALETTE_WRITE, 165 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m474 | [97m GPU_rgba 0x0F1717FF 
+[90m475 | [97m GPU_palt PALETTE_WRITE, 166 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:474:2:
+[0m[90m472 | [97m GPU_rgba 0x6F776FFF 
+[90m473 | [97m GPU_palt PALETTE_WRITE, 165 
+[90m474 | [97m GPU_rgba 0x0F1717FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m475 | [97m GPU_palt PALETTE_WRITE, 166 
+[90m476 | [97m GPU_rgba 0x773F67FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:475:2:
+[0m[90m473 | [97m GPU_palt PALETTE_WRITE, 165 
+[90m474 | [97m GPU_rgba 0x0F1717FF 
+[90m475 | [97m GPU_palt PALETTE_WRITE, 166 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m476 | [97m GPU_rgba 0x773F67FF 
+[90m477 | [97m GPU_palt PALETTE_WRITE, 167 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:476:2:
+[0m[90m474 | [97m GPU_rgba 0x0F1717FF 
+[90m475 | [97m GPU_palt PALETTE_WRITE, 166 
+[90m476 | [97m GPU_rgba 0x773F67FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m477 | [97m GPU_palt PALETTE_WRITE, 167 
+[90m478 | [97m GPU_rgba 0xAFBF9FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:477:2:
+[0m[90m475 | [97m GPU_palt PALETTE_WRITE, 166 
+[90m476 | [97m GPU_rgba 0x773F67FF 
+[90m477 | [97m GPU_palt PALETTE_WRITE, 167 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m478 | [97m GPU_rgba 0xAFBF9FFF 
+[90m479 | [97m GPU_palt PALETTE_WRITE, 168 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:478:2:
+[0m[90m476 | [97m GPU_rgba 0x773F67FF 
+[90m477 | [97m GPU_palt PALETTE_WRITE, 167 
+[90m478 | [97m GPU_rgba 0xAFBF9FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m479 | [97m GPU_palt PALETTE_WRITE, 168 
+[90m480 | [97m GPU_rgba 0x0F1F07FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:479:2:
+[0m[90m477 | [97m GPU_palt PALETTE_WRITE, 167 
+[90m478 | [97m GPU_rgba 0xAFBF9FFF 
+[90m479 | [97m GPU_palt PALETTE_WRITE, 168 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m480 | [97m GPU_rgba 0x0F1F07FF 
+[90m481 | [97m GPU_palt PALETTE_WRITE, 169 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:480:2:
+[0m[90m478 | [97m GPU_rgba 0xAFBF9FFF 
+[90m479 | [97m GPU_palt PALETTE_WRITE, 168 
+[90m480 | [97m GPU_rgba 0x0F1F07FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m481 | [97m GPU_palt PALETTE_WRITE, 169 
+[90m482 | [97m GPU_rgba 0x6F6F47FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:481:2:
+[0m[90m479 | [97m GPU_palt PALETTE_WRITE, 168 
+[90m480 | [97m GPU_rgba 0x0F1F07FF 
+[90m481 | [97m GPU_palt PALETTE_WRITE, 169 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m482 | [97m GPU_rgba 0x6F6F47FF 
+[90m483 | [97m GPU_palt PALETTE_WRITE, 170 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:482:2:
+[0m[90m480 | [97m GPU_rgba 0x0F1F07FF 
+[90m481 | [97m GPU_palt PALETTE_WRITE, 169 
+[90m482 | [97m GPU_rgba 0x6F6F47FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m483 | [97m GPU_palt PALETTE_WRITE, 170 
+[90m484 | [97m GPU_rgba 0x071700FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:483:2:
+[0m[90m481 | [97m GPU_palt PALETTE_WRITE, 169 
+[90m482 | [97m GPU_rgba 0x6F6F47FF 
+[90m483 | [97m GPU_palt PALETTE_WRITE, 170 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m484 | [97m GPU_rgba 0x071700FF 
+[90m485 | [97m GPU_palt PALETTE_WRITE, 171 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:484:2:
+[0m[90m482 | [97m GPU_rgba 0x6F6F47FF 
+[90m483 | [97m GPU_palt PALETTE_WRITE, 170 
+[90m484 | [97m GPU_rgba 0x071700FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m485 | [97m GPU_palt PALETTE_WRITE, 171 
+[90m486 | [97m GPU_rgba 0x3F473FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:485:2:
+[0m[90m483 | [97m GPU_palt PALETTE_WRITE, 170 
+[90m484 | [97m GPU_rgba 0x071700FF 
+[90m485 | [97m GPU_palt PALETTE_WRITE, 171 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m486 | [97m GPU_rgba 0x3F473FFF 
+[90m487 | [97m GPU_palt PALETTE_WRITE, 172 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:486:2:
+[0m[90m484 | [97m GPU_rgba 0x071700FF 
+[90m485 | [97m GPU_palt PALETTE_WRITE, 171 
+[90m486 | [97m GPU_rgba 0x3F473FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m487 | [97m GPU_palt PALETTE_WRITE, 172 
+[90m488 | [97m GPU_rgba 0x7F7F57FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:487:2:
+[0m[90m485 | [97m GPU_palt PALETTE_WRITE, 171 
+[90m486 | [97m GPU_rgba 0x3F473FFF 
+[90m487 | [97m GPU_palt PALETTE_WRITE, 172 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m488 | [97m GPU_rgba 0x7F7F57FF 
+[90m489 | [97m GPU_palt PALETTE_WRITE, 173 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:488:2:
+[0m[90m486 | [97m GPU_rgba 0x3F473FFF 
+[90m487 | [97m GPU_palt PALETTE_WRITE, 172 
+[90m488 | [97m GPU_rgba 0x7F7F57FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m489 | [97m GPU_palt PALETTE_WRITE, 173 
+[90m490 | [97m GPU_rgba 0x4F5FEFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:489:2:
+[0m[90m487 | [97m GPU_palt PALETTE_WRITE, 172 
+[90m488 | [97m GPU_rgba 0x7F7F57FF 
+[90m489 | [97m GPU_palt PALETTE_WRITE, 173 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m490 | [97m GPU_rgba 0x4F5FEFFF 
+[90m491 | [97m GPU_palt PALETTE_WRITE, 174 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:490:2:
+[0m[90m488 | [97m GPU_rgba 0x7F7F57FF 
+[90m489 | [97m GPU_palt PALETTE_WRITE, 173 
+[90m490 | [97m GPU_rgba 0x4F5FEFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m491 | [97m GPU_palt PALETTE_WRITE, 174 
+[90m492 | [97m GPU_rgba 0x172F0FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:491:2:
+[0m[90m489 | [97m GPU_palt PALETTE_WRITE, 173 
+[90m490 | [97m GPU_rgba 0x4F5FEFFF 
+[90m491 | [97m GPU_palt PALETTE_WRITE, 174 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m492 | [97m GPU_rgba 0x172F0FFF 
+[90m493 | [97m GPU_palt PALETTE_WRITE, 175 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:492:2:
+[0m[90m490 | [97m GPU_rgba 0x4F5FEFFF 
+[90m491 | [97m GPU_palt PALETTE_WRITE, 174 
+[90m492 | [97m GPU_rgba 0x172F0FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m493 | [97m GPU_palt PALETTE_WRITE, 175 
+[90m494 | [97m GPU_rgba 0x070007FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:493:2:
+[0m[90m491 | [97m GPU_palt PALETTE_WRITE, 174 
+[90m492 | [97m GPU_rgba 0x172F0FFF 
+[90m493 | [97m GPU_palt PALETTE_WRITE, 175 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m494 | [97m GPU_rgba 0x070007FF 
+[90m495 | [97m GPU_palt PALETTE_WRITE, 176 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:494:2:
+[0m[90m492 | [97m GPU_rgba 0x172F0FFF 
+[90m493 | [97m GPU_palt PALETTE_WRITE, 175 
+[90m494 | [97m GPU_rgba 0x070007FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m495 | [97m GPU_palt PALETTE_WRITE, 176 
+[90m496 | [97m GPU_rgba 0x9FBFBFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:495:2:
+[0m[90m493 | [97m GPU_palt PALETTE_WRITE, 175 
+[90m494 | [97m GPU_rgba 0x070007FF 
+[90m495 | [97m GPU_palt PALETTE_WRITE, 176 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m496 | [97m GPU_rgba 0x9FBFBFFF 
+[90m497 | [97m GPU_palt PALETTE_WRITE, 177 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:496:2:
+[0m[90m494 | [97m GPU_rgba 0x070007FF 
+[90m495 | [97m GPU_palt PALETTE_WRITE, 176 
+[90m496 | [97m GPU_rgba 0x9FBFBFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m497 | [97m GPU_palt PALETTE_WRITE, 177 
+[90m498 | [97m GPU_rgba 0xC7CFF7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:497:2:
+[0m[90m495 | [97m GPU_palt PALETTE_WRITE, 176 
+[90m496 | [97m GPU_rgba 0x9FBFBFFF 
+[90m497 | [97m GPU_palt PALETTE_WRITE, 177 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m498 | [97m GPU_rgba 0xC7CFF7FF 
+[90m499 | [97m GPU_palt PALETTE_WRITE, 178 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:498:2:
+[0m[90m496 | [97m GPU_rgba 0x9FBFBFFF 
+[90m497 | [97m GPU_palt PALETTE_WRITE, 177 
+[90m498 | [97m GPU_rgba 0xC7CFF7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m499 | [97m GPU_palt PALETTE_WRITE, 178 
+[90m500 | [97m GPU_rgba 0x8F97EFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:499:2:
+[0m[90m497 | [97m GPU_palt PALETTE_WRITE, 177 
+[90m498 | [97m GPU_rgba 0xC7CFF7FF 
+[90m499 | [97m GPU_palt PALETTE_WRITE, 178 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m500 | [97m GPU_rgba 0x8F97EFFF 
+[90m501 | [97m GPU_palt PALETTE_WRITE, 179 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:500:2:
+[0m[90m498 | [97m GPU_rgba 0xC7CFF7FF 
+[90m499 | [97m GPU_palt PALETTE_WRITE, 178 
+[90m500 | [97m GPU_rgba 0x8F97EFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m501 | [97m GPU_palt PALETTE_WRITE, 179 
+[90m502 | [97m GPU_rgba 0x4F471FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:501:2:
+[0m[90m499 | [97m GPU_palt PALETTE_WRITE, 178 
+[90m500 | [97m GPU_rgba 0x8F97EFFF 
+[90m501 | [97m GPU_palt PALETTE_WRITE, 179 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m502 | [97m GPU_rgba 0x4F471FFF 
+[90m503 | [97m GPU_palt PALETTE_WRITE, 180 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:502:2:
+[0m[90m500 | [97m GPU_rgba 0x8F97EFFF 
+[90m501 | [97m GPU_palt PALETTE_WRITE, 179 
+[90m502 | [97m GPU_rgba 0x4F471FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m503 | [97m GPU_palt PALETTE_WRITE, 180 
+[90m504 | [97m GPU_rgba 0x2F2F0FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:503:2:
+[0m[90m501 | [97m GPU_palt PALETTE_WRITE, 179 
+[90m502 | [97m GPU_rgba 0x4F471FFF 
+[90m503 | [97m GPU_palt PALETTE_WRITE, 180 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m504 | [97m GPU_rgba 0x2F2F0FFF 
+[90m505 | [97m GPU_palt PALETTE_WRITE, 181 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:504:2:
+[0m[90m502 | [97m GPU_rgba 0x4F471FFF 
+[90m503 | [97m GPU_palt PALETTE_WRITE, 180 
+[90m504 | [97m GPU_rgba 0x2F2F0FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m505 | [97m GPU_palt PALETTE_WRITE, 181 
+[90m506 | [97m GPU_rgba 0x1F1707FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:505:2:
+[0m[90m503 | [97m GPU_palt PALETTE_WRITE, 180 
+[90m504 | [97m GPU_rgba 0x2F2F0FFF 
+[90m505 | [97m GPU_palt PALETTE_WRITE, 181 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m506 | [97m GPU_rgba 0x1F1707FF 
+[90m507 | [97m GPU_palt PALETTE_WRITE, 182 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:506:2:
+[0m[90m504 | [97m GPU_rgba 0x2F2F0FFF 
+[90m505 | [97m GPU_palt PALETTE_WRITE, 181 
+[90m506 | [97m GPU_rgba 0x1F1707FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m507 | [97m GPU_palt PALETTE_WRITE, 182 
+[90m508 | [97m GPU_rgba 0x67877FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:507:2:
+[0m[90m505 | [97m GPU_palt PALETTE_WRITE, 181 
+[90m506 | [97m GPU_rgba 0x1F1707FF 
+[90m507 | [97m GPU_palt PALETTE_WRITE, 182 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m508 | [97m GPU_rgba 0x67877FFF 
+[90m509 | [97m GPU_palt PALETTE_WRITE, 183 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:508:2:
+[0m[90m506 | [97m GPU_rgba 0x1F1707FF 
+[90m507 | [97m GPU_palt PALETTE_WRITE, 182 
+[90m508 | [97m GPU_rgba 0x67877FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m509 | [97m GPU_palt PALETTE_WRITE, 183 
+[90m510 | [97m GPU_rgba 0x2F5F5FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:509:2:
+[0m[90m507 | [97m GPU_palt PALETTE_WRITE, 182 
+[90m508 | [97m GPU_rgba 0x67877FFF 
+[90m509 | [97m GPU_palt PALETTE_WRITE, 183 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m510 | [97m GPU_rgba 0x2F5F5FFF 
+[90m511 | [97m GPU_palt PALETTE_WRITE, 184 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:510:2:
+[0m[90m508 | [97m GPU_rgba 0x67877FFF 
+[90m509 | [97m GPU_palt PALETTE_WRITE, 183 
+[90m510 | [97m GPU_rgba 0x2F5F5FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m511 | [97m GPU_palt PALETTE_WRITE, 184 
+[90m512 | [97m GPU_rgba 0x0F1F1FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:511:2:
+[0m[90m509 | [97m GPU_palt PALETTE_WRITE, 183 
+[90m510 | [97m GPU_rgba 0x2F5F5FFF 
+[90m511 | [97m GPU_palt PALETTE_WRITE, 184 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m512 | [97m GPU_rgba 0x0F1F1FFF 
+[90m513 | [97m GPU_palt PALETTE_WRITE, 185 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:512:2:
+[0m[90m510 | [97m GPU_rgba 0x2F5F5FFF 
+[90m511 | [97m GPU_palt PALETTE_WRITE, 184 
+[90m512 | [97m GPU_rgba 0x0F1F1FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m513 | [97m GPU_palt PALETTE_WRITE, 185 
+[90m514 | [97m GPU_rgba 0x1F3F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:513:2:
+[0m[90m511 | [97m GPU_palt PALETTE_WRITE, 184 
+[90m512 | [97m GPU_rgba 0x0F1F1FFF 
+[90m513 | [97m GPU_palt PALETTE_WRITE, 185 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m514 | [97m GPU_rgba 0x1F3F3FFF 
+[90m515 | [97m GPU_palt PALETTE_WRITE, 186 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:514:2:
+[0m[90m512 | [97m GPU_rgba 0x0F1F1FFF 
+[90m513 | [97m GPU_palt PALETTE_WRITE, 185 
+[90m514 | [97m GPU_rgba 0x1F3F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m515 | [97m GPU_palt PALETTE_WRITE, 186 
+[90m516 | [97m GPU_rgba 0x3F8787FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:515:2:
+[0m[90m513 | [97m GPU_palt PALETTE_WRITE, 185 
+[90m514 | [97m GPU_rgba 0x1F3F3FFF 
+[90m515 | [97m GPU_palt PALETTE_WRITE, 186 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m516 | [97m GPU_rgba 0x3F8787FF 
+[90m517 | [97m GPU_palt PALETTE_WRITE, 187 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:516:2:
+[0m[90m514 | [97m GPU_rgba 0x1F3F3FFF 
+[90m515 | [97m GPU_palt PALETTE_WRITE, 186 
+[90m516 | [97m GPU_rgba 0x3F8787FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m517 | [97m GPU_palt PALETTE_WRITE, 187 
+[90m518 | [97m GPU_rgba 0xDFDFC7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:517:2:
+[0m[90m515 | [97m GPU_palt PALETTE_WRITE, 186 
+[90m516 | [97m GPU_rgba 0x3F8787FF 
+[90m517 | [97m GPU_palt PALETTE_WRITE, 187 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m518 | [97m GPU_rgba 0xDFDFC7FF 
+[90m519 | [97m GPU_palt PALETTE_WRITE, 188 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:518:2:
+[0m[90m516 | [97m GPU_rgba 0x3F8787FF 
+[90m517 | [97m GPU_palt PALETTE_WRITE, 187 
+[90m518 | [97m GPU_rgba 0xDFDFC7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m519 | [97m GPU_palt PALETTE_WRITE, 188 
+[90m520 | [97m GPU_rgba 0x979767FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:519:2:
+[0m[90m517 | [97m GPU_palt PALETTE_WRITE, 187 
+[90m518 | [97m GPU_rgba 0xDFDFC7FF 
+[90m519 | [97m GPU_palt PALETTE_WRITE, 188 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m520 | [97m GPU_rgba 0x979767FF 
+[90m521 | [97m GPU_palt PALETTE_WRITE, 189 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:520:2:
+[0m[90m518 | [97m GPU_rgba 0xDFDFC7FF 
+[90m519 | [97m GPU_palt PALETTE_WRITE, 188 
+[90m520 | [97m GPU_rgba 0x979767FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m521 | [97m GPU_palt PALETTE_WRITE, 189 
+[90m522 | [97m GPU_rgba 0x7F6F5FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:521:2:
+[0m[90m519 | [97m GPU_palt PALETTE_WRITE, 188 
+[90m520 | [97m GPU_rgba 0x979767FF 
+[90m521 | [97m GPU_palt PALETTE_WRITE, 189 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m522 | [97m GPU_rgba 0x7F6F5FFF 
+[90m523 | [97m GPU_palt PALETTE_WRITE, 190 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:522:2:
+[0m[90m520 | [97m GPU_rgba 0x979767FF 
+[90m521 | [97m GPU_palt PALETTE_WRITE, 189 
+[90m522 | [97m GPU_rgba 0x7F6F5FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m523 | [97m GPU_palt PALETTE_WRITE, 190 
+[90m524 | [97m GPU_rgba 0xEF1F57FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:523:2:
+[0m[90m521 | [97m GPU_palt PALETTE_WRITE, 189 
+[90m522 | [97m GPU_rgba 0x7F6F5FFF 
+[90m523 | [97m GPU_palt PALETTE_WRITE, 190 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m524 | [97m GPU_rgba 0xEF1F57FF 
+[90m525 | [97m GPU_palt PALETTE_WRITE, 191 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:524:2:
+[0m[90m522 | [97m GPU_rgba 0x7F6F5FFF 
+[90m523 | [97m GPU_palt PALETTE_WRITE, 190 
+[90m524 | [97m GPU_rgba 0xEF1F57FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m525 | [97m GPU_palt PALETTE_WRITE, 191 
+[90m526 | [97m GPU_rgba 0x0F2F4FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:525:2:
+[0m[90m523 | [97m GPU_palt PALETTE_WRITE, 190 
+[90m524 | [97m GPU_rgba 0xEF1F57FF 
+[90m525 | [97m GPU_palt PALETTE_WRITE, 191 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m526 | [97m GPU_rgba 0x0F2F4FFF 
+[90m527 | [97m GPU_palt PALETTE_WRITE, 192 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:526:2:
+[0m[90m524 | [97m GPU_rgba 0xEF1F57FF 
+[90m525 | [97m GPU_palt PALETTE_WRITE, 191 
+[90m526 | [97m GPU_rgba 0x0F2F4FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m527 | [97m GPU_palt PALETTE_WRITE, 192 
+[90m528 | [97m GPU_rgba 0x071737FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:527:2:
+[0m[90m525 | [97m GPU_palt PALETTE_WRITE, 191 
+[90m526 | [97m GPU_rgba 0x0F2F4FFF 
+[90m527 | [97m GPU_palt PALETTE_WRITE, 192 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m528 | [97m GPU_rgba 0x071737FF 
+[90m529 | [97m GPU_palt PALETTE_WRITE, 193 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:528:2:
+[0m[90m526 | [97m GPU_rgba 0x0F2F4FFF 
+[90m527 | [97m GPU_palt PALETTE_WRITE, 192 
+[90m528 | [97m GPU_rgba 0x071737FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m529 | [97m GPU_palt PALETTE_WRITE, 193 
+[90m530 | [97m GPU_rgba 0x000717FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:529:2:
+[0m[90m527 | [97m GPU_palt PALETTE_WRITE, 192 
+[90m528 | [97m GPU_rgba 0x071737FF 
+[90m529 | [97m GPU_palt PALETTE_WRITE, 193 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m530 | [97m GPU_rgba 0x000717FF 
+[90m531 | [97m GPU_palt PALETTE_WRITE, 194 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:530:2:
+[0m[90m528 | [97m GPU_rgba 0x071737FF 
+[90m529 | [97m GPU_palt PALETTE_WRITE, 193 
+[90m530 | [97m GPU_rgba 0x000717FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m531 | [97m GPU_palt PALETTE_WRITE, 194 
+[90m532 | [97m GPU_rgba 0x2F271FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:531:2:
+[0m[90m529 | [97m GPU_palt PALETTE_WRITE, 193 
+[90m530 | [97m GPU_rgba 0x000717FF 
+[90m531 | [97m GPU_palt PALETTE_WRITE, 194 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m532 | [97m GPU_rgba 0x2F271FFF 
+[90m533 | [97m GPU_palt PALETTE_WRITE, 195 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:532:2:
+[0m[90m530 | [97m GPU_rgba 0x000717FF 
+[90m531 | [97m GPU_palt PALETTE_WRITE, 194 
+[90m532 | [97m GPU_rgba 0x2F271FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m533 | [97m GPU_palt PALETTE_WRITE, 195 
+[90m534 | [97m GPU_rgba 0x574F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:533:2:
+[0m[90m531 | [97m GPU_palt PALETTE_WRITE, 194 
+[90m532 | [97m GPU_rgba 0x2F271FFF 
+[90m533 | [97m GPU_palt PALETTE_WRITE, 195 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m534 | [97m GPU_rgba 0x574F3FFF 
+[90m535 | [97m GPU_palt PALETTE_WRITE, 196 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:534:2:
+[0m[90m532 | [97m GPU_rgba 0x2F271FFF 
+[90m533 | [97m GPU_palt PALETTE_WRITE, 195 
+[90m534 | [97m GPU_rgba 0x574F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m535 | [97m GPU_palt PALETTE_WRITE, 196 
+[90m536 | [97m GPU_rgba 0x0F0000FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:535:2:
+[0m[90m533 | [97m GPU_palt PALETTE_WRITE, 195 
+[90m534 | [97m GPU_rgba 0x574F3FFF 
+[90m535 | [97m GPU_palt PALETTE_WRITE, 196 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m536 | [97m GPU_rgba 0x0F0000FF 
+[90m537 | [97m GPU_palt PALETTE_WRITE, 197 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:536:2:
+[0m[90m534 | [97m GPU_rgba 0x574F3FFF 
+[90m535 | [97m GPU_palt PALETTE_WRITE, 196 
+[90m536 | [97m GPU_rgba 0x0F0000FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m537 | [97m GPU_palt PALETTE_WRITE, 197 
+[90m538 | [97m GPU_rgba 0xDFDFA7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:537:2:
+[0m[90m535 | [97m GPU_palt PALETTE_WRITE, 196 
+[90m536 | [97m GPU_rgba 0x0F0000FF 
+[90m537 | [97m GPU_palt PALETTE_WRITE, 197 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m538 | [97m GPU_rgba 0xDFDFA7FF 
+[90m539 | [97m GPU_palt PALETTE_WRITE, 198 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:538:2:
+[0m[90m536 | [97m GPU_rgba 0x0F0000FF 
+[90m537 | [97m GPU_palt PALETTE_WRITE, 197 
+[90m538 | [97m GPU_rgba 0xDFDFA7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m539 | [97m GPU_palt PALETTE_WRITE, 198 
+[90m540 | [97m GPU_rgba 0xA7A787FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:539:2:
+[0m[90m537 | [97m GPU_palt PALETTE_WRITE, 197 
+[90m538 | [97m GPU_rgba 0xDFDFA7FF 
+[90m539 | [97m GPU_palt PALETTE_WRITE, 198 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m540 | [97m GPU_rgba 0xA7A787FF 
+[90m541 | [97m GPU_palt PALETTE_WRITE, 199 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:540:2:
+[0m[90m538 | [97m GPU_rgba 0xDFDFA7FF 
+[90m539 | [97m GPU_palt PALETTE_WRITE, 198 
+[90m540 | [97m GPU_rgba 0xA7A787FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m541 | [97m GPU_palt PALETTE_WRITE, 199 
+[90m542 | [97m GPU_rgba 0x000F27FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:541:2:
+[0m[90m539 | [97m GPU_palt PALETTE_WRITE, 198 
+[90m540 | [97m GPU_rgba 0xA7A787FF 
+[90m541 | [97m GPU_palt PALETTE_WRITE, 199 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m542 | [97m GPU_rgba 0x000F27FF 
+[90m543 | [97m GPU_palt PALETTE_WRITE, 200 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:542:2:
+[0m[90m540 | [97m GPU_rgba 0xA7A787FF 
+[90m541 | [97m GPU_palt PALETTE_WRITE, 199 
+[90m542 | [97m GPU_rgba 0x000F27FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m543 | [97m GPU_palt PALETTE_WRITE, 200 
+[90m544 | [97m GPU_rgba 0x374747FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:543:2:
+[0m[90m541 | [97m GPU_palt PALETTE_WRITE, 199 
+[90m542 | [97m GPU_rgba 0x000F27FF 
+[90m543 | [97m GPU_palt PALETTE_WRITE, 200 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m544 | [97m GPU_rgba 0x374747FF 
+[90m545 | [97m GPU_palt PALETTE_WRITE, 201 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:544:2:
+[0m[90m542 | [97m GPU_rgba 0x000F27FF 
+[90m543 | [97m GPU_palt PALETTE_WRITE, 200 
+[90m544 | [97m GPU_rgba 0x374747FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m545 | [97m GPU_palt PALETTE_WRITE, 201 
+[90m546 | [97m GPU_rgba 0xEFE7DFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:545:2:
+[0m[90m543 | [97m GPU_palt PALETTE_WRITE, 200 
+[90m544 | [97m GPU_rgba 0x374747FF 
+[90m545 | [97m GPU_palt PALETTE_WRITE, 201 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m546 | [97m GPU_rgba 0xEFE7DFFF 
+[90m547 | [97m GPU_palt PALETTE_WRITE, 202 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:546:2:
+[0m[90m544 | [97m GPU_rgba 0x374747FF 
+[90m545 | [97m GPU_palt PALETTE_WRITE, 201 
+[90m546 | [97m GPU_rgba 0xEFE7DFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m547 | [97m GPU_palt PALETTE_WRITE, 202 
+[90m548 | [97m GPU_rgba 0x7FA79FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:547:2:
+[0m[90m545 | [97m GPU_palt PALETTE_WRITE, 201 
+[90m546 | [97m GPU_rgba 0xEFE7DFFF 
+[90m547 | [97m GPU_palt PALETTE_WRITE, 202 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m548 | [97m GPU_rgba 0x7FA79FFF 
+[90m549 | [97m GPU_palt PALETTE_WRITE, 203 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:548:2:
+[0m[90m546 | [97m GPU_rgba 0xEFE7DFFF 
+[90m547 | [97m GPU_palt PALETTE_WRITE, 202 
+[90m548 | [97m GPU_rgba 0x7FA79FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m549 | [97m GPU_palt PALETTE_WRITE, 203 
+[90m550 | [97m GPU_rgba 0x4F6F67FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:549:2:
+[0m[90m547 | [97m GPU_palt PALETTE_WRITE, 202 
+[90m548 | [97m GPU_rgba 0x7FA79FFF 
+[90m549 | [97m GPU_palt PALETTE_WRITE, 203 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m550 | [97m GPU_rgba 0x4F6F67FF 
+[90m551 | [97m GPU_palt PALETTE_WRITE, 204 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:550:2:
+[0m[90m548 | [97m GPU_rgba 0x7FA79FFF 
+[90m549 | [97m GPU_palt PALETTE_WRITE, 203 
+[90m550 | [97m GPU_rgba 0x4F6F67FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m551 | [97m GPU_palt PALETTE_WRITE, 204 
+[90m552 | [97m GPU_rgba 0x374F47FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:551:2:
+[0m[90m549 | [97m GPU_palt PALETTE_WRITE, 203 
+[90m550 | [97m GPU_rgba 0x4F6F67FF 
+[90m551 | [97m GPU_palt PALETTE_WRITE, 204 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m552 | [97m GPU_rgba 0x374F47FF 
+[90m553 | [97m GPU_palt PALETTE_WRITE, 205 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:552:2:
+[0m[90m550 | [97m GPU_rgba 0x4F6F67FF 
+[90m551 | [97m GPU_palt PALETTE_WRITE, 204 
+[90m552 | [97m GPU_rgba 0x374F47FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m553 | [97m GPU_palt PALETTE_WRITE, 205 
+[90m554 | [97m GPU_rgba 0x00001FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:553:2:
+[0m[90m551 | [97m GPU_palt PALETTE_WRITE, 204 
+[90m552 | [97m GPU_rgba 0x374F47FF 
+[90m553 | [97m GPU_palt PALETTE_WRITE, 205 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m554 | [97m GPU_rgba 0x00001FFF 
+[90m555 | [97m GPU_palt PALETTE_WRITE, 206 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:554:2:
+[0m[90m552 | [97m GPU_rgba 0x374F47FF 
+[90m553 | [97m GPU_palt PALETTE_WRITE, 205 
+[90m554 | [97m GPU_rgba 0x00001FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m555 | [97m GPU_palt PALETTE_WRITE, 206 
+[90m556 | [97m GPU_rgba 0x072717FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:555:2:
+[0m[90m553 | [97m GPU_palt PALETTE_WRITE, 205 
+[90m554 | [97m GPU_rgba 0x00001FFF 
+[90m555 | [97m GPU_palt PALETTE_WRITE, 206 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m556 | [97m GPU_rgba 0x072717FF 
+[90m557 | [97m GPU_palt PALETTE_WRITE, 207 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:556:2:
+[0m[90m554 | [97m GPU_rgba 0x00001FFF 
+[90m555 | [97m GPU_palt PALETTE_WRITE, 206 
+[90m556 | [97m GPU_rgba 0x072717FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m557 | [97m GPU_palt PALETTE_WRITE, 207 
+[90m558 | [97m GPU_rgba 0x0F4F1FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:557:2:
+[0m[90m555 | [97m GPU_palt PALETTE_WRITE, 206 
+[90m556 | [97m GPU_rgba 0x072717FF 
+[90m557 | [97m GPU_palt PALETTE_WRITE, 207 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m558 | [97m GPU_rgba 0x0F4F1FFF 
+[90m559 | [97m GPU_palt PALETTE_WRITE, 208 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:558:2:
+[0m[90m556 | [97m GPU_rgba 0x072717FF 
+[90m557 | [97m GPU_palt PALETTE_WRITE, 207 
+[90m558 | [97m GPU_rgba 0x0F4F1FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m559 | [97m GPU_palt PALETTE_WRITE, 208 
+[90m560 | [97m GPU_rgba 0x578F27FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:559:2:
+[0m[90m557 | [97m GPU_palt PALETTE_WRITE, 207 
+[90m558 | [97m GPU_rgba 0x0F4F1FFF 
+[90m559 | [97m GPU_palt PALETTE_WRITE, 208 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m560 | [97m GPU_rgba 0x578F27FF 
+[90m561 | [97m GPU_palt PALETTE_WRITE, 209 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:560:2:
+[0m[90m558 | [97m GPU_rgba 0x0F4F1FFF 
+[90m559 | [97m GPU_palt PALETTE_WRITE, 208 
+[90m560 | [97m GPU_rgba 0x578F27FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m561 | [97m GPU_palt PALETTE_WRITE, 209 
+[90m562 | [97m GPU_rgba 0x276F37FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:561:2:
+[0m[90m559 | [97m GPU_palt PALETTE_WRITE, 208 
+[90m560 | [97m GPU_rgba 0x578F27FF 
+[90m561 | [97m GPU_palt PALETTE_WRITE, 209 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m562 | [97m GPU_rgba 0x276F37FF 
+[90m563 | [97m GPU_palt PALETTE_WRITE, 210 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:562:2:
+[0m[90m560 | [97m GPU_rgba 0x578F27FF 
+[90m561 | [97m GPU_palt PALETTE_WRITE, 209 
+[90m562 | [97m GPU_rgba 0x276F37FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m563 | [97m GPU_palt PALETTE_WRITE, 210 
+[90m564 | [97m GPU_rgba 0x1F3727FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:563:2:
+[0m[90m561 | [97m GPU_palt PALETTE_WRITE, 209 
+[90m562 | [97m GPU_rgba 0x276F37FF 
+[90m563 | [97m GPU_palt PALETTE_WRITE, 210 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m564 | [97m GPU_rgba 0x1F3727FF 
+[90m565 | [97m GPU_palt PALETTE_WRITE, 211 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:564:2:
+[0m[90m562 | [97m GPU_rgba 0x276F37FF 
+[90m563 | [97m GPU_palt PALETTE_WRITE, 210 
+[90m564 | [97m GPU_rgba 0x1F3727FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m565 | [97m GPU_palt PALETTE_WRITE, 211 
+[90m566 | [97m GPU_rgba 0x071707FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:565:2:
+[0m[90m563 | [97m GPU_palt PALETTE_WRITE, 210 
+[90m564 | [97m GPU_rgba 0x1F3727FF 
+[90m565 | [97m GPU_palt PALETTE_WRITE, 211 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m566 | [97m GPU_rgba 0x071707FF 
+[90m567 | [97m GPU_palt PALETTE_WRITE, 212 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:566:2:
+[0m[90m564 | [97m GPU_rgba 0x1F3727FF 
+[90m565 | [97m GPU_palt PALETTE_WRITE, 211 
+[90m566 | [97m GPU_rgba 0x071707FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m567 | [97m GPU_palt PALETTE_WRITE, 212 
+[90m568 | [97m GPU_rgba 0xD7DFDFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:567:2:
+[0m[90m565 | [97m GPU_palt PALETTE_WRITE, 211 
+[90m566 | [97m GPU_rgba 0x071707FF 
+[90m567 | [97m GPU_palt PALETTE_WRITE, 212 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m568 | [97m GPU_rgba 0xD7DFDFFF 
+[90m569 | [97m GPU_palt PALETTE_WRITE, 213 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:568:2:
+[0m[90m566 | [97m GPU_rgba 0x071707FF 
+[90m567 | [97m GPU_palt PALETTE_WRITE, 212 
+[90m568 | [97m GPU_rgba 0xD7DFDFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m569 | [97m GPU_palt PALETTE_WRITE, 213 
+[90m570 | [97m GPU_rgba 0xAFB7BFFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:569:2:
+[0m[90m567 | [97m GPU_palt PALETTE_WRITE, 212 
+[90m568 | [97m GPU_rgba 0xD7DFDFFF 
+[90m569 | [97m GPU_palt PALETTE_WRITE, 213 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m570 | [97m GPU_rgba 0xAFB7BFFF 
+[90m571 | [97m GPU_palt PALETTE_WRITE, 214 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:570:2:
+[0m[90m568 | [97m GPU_rgba 0xD7DFDFFF 
+[90m569 | [97m GPU_palt PALETTE_WRITE, 213 
+[90m570 | [97m GPU_rgba 0xAFB7BFFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m571 | [97m GPU_palt PALETTE_WRITE, 214 
+[90m572 | [97m GPU_rgba 0x87979FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:571:2:
+[0m[90m569 | [97m GPU_palt PALETTE_WRITE, 213 
+[90m570 | [97m GPU_rgba 0xAFB7BFFF 
+[90m571 | [97m GPU_palt PALETTE_WRITE, 214 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m572 | [97m GPU_rgba 0x87979FFF 
+[90m573 | [97m GPU_palt PALETTE_WRITE, 215 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:572:2:
+[0m[90m570 | [97m GPU_rgba 0xAFB7BFFF 
+[90m571 | [97m GPU_palt PALETTE_WRITE, 214 
+[90m572 | [97m GPU_rgba 0x87979FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m573 | [97m GPU_palt PALETTE_WRITE, 215 
+[90m574 | [97m GPU_rgba 0x2F475FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:573:2:
+[0m[90m571 | [97m GPU_palt PALETTE_WRITE, 214 
+[90m572 | [97m GPU_rgba 0x87979FFF 
+[90m573 | [97m GPU_palt PALETTE_WRITE, 215 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m574 | [97m GPU_rgba 0x2F475FFF 
+[90m575 | [97m GPU_palt PALETTE_WRITE, 216 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:574:2:
+[0m[90m572 | [97m GPU_rgba 0x87979FFF 
+[90m573 | [97m GPU_palt PALETTE_WRITE, 215 
+[90m574 | [97m GPU_rgba 0x2F475FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m575 | [97m GPU_palt PALETTE_WRITE, 216 
+[90m576 | [97m GPU_rgba 0x071F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:575:2:
+[0m[90m573 | [97m GPU_palt PALETTE_WRITE, 215 
+[90m574 | [97m GPU_rgba 0x2F475FFF 
+[90m575 | [97m GPU_palt PALETTE_WRITE, 216 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m576 | [97m GPU_rgba 0x071F3FFF 
+[90m577 | [97m GPU_palt PALETTE_WRITE, 217 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:576:2:
+[0m[90m574 | [97m GPU_rgba 0x2F475FFF 
+[90m575 | [97m GPU_palt PALETTE_WRITE, 216 
+[90m576 | [97m GPU_rgba 0x071F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m577 | [97m GPU_palt PALETTE_WRITE, 217 
+[90m578 | [97m GPU_rgba 0x5F6F7FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:577:2:
+[0m[90m575 | [97m GPU_palt PALETTE_WRITE, 216 
+[90m576 | [97m GPU_rgba 0x071F3FFF 
+[90m577 | [97m GPU_palt PALETTE_WRITE, 217 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m578 | [97m GPU_rgba 0x5F6F7FFF 
+[90m579 | [97m GPU_palt PALETTE_WRITE, 218 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:578:2:
+[0m[90m576 | [97m GPU_rgba 0x071F3FFF 
+[90m577 | [97m GPU_palt PALETTE_WRITE, 217 
+[90m578 | [97m GPU_rgba 0x5F6F7FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m579 | [97m GPU_palt PALETTE_WRITE, 218 
+[90m580 | [97m GPU_rgba 0xC7C787FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:579:2:
+[0m[90m577 | [97m GPU_palt PALETTE_WRITE, 217 
+[90m578 | [97m GPU_rgba 0x5F6F7FFF 
+[90m579 | [97m GPU_palt PALETTE_WRITE, 218 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m580 | [97m GPU_rgba 0xC7C787FF 
+[90m581 | [97m GPU_palt PALETTE_WRITE, 219 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:580:2:
+[0m[90m578 | [97m GPU_rgba 0x5F6F7FFF 
+[90m579 | [97m GPU_palt PALETTE_WRITE, 218 
+[90m580 | [97m GPU_rgba 0xC7C787FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m581 | [97m GPU_palt PALETTE_WRITE, 219 
+[90m582 | [97m GPU_rgba 0x373F3FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:581:2:
+[0m[90m579 | [97m GPU_palt PALETTE_WRITE, 218 
+[90m580 | [97m GPU_rgba 0xC7C787FF 
+[90m581 | [97m GPU_palt PALETTE_WRITE, 219 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m582 | [97m GPU_rgba 0x373F3FFF 
+[90m583 | [97m GPU_palt PALETTE_WRITE, 220 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:582:2:
+[0m[90m580 | [97m GPU_rgba 0xC7C787FF 
+[90m581 | [97m GPU_palt PALETTE_WRITE, 219 
+[90m582 | [97m GPU_rgba 0x373F3FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m583 | [97m GPU_palt PALETTE_WRITE, 220 
+[90m584 | [97m GPU_rgba 0x6F6F4FFF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:583:2:
+[0m[90m581 | [97m GPU_palt PALETTE_WRITE, 219 
+[90m582 | [97m GPU_rgba 0x373F3FFF 
+[90m583 | [97m GPU_palt PALETTE_WRITE, 220 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m584 | [97m GPU_rgba 0x6F6F4FFF 
+[90m585 | [97m GPU_palt PALETTE_WRITE, 221 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:584:2:
+[0m[90m582 | [97m GPU_rgba 0x373F3FFF 
+[90m583 | [97m GPU_palt PALETTE_WRITE, 220 
+[90m584 | [97m GPU_rgba 0x6F6F4FFF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m585 | [97m GPU_palt PALETTE_WRITE, 221 
+[90m586 | [97m GPU_rgba 0x2F7F47FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:585:2:
+[0m[90m583 | [97m GPU_palt PALETTE_WRITE, 220 
+[90m584 | [97m GPU_rgba 0x6F6F4FFF 
+[90m585 | [97m GPU_palt PALETTE_WRITE, 221 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m586 | [97m GPU_rgba 0x2F7F47FF 
+[90m587 | [97m GPU_palt PALETTE_WRITE, 222 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:586:2:
+[0m[90m584 | [97m GPU_rgba 0x6F6F4FFF 
+[90m585 | [97m GPU_palt PALETTE_WRITE, 221 
+[90m586 | [97m GPU_rgba 0x2F7F47FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m587 | [97m GPU_palt PALETTE_WRITE, 222 
+[90m588 | [97m GPU_rgba 0xEFEFA7FF 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:587:2:
+[0m[90m585 | [97m GPU_palt PALETTE_WRITE, 221 
+[90m586 | [97m GPU_rgba 0x2F7F47FF 
+[90m587 | [97m GPU_palt PALETTE_WRITE, 222 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m588 | [97m GPU_rgba 0xEFEFA7FF 
+[90m589 | [97m GPU_palt PALETTE_WRITE, 223 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:588:2:
+[0m[90m586 | [97m GPU_rgba 0x2F7F47FF 
+[90m587 | [97m GPU_palt PALETTE_WRITE, 222 
+[90m588 | [97m GPU_rgba 0xEFEFA7FF 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^  
+[90m589 | [97m GPU_palt PALETTE_WRITE, 223 
+[90m590 | [97m GPU_ret 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:589:2:
+[0m[90m587 | [97m GPU_palt PALETTE_WRITE, 222 
+[90m588 | [97m GPU_rgba 0xEFEFA7FF 
+[90m589 | [97m GPU_palt PALETTE_WRITE, 223 
+[90m    | [91m ^^^^^^^^^^^^^^^^^^^^^^^^^^^  
+[90m590 | [97m GPU_ret 
+[90m591 | [97m 
+[0m[90m[1m[91merror: no match found for instruction
+[0m  [90m --> ./shader-02.asm:590:2:
+[0m[90m588 | [97m GPU_rgba 0xEFEFA7FF 
+[90m589 | [97m GPU_palt PALETTE_WRITE, 223 
+[90m590 | [97m GPU_ret 
+[90m    | [91m ^^^^^^^  
+[90m591 | [97m 
+[90m592 | [97m#addr cavestory_tileset 
+[0m

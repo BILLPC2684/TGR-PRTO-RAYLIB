@@ -10,6 +10,7 @@
 #include <math.h>
 #include <time.h>
 #include <raylib.h>
+#include <unistd.h>
 
 #define TAYLOR_GPU_DEBUG_TEST false //forced debug toggle
 uint8_t TaylorPrintString[0xFFFF] = "";
@@ -118,21 +119,21 @@ void crop(uint8_t *dst, uint8_t *src, size_t mn, size_t mx) {
 FILE *BIOSfp,*ROMfp,*SAVfp,Statefp;
 
 void FlushSAV() {
- sprintf(TaylorPrintString,"FlushSAV (LoadFailed: %s, EXTSAV: %s, strlen(SAVName): %li]: %s\n%s\n", (!sys.ROMloaded)?"True":"False", sys.EXTSAV?"True":"False", strlen(sys.SN), (!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0))?"True":"False",sys.SN); FilterAnsi(TaylorPrintString);
+ sprintf(TaylorPrintString,"FlushSAV (LoadFailed: %s, EXTSAV: %s, strlen(SAVName): %li]: %s\n%s\n", (uint8_t*)((!sys.ROMloaded)?"True":"False"), (uint8_t*)(sys.EXTSAV?"True":"False"), strlen(sys.SN), (uint8_t*)((!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0))?"True":"False"),sys.SN); FilterAnsi(TaylorPrintString);
  if (!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0)) {
   FilterAnsi("FlushSAV!!\n");
   SAVfp = fopen(sys.SN,"wb"); fwrite(&sys.MEM[0x1000000], 1, TGR_MEM_ROM_SIZE, SAVfp);
   fflush(SAVfp); fclose(SAVfp);
 }}
 void WriteSAV(uint32_t Address, uint8_t Data) {
- sprintf(TaylorPrintString,"WriteSAV (LoadFailed: %s, EXTSAV: %s, strlen(SAVName): %li]: %s\n", (!sys.ROMloaded)?"True":"False", sys.EXTSAV?"True":"False", strlen(sys.SN), (!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0))?"True":"False"); FilterAnsi(TaylorPrintString);
+ sprintf(TaylorPrintString,"WriteSAV (LoadFailed: %s, EXTSAV: %s, strlen(SAVName): %li]: %s\n", (uint8_t*)((!sys.ROMloaded)?"True":"False"), (uint8_t*)(sys.EXTSAV?"True":"False"), (uint8_t*)(strlen(sys.SN), (!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0))?"True":"False")); FilterAnsi(TaylorPrintString);
  if (!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0)) {
   FilterAnsi("WriteSAV!!\n");
   SAVfp = fopen(sys.SN,"wb"); fseek(Address, SAVfp, SEEK_SET);
   fwrite(Data, 1, 1, SAVfp); fflush(SAVfp); fclose(SAVfp);
 }}
 void LoadSAV() {
- sprintf(TaylorPrintString,"LoadSAV (LoadFailed: %s, EXTSAV: %s, strlen(SAVName): %li]: %s\n", (!sys.ROMloaded)?"True":"False", sys.EXTSAV?"True":"False", strlen(sys.SN), (!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0))?"True":"False"); FilterAnsi(TaylorPrintString);
+ sprintf(TaylorPrintString,"LoadSAV (LoadFailed: %s, EXTSAV: %s, strlen(SAVName): %li]: %s\n", (uint8_t*)((!sys.ROMloaded)?"True":"False"), (uint8_t*)(sys.EXTSAV?"True":"False"), strlen(sys.SN), (uint8_t*)((!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0))?"True":"False")); FilterAnsi(TaylorPrintString);
  if (!sys.ROMloaded && !(sys.EXTSAV && strlen(sys.SN)==0)) {
   FilterAnsi("LoadSAV!!\n");
   if ((SAVfp = fopen(sys.SN,"rb")) != NULL) { fread(&sys.MEM[0x1000000], 1, TGR_MEM_ROM_SIZE, SAVfp); fclose(SAVfp); }
@@ -168,13 +169,13 @@ void PrintHeader() {
  printf("\"\n");
 }
 
-int CARTINIT();
+uint16_t CARTINIT();
 void*Clock();
 void*MemCheck();
 void*GPUMain();
 void*GPUCore(uint8_t ID);
 
-void CPU_init() { //############################################//
+int8_t CPU_init() { //############################################//
  sys.SilentRun = false;
  sprintf(TaylorPrintString,"Initalizing Taylor v0.32 Alpha Build\n"); FilterAnsi(TaylorPrintString);
  //sys.Debug = false; //debug mode
@@ -214,7 +215,7 @@ void CPU_load(uint8_t filepath[]) { CPU_stop();
  WaitTime(0.001); sys.RN = malloc(1024); sys.SN = malloc(1024);
  strcpy(sys.RN, filepath); sprintf(TaylorPrintString,"\nROM Selected: %s\n",filepath); FilterAnsi(TaylorPrintString); sys.EXTSAV = false;
  if(LoadCart()<0) { sys.Title[0] = 0; sys.ROMloaded = 0; sys.ErrorType = 1; sprintf(sys.Error,"%sFailed to load ROM: \"%s\"...\n",sys.Error,sys.RN); printError(); }
- else { sprintf(sys.Title, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",sys.ROMBANK[0][5],sys.ROMBANK[0][6],sys.ROMBANK[0][7],sys.ROMBANK[0][8],sys.ROMBANK[0][9],sys.ROMBANK[0][10],sys.ROMBANK[0][11],sys.ROMBANK[0][12],sys.ROMBANK[0][13],sys.ROMBANK[0][14],sys.ROMBANK[0][15],sys.ROMBANK[0][16],sys.ROMBANK[0][17],sys.ROMBANK[0][18],sys.ROMBANK[0][19],sys.ROMBANK[0][20]); sys.ROMloaded = 1; sys.HeaderSize = CARTINIT(); }
+ else { CPU_LoadPage(0,0); CPU_LoadPage(1,1); sprintf(sys.Title, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",sys.ROMBANK[0][5],sys.ROMBANK[0][6],sys.ROMBANK[0][7],sys.ROMBANK[0][8],sys.ROMBANK[0][9],sys.ROMBANK[0][10],sys.ROMBANK[0][11],sys.ROMBANK[0][12],sys.ROMBANK[0][13],sys.ROMBANK[0][14],sys.ROMBANK[0][15],sys.ROMBANK[0][16],sys.ROMBANK[0][17],sys.ROMBANK[0][18],sys.ROMBANK[0][19],sys.ROMBANK[0][20]); sys.ROMloaded = 1; sys.HeaderSize = CARTINIT(); }
 }
 void CPU_start() {
  if (sys.ROMloaded && !CPU[0].running && !CPU[1].running) {
@@ -223,12 +224,13 @@ void CPU_start() {
   } else {
    for(uint8_t i=0;i<1;i++) { CPU_ResetCore(i); CPU_LoadPage(i,i); } //dumpData(i?"ROM#0":"ROM#1", &sys.MEM[TGR_MEM_ROM_SIZE*i], TGR_MEM_ROM_SIZE, 0, 256);
    CPU[0].running=true; PrintHeader();
-}}}
+}} else { sprintf(sys.Error, "Cannot Start Emulation due to ROM not loaded or system is already running!\n"); sys.ErrorType=0; printError(); }
+}
 void CPU_reset(bool hard) {
  if (sys.ROMloaded && sys.Resetting == false) {
   sys.Resetting = true;
   FlushSAV();
-  sprintf(TaylorPrintString,"%sReset...",hard>0?"":"Hard "); FilterAnsi(TaylorPrintString);
+  sprintf(TaylorPrintString,"%sReset...",(uint8_t*)(hard>0?"":"Hard ")); FilterAnsi(TaylorPrintString);
   CPU[0].running = CPU[1].running = GPU[0].running = GPU[1].running = GPU[2].running = GPU[3].running = GPUctl.Rez = GPUctl.NewRez = false; WaitTime(0.001);
   if (hard>0) { memset(sys.MEM, 0, 0xD800000); }
   CPU_ResetCore(0); CPU_ResetCore(1); CPU_LoadPage(1,1); CPU[0].running=true;
@@ -237,10 +239,10 @@ void CPU_reset(bool hard) {
 void CPU_stop() { if (sys.ROMloaded) { FlushSAV(); }
  CPU[0].running = CPU[1].running = GPU[0].running = GPU[1].running = GPU[2].running = GPU[3].running = GPUctl.Rez = GPUctl.NewRez = false; memset(sys.MEM, 0, 0xD800000);
 }
-void CPU_state(int type) { sprintf(TaylorPrintString,"%s SAVESTATE\nWIP!!!\n",type==0?"Loading":"Saving"); FilterAnsi(TaylorPrintString); }
-void CPU_memdump(uint8_t recvbuf[], uint8_t* sendbuf[]) {  }
+void CPU_state(int type) { sprintf(TaylorPrintString,"%s SAVESTATE\nWIP!!!\n",(uint8_t*)(type==0?"Loading":"Saving")); FilterAnsi(TaylorPrintString); }
+//void CPU_memdump(uint8_t recvbuf[], uint8_t* sendbuf[]) {  }
 
-int CARTINIT() { CPU_LoadPage(0,0);
+uint16_t CARTINIT() {
  switch(sys.MEM[0]) {
   case 0x00:
    //TGRHeader[5]+Title[16]+version[12]
@@ -286,7 +288,7 @@ void*MemCheck() {
  double MemUse=0; bool l=0;
  while(true) {
   while(!sys.ClockSync) usleep(1);
-  if(l) {for(uint32_t i=0;i<0x8000000;i++) { MemUse+=sys.MEM[TGR_MEM_WRAM+i]/255.0f; } sys.MemUse = MemUse; }
+  if(l) {for(uint32_t i=0;i<TGR_MEM_WRAM_FULL;i++) { MemUse+=sys.MEM[TGR_MEM_WRAM+i]/255.0f; } sys.MemUse = MemUse; }
   else {
    //if((sys.Clock%5000)==0) GPUctl.NewRez=(GPUctl.NewRez+1)%4;
    //GPUctl.NewRez = 1;
@@ -296,7 +298,7 @@ void*MemCheck() {
 //   FilterAnsi(TaylorPrintString);
    CPU[0].IPS = CPU[1].IPS = 0;
    CPU[0].ticked=1; CPU[1].ticked=1;
-   for(uint32_t i=0;i<0x4000000;i++) { MemUse+=sys.MEM[TGR_MEM_VRAM+i]/255.0f; } sys.VMemUse = MemUse;
+   for(uint32_t i=0;i<TGR_MEM_VRAM_FULL;i++) { MemUse+=sys.MEM[TGR_MEM_VRAM+i]/255.0f; } sys.VMemUse = MemUse;
   } MemUse = 0, l=!l;
 }}
 
@@ -322,7 +324,7 @@ void*CPUCore(bool ID) {
  uint32_t i=0,j=0;
  uint8_t CPUPrintString[0xFFFF] = "";
  sys.DebugTick[ID] = true;
- printf("CPU Process #%d Started!\n",ID);
+ //printf("CPU Process #%d Started!\n",ID);
  while(true) {
   if(CPU[ID].running && !sys.Debug && sys.DebugPause[ID]>0) { sys.DebugTick[ID] = true, sys.DebugPause[ID] = 0; }
   if(CPU[ID].running && !sys.Pause && sys.DebugTick[ID] && sys.Cutscene0Timer > 31*30) {
@@ -331,7 +333,7 @@ void*CPUCore(bool ID) {
    #else
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
    #endif
-   for(j=0;j<50000;j++) { CPU[ID].IP=CPU[ID].IP&0xD7FFFFF;
+   for(j=0;j<50000;j++) { CPU[ID].IP=CPU[ID].IP%0xD800000;
     if(!CPU[ID].running || sys.Pause || !sys.DebugTick[ID]) break;
     if(CPU[ID].ticked) CPU[ID].IPS = CPU[ID].ticked = 0;
     uint8_t A   =      sys.MEM[CPU[ID].IP+1] >> 4 ;       //4 \.
@@ -354,10 +356,10 @@ void*CPUCore(bool ID) {
      sprintf(msg,"%s %s| %sTotalRan: %s%ld %s(%ld)\n%s\\ %s>> %s[",msg,COLOR_BOLD,COLOR_YELLOW,COLOR_GREEN,CPU[ID].TI,COLOR_NORMAL,CPU[0].TI+CPU[1].TI,COLOR_BOLD,COLOR_YELLOW,COLOR_NORMAL);
      for (i=0; i < 6; i++) { sprintf(msg,"%s%s%s0x%02X%s%s",msg,COLOR_BOLD,COLOR_BLUE,sys.MEM[CPU[ID].IP+i],COLOR_NORMAL,COLOR_YELLOW); if (i < 5) { sprintf(msg,"%s, ",msg); } }
      sprintf(msg,"%s] %s| %s[%s%sA%s:%s%c%s%s, %s%sB%s:%s%c%s%s, %s%sC%s:%s%c%s%s, %s%sIMM%s:%s0x%07X%s%s]\n%s%s\\%sREGs: %s[",msg,COLOR_BOLD,COLOR_NORMAL,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,sys.REG[A],COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,sys.REG[B],COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,sys.REG[B],COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,IMM,COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_NORMAL);
-     for (i=0; i < 8; i++) { sprintf(msg,"%s%s%s%c%s:%s0x%04X%s%s%s",msg,COLOR_BOLD,COLOR_GREEN,sys.REG[i],COLOR_YELLOW,COLOR_MAGENTA,CPU[ID].REGs[i],COLOR_NORMAL,COLOR_YELLOW,(i<7)?", ":""); }
+     for (i=0; i < 8; i++) { sprintf(msg,"%s%s%s%c%s:%s0x%04X%s%s%s",msg,COLOR_BOLD,COLOR_GREEN,sys.REG[i],COLOR_YELLOW,COLOR_MAGENTA,CPU[ID].REGs[i],COLOR_NORMAL,COLOR_YELLOW,(uint8_t*)(i<7?", ":"")); }
      sprintf(msg,"%s]\n%s%s\\%sStackPointer: %s0x%x%s/%s%d %s| StackBase: 0x%x/%d\n\\\\StackData:[",msg,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_CYAN,CPU[ID].SP,COLOR_YELLOW,COLOR_CYAN,CPU[ID].SP,COLOR_GREEN,CPU[ID].BP,CPU[ID].BP);
-     for (i = CPU[ID].SP+1; i <= CPU[ID].MP; ++i){
-      if((i+1)%2==0) { sprintf(msg,"%s 0x",msg); }
+     for (i = CPU[ID].SP+1; i <= CPU[ID].MP; ++i) {
+      if(i%2==0) { sprintf(msg,"%s 0x",msg); }
       sprintf(msg,"%s%02X",msg,sys.MEM[i]);
       if(i%16==0 && i != 0) { sprintf(msg,"%s\n",msg); }
      } sprintf(msg,"%s]\n \\instruction: ",msg);
@@ -428,26 +430,47 @@ void*CPUCore(bool ID) {
       CPU[ID].REGs[A] = ~CPU[ID].REGs[A]; break;
      case 0x0C:// flag  |
       if (sys.Debug == true) { sprintf(msg,"%sFLAG\n",msg); } CPU[ID].REGs[A] = 0;
-      for(i=0;i<8;i++) {CPU[ID].REGs[A]+=pow(2,i)*CPU[ID].flag[i]; if(sys.Debug==true){printf("CPU[ID].flag[%d]: %s\n",i,(CPU[ID].flag[i])?"true":"false");} CPU[ID].flag[i]=false;} CPU[ID].flag[0]=true; break;
+      for(i=0;i<8;i++) {CPU[ID].REGs[A]+=pow(2,i)*CPU[ID].flag[i]; if(sys.Debug==true){printf("CPU[ID].flag[%d]: %s\n",i,(uint8_t*)(CPU[ID].flag[i]?"true":"false"));} CPU[ID].flag[i]=false;} CPU[ID].flag[0]=true; break;
      case 0x0D:// JMP    |
       if (sys.Debug == true) { sprintf(msg,"%sJUMP\n",msg); }
       memset(CPU[ID].flag, 0, 8);
       if (C >= 1) { CPU[ID].IP = (CPU[ID].REGs[A]<<16|CPU[ID].REGs[B])-6; CPU[ID].flag[1]=true; }else{ CPU[ID].IP = IMM-6; } break;
+    // case 0x0E:// CMPEQ  |
+    //  if (sys.Debug == true) { sprintf(msg,"%sCMP=\n",msg); }
+    //  memset(CPU[ID].flag, 0, 8); CPU[ID].flag[1]=true; CPU[ID].flag[4]=true;
+    //  if (IMM>0) {  if (CPU[ID].REGs[A] != IMM) { CPU[ID].IP += ((C>0)?C:1)*6; }
+    //  }else if(CPU[ID].REGs[A] != CPU[ID].REGs[B]) { CPU[ID].IP += ((C>0)?C:1)*6; } break;
+    // case 0x0F:// CMPLT  |
+    //  if (sys.Debug == true) { sprintf(msg,"%sCMP<\n",msg); }
+    //  memset(CPU[ID].flag, 0, 8); CPU[ID].flag[1]=true; CPU[ID].flag[4]=true;
+    //  if (IMM>0) { if (!(CPU[ID].REGs[A] <  IMM)) { CPU[ID].IP += ((C>0)?C:1)*6; }
+    //  }else if(!(CPU[ID].REGs[A] <  CPU[ID].REGs[B])) { CPU[ID].IP += ((C>0)?C:1)*6; } break;
+    // case 0x10:// CMPGT  |
+    //  if (sys.Debug == true) { sprintf(msg,"%sCMP>\n",msg); }
+    //  memset(CPU[ID].flag, 0, 8); CPU[ID].flag[1]=true; CPU[ID].flag[4]=true;
+    //  if (IMM>0) {  if (!(CPU[ID].REGs[A] >  IMM)) { CPU[ID].IP += ((C>0)?C:1)*6; }
+    //  }else if(!(CPU[ID].REGs[A] >  CPU[ID].REGs[B])) { CPU[ID].IP += ((C>0)?C:1)*6; } break;
+
+
      case 0x0E:// CMPEQ  |
       if (sys.Debug == true) { sprintf(msg,"%sCMP=\n",msg); }
-      memset(CPU[ID].flag, 0, 8); CPU[ID].flag[1]=true; CPU[ID].flag[4]=true;
-      if (IMM>0) {  if (CPU[ID].REGs[A] != IMM) { CPU[ID].IP += ((C>0)?C:1)*6; }
-      }else if(CPU[ID].REGs[A] != CPU[ID].REGs[B]) { CPU[ID].IP += ((C>0)?C:1)*6; } break;
+      if ((IMM>0)?(CPU[ID].REGs[A] == (IMM&0x7FFFFFF)):(CPU[ID].REGs[A] == CPU[ID].REGs[B])) {
+       if (sys.Debug == true) sprintf(msg,"%s  \\True\n",msg); break;
+      } CPU[ID].IP += max(C,1)*6;
+      if (sys.Debug == true) sprintf(msg,"%s  \\False\n",msg); break;
      case 0x0F:// CMPLT  |
       if (sys.Debug == true) { sprintf(msg,"%sCMP<\n",msg); }
-      memset(CPU[ID].flag, 0, 8); CPU[ID].flag[1]=true; CPU[ID].flag[4]=true;
-      if (IMM>0) { if (!(CPU[ID].REGs[A] <  IMM)) { CPU[ID].IP += ((C>0)?C:1)*6; }
-      }else if(!(CPU[ID].REGs[A] <  CPU[ID].REGs[B])) { CPU[ID].IP += ((C>0)?C:1)*6; } break;
+      if ((IMM>0)?(CPU[ID].REGs[A] < (IMM&0x7FFFFFF)):(CPU[ID].REGs[A] < CPU[ID].REGs[B])) {
+       if (sys.Debug == true) sprintf(msg,"%s  \\True\n",msg); break;
+      } CPU[ID].IP += max(C,1)*6;
+      if (sys.Debug == true) sprintf(msg,"%s  \\False\n",msg); break;
      case 0x10:// CMPGT  |
       if (sys.Debug == true) { sprintf(msg,"%sCMP>\n",msg); }
-      memset(CPU[ID].flag, 0, 8); CPU[ID].flag[1]=true; CPU[ID].flag[4]=true;
-      if (IMM>0) {  if (!(CPU[ID].REGs[A] >  IMM)) { CPU[ID].IP += ((C>0)?C:1)*6; }
-      }else if(!(CPU[ID].REGs[A] >  CPU[ID].REGs[B])) { CPU[ID].IP += ((C>0)?C:1)*6; } break;
+      if ((IMM>0)?(CPU[ID].REGs[A] > (IMM&0x7FFFFFF)):(CPU[ID].REGs[A] > CPU[ID].REGs[B])) {
+       if (sys.Debug == true) sprintf(msg,"%s  \\True\n",msg); break;
+      } CPU[ID].IP += max(C,1)*6;
+      if (sys.Debug == true) sprintf(msg,"%s  \\False\n",msg); break;
+
      case 0x11:// SPLIT  |
       if (sys.Debug == true) { sprintf(msg,"%sSPLIT\n",msg); }
       memset(CPU[ID].flag, 0, 8); CPU[ID].flag[0]=true; CPU[ID].flag[1]=true;
@@ -504,14 +527,16 @@ void*CPUCore(bool ID) {
       if (sys.DebugPause[ID]>0) { sys.DebugTick[ID] = true, sys.DebugPause[ID] = 0, sys.Debug = sys.BreakDebug; FilterAnsi(msg); }
       break;
      case 0x16:// DISP   |
-      if (sys.Debug == true) { sprintf(msg,"%sDISP\n",msg); }
-      memset(CPU[ID].flag, 0, 8); CPU[ID].flag[1]=true;
-      if (!sys.BlockDisp) {
-       if((IMM%3)==0) { sprintf(sys.Debug?msg:CPUPrintString,"%s%s%s%c: 0x%04X\n%s",sys.Debug?msg:"",COLOR_BOLD,COLOR_MAGENTA,sys.REG[A],CPU[ID].REGs[A],COLOR_RESET); } else
-       if((IMM%3)==1) { sprintf(sys.Debug?msg:CPUPrintString,"%s%s%s%c: 0x%04X\t%c: 0x%04X\t\n%s",sys.Debug?msg:"",COLOR_BOLD,COLOR_MAGENTA,sys.REG[A],CPU[ID].REGs[A],sys.REG[B],CPU[ID].REGs[B],COLOR_RESET); } else
-       if((IMM%3)==2) { sprintf(sys.Debug?msg:CPUPrintString,"%s%s%s%c: 0x%04X\t%c: 0x%04X\t%c: 0x%04X\t\n%s",sys.Debug?msg:"",COLOR_BOLD,COLOR_MAGENTA,sys.REG[A],CPU[ID].REGs[A],sys.REG[B],CPU[ID].REGs[B],sys.REG[C],CPU[ID].REGs[C],COLOR_RESET); }
-       FilterAnsi(CPUPrintString);
-      } break;
+     if (sys.Debug == true) { sprintf(msg,"%sDISP%s\n",msg,(uint8_t*)(sys.BlockDisp?" [BLOCKED]":"")); }
+     if (sys.BlockDisp) break;
+      uint8_t DispMsg[3][16] = {0};
+      switch(IMM%3) {
+       case 2: sprintf(DispMsg[2],"%c: 0x%04X\t",sys.REG[C],CPU[ID].REGs[C]);
+       case 1: sprintf(DispMsg[1],"%c: 0x%04X\t",sys.REG[B],CPU[ID].REGs[B]);
+       case 0: sprintf(DispMsg[0],"%c: 0x%04X\t",sys.REG[A],CPU[ID].REGs[A]); break;
+      } sprintf(sys.Debug?msg:CPUPrintString,"%s%s%s%s\n",sys.Debug?msg:CPUPrintString,DispMsg[0],DispMsg[1],DispMsg[2]);
+      if (!sys.Debug) FilterAnsi(CPUPrintString);
+      break;
      case 0x17:// IPOUT  |
       if (sys.Debug == true) { sprintf(msg,"%sIPOUT\n",msg); }
       memset(CPU[ID].flag, 0, 8); CPU[ID].flag[0]=true;
@@ -529,6 +554,7 @@ void*CPUCore(bool ID) {
       //B = State
       //IMM = Start Address
       if (A>1) {
+//       sys.BreakDebug = sys.Debug, sys.Debug = true, sys.DebugPause[A-2] = INT32_MAX, sys.DebugTick[A-2] = false;
        GPU_RESET(A-2);
        GPU[A-2].IP = IMM;
        GPU[A-2].running = B%2;
@@ -547,16 +573,16 @@ void*CPUCore(bool ID) {
       if (sys.Debug == true) { sprintf(msg,"%sPOP\n",msg); }
       memset(CPU[ID].flag, 0, 8); CPU[ID].flag[0]=true;
       if (CPU[ID].SP+2 > CPU[ID].MP) { sys.ErrorType = 3; sprintf(sys.Error,"CPU#%i: PANIC! stack empty...\n",ID); CPU[ID].running=false; break;}
-      else {CPU[ID].REGs[A] = sys.MEM[CPU[ID].SP++]|(sys.MEM[CPU[ID].SP++]<<8); } break;
+      else {CPU[ID].REGs[A] = sys.MEM[++CPU[ID].SP]<<8|sys.MEM[++CPU[ID].SP]; } break;
      case 0x1C:// CALL   |
       if (sys.Debug == true) { sprintf(msg,"%sCALL\n",msg); } if(C>0){CPU[ID].flag[1]=true;}
       if (CPU[ID].SP-4 < CPU[ID].BP) { sys.ErrorType = 3; sprintf(sys.Error,"CPU#%i: PANIC! STACK OVERFLOW!!\n",ID); CPU[ID].running=false; break;}
-      else {sys.MEM[CPU[ID].SP--] = CPU[ID].IP,sys.MEM[CPU[ID].SP--] = CPU[ID].IP>>8,sys.MEM[CPU[ID].SP--] = CPU[ID].IP>>16,sys.MEM[CPU[ID].SP--] = CPU[ID].IP>>24,CPU[ID].IP = ((C==0)?IMM:(A<<16|B))&0xFFFFFFFFF;} break;
+      else {sys.MEM[CPU[ID].SP--] = CPU[ID].IP,sys.MEM[CPU[ID].SP--] = CPU[ID].IP>>8,sys.MEM[CPU[ID].SP--] = CPU[ID].IP>>16,sys.MEM[CPU[ID].SP--] = CPU[ID].IP>>24,CPU[ID].IP = (IMM>0?IMM:(CPU[ID].REGs[A]<<16|CPU[ID].REGs[B])%0xD800000)-6;} break;
      case 0x1D:// RET    |
       if (sys.Debug == true) { sprintf(msg,"%sRET\n",msg); }
       memset(CPU[ID].flag, 0, 8);
       if (CPU[ID].SP+4 > CPU[ID].MP) {sys.ErrorType = 3; sprintf(sys.Error,"CPU#%i: PANIC! stack empty...\n",ID); CPU[ID].running=false; break;}
-       CPU[ID].IP = sys.MEM[CPU[ID].SP++]|sys.MEM[CPU[ID].SP++]<<8|sys.MEM[CPU[ID].SP++]<<16|sys.MEM[CPU[ID].SP++]<<24; break;
+       CPU[ID].IP = sys.MEM[++CPU[ID].SP]>>24|sys.MEM[++CPU[ID].SP]<<16|sys.MEM[++CPU[ID].SP]<<8|sys.MEM[++CPU[ID].SP]; break;
      case 0x1E:// SWAP   |
       if (sys.Debug == true) { sprintf(msg,"%sSWAP\n",msg); }
       memset(CPU[ID].flag, 0, 8);
@@ -601,7 +627,7 @@ void*CPUCore(bool ID) {
     else if (sys.DebugPause[ID]>0) { sprintf(msg,"%s%s%s[  #######  PRESS ENTER  #######  ]\n",msg,COLOR_RESET,COLOR_YELLOW);  sys.DebugTick[ID] = false; }
     //else { sys.DebugTick[ID] = true, sys.DebugPause[ID] = 0, sys.Debug = false; }
     if (sys.Debug == true) { FilterAnsi(msg); } printError();
-    sprintf(msg,"\x00");  sprintf(CPUPrintString,"\x00");
+    sprintf(msg,"");  sprintf(CPUPrintString,"");
     if (sys.MEM[CPU[ID].IP] == 0x21) { usleep(IMM>0?IMM:((CPU[ID].REGs[A]<<16)|CPU[ID].REGs[B])); }
    }
    #ifdef _WIN32
@@ -777,10 +803,12 @@ void*GPUCore(uint8_t ID) {
  uint32_t loops_since_last_frame = 0;
  long sleep_time;
  
- printf("GPU Process #%d Started!\n",ID);
+ //printf("GPU Process #%d Started!\n",ID);
  struct timespec start, end;
  clock_gettime(CLOCK_MONOTONIC, &start);
+ bool useIMM;
  while(true) {
+  useIMM = false;
   //printf("GPU[%d].running: %s, sys.Pause: %s, sys.DebugTick[%d]: %s, sys.Cutscene0Timer: %d, sys.ScreenReady: %s\n", ID, GPU[ID].running?"true":"false", sys.Pause?"true":"false", ID+2, sys.DebugTick[ID+2]?"true":"false", sys.Cutscene0Timer, sys.ScreenReady?"true":"false");
   if(GPU[ID].running && !sys.Debug && sys.DebugPause[ID+2]>0) { sys.DebugTick[ID+2] = true, sys.DebugPause[ID+2] = 0; }
   if(GPU[ID].running && !sys.Pause && sys.DebugTick[ID+2] && (sys.Cutscene0Timer > 31*30) && sys.ScreenReady == true) {
@@ -788,25 +816,25 @@ void*GPUCore(uint8_t ID) {
 //   printf("TICK GPUCore(%d)!\n",ID);
    // X, X2, Y, Y2, InstructionPointer, StackPointer, SpritePointer, R,G,B,A, E,I,O,U
    //printf("TGR_MEM_VRAM+GPU[ID].IP+1: 0x%07X\n-------------------------: 0xD800000\n", TGR_MEM_VRAM+GPU[ID].IP+1);
-   uint8_t A   =      sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+1] >> 4 ,       //4 \.
-           B   =      sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+1] & 0xF,       //4 |-> A/B/C = 1.5 bytes
-           C   =      sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+2] >> 4 ;       //4 /'
-   int32_t IMM =((((((sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+2] & 0xF) << 8) //4 \.
-               |      sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+3]) << 8)       //8 |->  IMM  = 3.5 bytes
-               |      sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+4]) << 8)       //8 |
-               |      sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+5];             //8 /'
+   uint8_t A   =      sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+1)%0xD800000] >> 4 ,       //4 \.
+           B   =      sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+1)%0xD800000] & 0xF,       //4 |-> A/B/C = 1.5 bytes
+           C   =      sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+2)%0xD800000] >> 4 ;       //4 /'
+   int32_t IMM =((((((sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+2)%0xD800000] & 0xF) << 8) //4 \.
+               |      sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+3)%0xD800000]) << 8)       //8 |->  IMM  = 3.5 bytes
+               |      sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+4)%0xD800000]) << 8)       //8 |
+               |      sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+5)%0xD800000];             //8 /'
    GPUctl.FrameRendering == true;
    if (sys.DebugPause[ID+2]>0 && sys.Debug) {
     sprintf(msg,"%s%s%s\nBreakPoint[GPU#%i] Ends in %d instructions! [PRESS CTRL + C TO QUIT BREAKPOINT]",msg,COLOR_BOLD,COLOR_YELLOW,ID,--sys.DebugPause[ID+2]-1); sys.DebugTick[ID+2] = false;
    }
-   if (sys.MEM[TGR_MEM_VRAM+GPU[ID].IP] == 0x1F) {
+   if (sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP)%0xD800000] == 0x1F) {
     sys.BreakDebug = sys.Debug, sys.Debug = true, sys.DebugPause[ID+2] = IMM>0?IMM+1:INT32_MAX, sys.DebugTick[ID+2] = false;
     sprintf(msg,"%s%s%s\n[[GPU#%i BREAKPOINT ACTIVATED!]] Ends in %d instructions! [PRESS CTRL + C TO QUIT BREAKPOINT]",msg,COLOR_BOLD,COLOR_YELLOW,ID,sys.DebugPause[ID+2]-1);
    }
    if (sys.Debug == true) {
     sprintf(msg,"%s\n[GPU%s#%s%d] IC: 0x%07X/%9i ",msg,COLOR_RED,COLOR_GREEN,ID,GPU[ID].IP,GPU[ID].IP);
     print_GPU_Area(msg,GPU[ID].IP); sprintf(msg,"%s\n\\ >> [",msg);
-    for (i=0; i < 6; i++) { sprintf(msg,"%s%s%s0x%02X%s%s%s",msg,COLOR_BOLD,COLOR_BLUE,sys.MEM[TGR_MEM_VRAM+GPU[ID].IP+i],COLOR_NORMAL,COLOR_YELLOW,(i<5)?", ":""); }
+    for (i=0; i < 6; i++) { sprintf(msg,"%s%s%s0x%02X%s%s%s",msg,COLOR_BOLD,COLOR_BLUE,sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP+i)%0xD800000],COLOR_NORMAL,COLOR_YELLOW,(i<5)?", ":""); }
     sprintf(msg,"%s] %s| %s[%s%sA%s:%s%s%s%s, %s%sB%s:%s%s%s%s, %s%sC%s:%s%s%s%s, %s%sIMM%s:%s0x%07X%s%s]\n%s%s\\%sREGs: %s[",msg,COLOR_BOLD,COLOR_NORMAL,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,GPU_REG(A),COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,GPU_REG(B),COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,GPU_REG(C),COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_BLUE,IMM,COLOR_NORMAL,COLOR_YELLOW,COLOR_BOLD,COLOR_GREEN,COLOR_YELLOW,COLOR_NORMAL);
     // 0, 1, . . . X[2]    16-bit X Position / X2/Width Position
     // 2, 3, . . . Y[2]    16-bit Y Position / Y2/Height Position
@@ -832,7 +860,7 @@ void*GPUCore(uint8_t ID) {
      if(i%16==0 && i != 0) { sprintf(msg,"%s\n",msg); }
     } sprintf(msg,"%s]\n \\instruction: ",msg);
    }
-   switch(sys.MEM[TGR_MEM_VRAM+GPU[ID].IP]) {
+   switch(sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP)%0xD800000]) {
     case 0x00:
      if (sys.Debug == true) { sprintf(msg,"%sLOAD\n",msg); }
      GPU_REGW(ID, A, IMM);
@@ -886,27 +914,36 @@ void*GPUCore(uint8_t ID) {
      GPU_REGW(ID, A, ~GPU_REGR(ID,A)); break;
     case 0x0D:// CMPEQ  |
      //printf("=IMM: %d\n",IMM&0x7FFFFFF);
+     if(IMM>0x7FFFFFF) useIMM = true, IMM &= 0x7FFFFFF;
+     if(IMM>0x3FFFFFF) IMM -= 0x8000000; //negitive
+     //printf(">> %d\n",IMM);
      if (sys.Debug == true) { sprintf(msg,"%sCMP=\n",msg); }
      //printf("IMM>0: %s, %s/0x%07X==0x%07X: %d, %s/0x%07X==%s/0x%07X: %d\n", IMM>0?"left":"right", GPU_REG(A),GPU_REGR(ID,A),IMM&0x7FFFFFF,(GPU_REGR(ID,A) == (IMM&0x7FFFFFF)), GPU_REG(A),GPU_REGR(ID,A),GPU_REG(B),GPU_REGR(ID,B),(GPU_REGR(ID,A) == GPU_REGR(ID,B)) );
-     if ((IMM>0)?(GPU_REGR(ID,A) == (IMM&0x7FFFFFF)):(GPU_REGR(ID,A) == GPU_REGR(ID,B))) {
+     if (useIMM?(GPU_REGR(ID,A) == IMM):(GPU_REGR(ID,A) == GPU_REGR(ID,B))) {
       if (sys.Debug == true) sprintf(msg,"%s  \\True\n",msg); break;
      }
      GPU[ID].IP += max(C,1)*6;
      if (sys.Debug == true) sprintf(msg,"%s  \\False\n",msg); break;
     case 0x0E:// CMPLT  |
      //printf("<IMM: %d\n",IMM&0x7FFFFFF);
+     if(IMM>0x7FFFFFF) useIMM = true, IMM &= 0x7FFFFFF;
+     if(IMM>0x3FFFFFF) IMM -= 0x8000000; //negitive
+     //printf(">> %d\n",IMM);
      if (sys.Debug == true) { sprintf(msg,"%sCMP<\n",msg); }
      //printf("IMM>0: %s, %s/0x%07X< 0x%07X: %d, %s/0x%07X< %s/0x%07X: %d\n", IMM>0?"left":"right", GPU_REG(A),GPU_REGR(ID,A),IMM&0x7FFFFFF,(GPU_REGR(ID,A) < (IMM&0x7FFFFFF)), GPU_REG(A),GPU_REGR(ID,A),GPU_REG(B),GPU_REGR(ID,B),(GPU_REGR(ID,A) < GPU_REGR(ID,B)) );
-     if ((IMM>0)?(GPU_REGR(ID,A) < (IMM&0x7FFFFFF)):(GPU_REGR(ID,A) < GPU_REGR(ID,B))) {
+     if (useIMM?(GPU_REGR(ID,A) < IMM):(GPU_REGR(ID,A) < GPU_REGR(ID,B))) {
       if (sys.Debug == true) sprintf(msg,"%s  \\True\n",msg); break;
      }
      GPU[ID].IP += max(C,1)*6;
      if (sys.Debug == true) sprintf(msg,"%s  \\False\n",msg); break;
     case 0x0F:// CMPGT  |
      //printf(">IMM: %d\n",IMM&0x7FFFFFF);
+     if(IMM>0x7FFFFFF) useIMM = true, IMM &= 0x7FFFFFF;
+     if(IMM>0x3FFFFFF) IMM -= 0x8000000; //negitive
+     //printf(">> %d\n",IMM);
      if (sys.Debug == true) { sprintf(msg,"%sCMP>\n",msg); }
      //printf("IMM>0: %s, %s/0x%07X >0x%07X: %d, %s/0x%07X >%s/0x%07X: %d\n", IMM>0?"left":"right", GPU_REG(A),GPU_REGR(ID,A),IMM&0x7FFFFFF,(GPU_REGR(ID,A) > (IMM&0x7FFFFFF)), GPU_REG(A),GPU_REGR(ID,A),GPU_REG(B),GPU_REGR(ID,B),(GPU_REGR(ID,A) > GPU_REGR(ID,B)) );
-     if ((IMM>0)?(GPU_REGR(ID,A) > (IMM&0x7FFFFFF)):(GPU_REGR(ID,A) > GPU_REGR(ID,B))) {
+     if (useIMM?(GPU_REGR(ID,A) > IMM):(GPU_REGR(ID,A) > GPU_REGR(ID,B))) {
       if (sys.Debug == true) sprintf(msg,"%s  \\True\n",msg); break;
      }
      GPU[ID].IP += max(C,1)*6;
@@ -935,12 +972,12 @@ void*GPUCore(uint8_t ID) {
      if (IMM > 0x3FFFFFF) { IMM = GPU_REGR(ID,B)&0x3FFFFFF; }
      if (sys.Debug == true) {
       sprintf(msg,"%sWMEM\n  \\Writing REG:%s to 0x%x ",msg,GPU_REG(A),IMM); print_GPU_Area(msg,IMM);
-     } sys.MEM[TGR_MEM_VRAM+IMM]=GPU_REGR(ID,A); break;
+     } sys.MEM[(TGR_MEM_VRAM+IMM)%0xD800000]=GPU_REGR(ID,A); break;
     case 0x13:// RMEM   |
      if (IMM > 0x3FFFFFF) { IMM = GPU_REGR(ID,B)&0x3FFFFFF; }
      if (sys.Debug == true) {
       sprintf(msg,"%sRMEM\n  \\Reading 0x%x to REG:%s ",msg,IMM,GPU_REG(A)); print_GPU_Area(msg,IMM);
-     } GPU_REGW(ID, A, sys.MEM[TGR_MEM_VRAM+IMM]); break;
+     } GPU_REGW(ID, A, sys.MEM[(TGR_MEM_VRAM+IMM)%0xD800000]); break;
     
     case 0x14:// HALT   |
      if (sys.Debug == true) { sprintf(msg,"%sHALT\n",msg); }
@@ -949,12 +986,12 @@ void*GPUCore(uint8_t ID) {
      break;
     case 0x15:// DISP   |
      if (sys.Debug == true) { sprintf(msg,"%sDISP%s\n",msg,sys.BlockDisp?" [BLOCKED]":""); }
-     if (!sys.BlockDisp) break;
-     uint8_t DispMsg[3][16]; memset(DispMsg,0,16*3);
+     if (sys.BlockDisp) break;
+     uint8_t DispMsg[3][16] = {0}; //memset(DispMsg,0,16*3);
      switch(IMM%3) {
-      case 2: sprintf(DispMsg[2],"%s: 0x%07X\t",GPU_REG(C),GPU_REGR(ID,C));
-      case 1: sprintf(DispMsg[1],"%s: 0x%07X\t",GPU_REG(B),GPU_REGR(ID,B));
-      case 0: sprintf(DispMsg[0],"%s: 0x%07X\t",GPU_REG(A),GPU_REGR(ID,A)); break;
+      case 2: sprintf(DispMsg[2],"%s:%s0x%07X\t",GPU_REG(C),(GPU_REGR(ID,C)<0)?"-":" ",abs(GPU_REGR(ID,C)));
+      case 1: sprintf(DispMsg[1],"%s:%s0x%07X\t",GPU_REG(B),(GPU_REGR(ID,B)<0)?"-":" ",abs(GPU_REGR(ID,B)));
+      case 0: sprintf(DispMsg[0],"%s:%s0x%07X\t",GPU_REG(A),(GPU_REGR(ID,A)<0)?"-":" ",abs(GPU_REGR(ID,A))); break;
      } sprintf(sys.Debug?msg:GPUPrintString,"%s%s%s%s\n",sys.Debug?msg:GPUPrintString,DispMsg[0],DispMsg[1],DispMsg[2]);
      if (!sys.Debug) FilterAnsi(GPUPrintString);
      break;
@@ -969,27 +1006,28 @@ void*GPUCore(uint8_t ID) {
      break;
     case 0x17:// PUSH   |
      if (sys.Debug == true) { sprintf(msg,"%sPUSH\n",msg); }
-     if (GPU[ID].SP-4 < GPU[ID].BP) { sys.ErrorType = 3; sprintf(sys.Error,"GPU#%i: PANIC! STACK OVERFLOW!!\n",ID); GPU[ID].running=false; break;}
+     if (GPU[ID].SP-4 < GPU[ID].BP) { sys.ErrorType = 3; sprintf(sys.Error,"GPU#%i: PANIC! STACK OVERFLOW!!\n",ID); GPU[ID].running=false; break; }
      else {
       sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU_REGR(ID,A)&0xFF,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU_REGR(ID,A)>>8,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU_REGR(ID,A)>>16,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU_REGR(ID,A)>>24;
-      printf("PUSH: %s -> 0x%X\n", GPU_REG(A), GPU_REGR(ID,A));
+      //printf("PUSH: %s -> 0x%X\n", GPU_REG(A), GPU_REGR(ID,A));
      } break;
     case 0x18:// POP    |
      if (sys.Debug == true) { sprintf(msg,"%sPOP\n",msg); }
-     if (GPU[ID].SP+2 > GPU[ID].MP) { sys.ErrorType = 3; sprintf(sys.Error,"GPU#%i: PANIC! stack empty...\n",ID); GPU[ID].running=false; break;}
+     if (GPU[ID].SP+2 > GPU[ID].MP) { sys.ErrorType = 3; sprintf(sys.Error,"GPU#%i: PANIC! stack empty...\n",ID); GPU[ID].running=false; break; }
      else {
-      uint32_t data = sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]<<8|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]<<16|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]<<24;
-      printf("POP: 0x%X -> %s\n", data, GPU_REG(A));
+      uint32_t data = sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP]<<24|sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP]<<16|sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP]<<8|sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP];
+      //uint32_t data = sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]<<8|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]<<16|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP++]<<24;
+      //printf("POP: 0x%X -> %s\n", data, GPU_REG(A));
       GPU_REGW(ID,A, data);
      } break;
     case 0x19:// CALL   |
      if (sys.Debug == true) { sprintf(msg,"%sCALL\n",msg); }
      if (GPU[ID].SP-4 < GPU[ID].BP) { sys.ErrorType = 3; sprintf(sys.Error,"GPU#%i: PANIC! STACK OVERFLOW!!\n",ID); GPU[ID].running=false; break;}
-     else {sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP>>8,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP>>16,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP>>24,GPU[ID].IP = ((C==0)?IMM:(A<<16|B))&0xFFFFFFFFF;} break;
+     else {sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP>>8,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP>>16,sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--] = GPU[ID].IP>>24, GPU[ID].IP = ((IMM>0?IMM:GPU_REGR(ID, A))&0x3FFFFFF)-6; } break;
     case 0x1A:// RET    |
      if (sys.Debug == true) { sprintf(msg,"%sRET\n",msg); }
      if (GPU[ID].SP+4 > GPU[ID].MP) {sys.ErrorType = 3; sprintf(sys.Error,"GPU#%i: PANIC! stack empty...\n",ID); GPU[ID].running=false; break;}
-     GPU[ID].IP = sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--]|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--]<<8|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--]<<16|sys.MEM[TGR_MEM_VRAM+GPU[ID].SP--]<<24; break;
+     GPU[ID].IP = sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP]<<24|sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP]<<16|sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP]<<8|sys.MEM[TGR_MEM_VRAM+ ++GPU[ID].SP]; break;
     case 0x1B:// SWAP   |
      if (sys.Debug == true) { sprintf(msg,"%sSWAP\n",msg); }
      if (!GPU[ID].SP+4 > GPU[ID].MP) {
@@ -1018,7 +1056,13 @@ void*GPUCore(uint8_t ID) {
      if (sys.Debug == true) { sprintf(msg,"%sBREAKPOINT\n",msg); }
      //operation happens before cycle//
      break;
-    
+    case 0x20:// RGBA  |
+     GPU[ID].R = IMM>>24&0x0F|C<<4,
+     GPU[ID].G = IMM>>16&0xFF,
+     GPU[ID].B = IMM>>8 &0xFF,
+     GPU[ID].A = IMM    &0xFF;
+     if (sys.Debug == true) { sprintf(msg,"%sRGBA: 0x%02X%02X%02X%02X\n",msg,GPU[ID].R,GPU[ID].G,GPU[ID].B,GPU[ID].A); }
+     break;
     case 0x6E:// LAYER/SELECTLAYER   |
      if (sys.Debug == true) { sprintf(msg,"%s DRAW: SELECTLAYER\n",msg); }
      GPU[ID].Layer = A%5;
@@ -1030,6 +1074,8 @@ void*GPUCore(uint8_t ID) {
  //    ImageResizeCanvas(GPU[ID].Canvas, GPU_Resolutions[GPUctl.Rez][0],GPU_Resolutions[GPUctl.Rez][1], 0,0, (Color){0,0,0,0xFF});
      break;
     case 0x70:// PLOT   |
+     //pthread_t call_GPU_Threads[Fin]; pthread_create(&call_Core0, NULL, &CPUCore, 0);
+     //GPU_PLOT
      if (sys.Debug == true) { sprintf(msg,"%s DRAW: PLOT\n",msg); }
      sprintf(msg,"%sPlotted Pixel at GPU[%d].Layer: %d | x: %d, y: %d with RGBA: [0x%02X, 0x%02X, 0x%02X, 0x%02X] | GPU[ID].Layer: %d\n",msg,ID,GPU[ID].Layer%5,GPU[ID].X[0],GPU[ID].Y[0],GPU[ID].R,GPU[ID].G,GPU[ID].B,GPU[ID].A,GPU[ID].Layer%5);
      ImageDrawPixel(&GPUctl.Layers[GPU[ID].Layer%5], GPU[ID].X[0],GPU[ID].Y[0], (Color){GPU[ID].R,GPU[ID].G,GPU[ID].B,GPU[ID].A});
@@ -1069,7 +1115,7 @@ void*GPUCore(uint8_t ID) {
      break;
     case 0x78:// COPY   | /OUT/
      if (sys.Debug == true) { sprintf(msg,"%s DRAW: COPY\n",msg); }
-     sprintf(msg,"%sImageDraw A: %d, GPU[%d].Layer: %d\nFrom: [%d,%d,%d,%d] | To: [%d,%d,%d,%d] (strlen(sys.Error): %d)\n",msg,A%5,ID,GPU[ID].Layer%5, GPU[ID].X[0],GPU[ID].Y[0],GPU[ID].X[1],GPU[ID].Y[1],GPU[ID].X[2],GPU[ID].Y[2],GPU[ID].X[3],GPU[ID].Y[3],strlen(sys.Error));
+     sprintf(msg,"%sImageDraw A: %d, GPU[%d].Layer: %d\nFrom: [%d,%d,%d,%d] | To: [%d,%d,%d,%d] (strlen(sys.Error): %ld)\n",msg,A%5,ID,GPU[ID].Layer%5, GPU[ID].X[0],GPU[ID].Y[0],GPU[ID].X[1],GPU[ID].Y[1],GPU[ID].X[2],GPU[ID].Y[2],GPU[ID].X[3],GPU[ID].Y[3],strlen(sys.Error));
      sys.ErrorType = 2;
      if (GPU[ID].X[1]<GPU[ID].X[0] || (GPU[ID].X[1]|GPU[ID].X[0])==0) sprintf(sys.Error,  "GPU#%i: NULL RENDER X METHOD DETECTED: X2: 0x%04X/%d <= X : 0x%04X/%d at address: 0x%07X\n",           ID, GPU[ID].X[1],GPU[ID].X[1], GPU[ID].X[0],GPU[ID].X[0], TGR_MEM_VRAM+GPU[ID].IP);
      if (GPU[ID].X[3]<GPU[ID].X[2] || (GPU[ID].X[3]|GPU[ID].X[2])==0) sprintf(sys.Error,"%sGPU#%i: NULL RENDER X METHOD DETECTED: X4: 0x%04X/%d <= X3: 0x%04X/%d at address: 0x%07X\n",sys.Error, ID, GPU[ID].X[3],GPU[ID].X[3], GPU[ID].X[2],GPU[ID].X[2], TGR_MEM_VRAM+GPU[ID].IP);
@@ -1088,13 +1134,27 @@ void*GPUCore(uint8_t ID) {
     case 0x79:// 
     case 0x7A:// 
     case 0x7B://     
-    case 0x7C:// 
-     
-    case 0x7D:// SPRITE
+    case 0x7C:// ColorPalette
+     if (IMM>255) IMM = GPU_REGR(ID,B)&0xFF;
+     switch(A%2) {
+      case 0:
+       GPU[ID].CP[IMM][0] = GPU[ID].R,
+       GPU[ID].CP[IMM][1] = GPU[ID].G,
+       GPU[ID].CP[IMM][2] = GPU[ID].B,
+       GPU[ID].CP[IMM][3] = GPU[ID].A;
+       break;
+      case 1:
+       GPU[ID].R = GPU[ID].CP[IMM][0],
+       GPU[ID].G = GPU[ID].CP[IMM][1],
+       GPU[ID].B = GPU[ID].CP[IMM][2],
+       GPU[ID].A = GPU[ID].CP[IMM][3];
+       break;
+     } break;
+    case 0x7D:// SPRITE / IMAGE 
      if (sys.Debug == true) { sprintf(msg,"%s DRAW: Sprite\n",msg); }
      if (IMM==0) IMM = GPU[ID].sp;
      IMM|=TGR_MEM_VRAM;
-     // A = ImageData Type [0:CP,1:RGB,2:RGBA]
+     // A = ImageData Type [0:CP 4-bit, 1:CP 8-bit, 2:RGB, 3:RGBA]
      // sp = Sprite Pointer
      // 
      // X[0] = X (uint)
@@ -1103,27 +1163,35 @@ void*GPUCore(uint8_t ID) {
      // Y[1] = Height
      //
      // X[2] = Rotation[1/2] 0xXXX.X----
-     // Y[2] = Rotation[2/2] 0x---.-XXXX
+     // Y[2] = Rotation[2/2] 0x---.-XXXX (probbly unused)
      // X[3] = Stretch/Resize Width  (Stretch/Resize happens)
      // Y[3] = Stretch/Resize Height (    Before Rotation   )
      // //perhaps will add scewing or leave that up to the dev to make...
      //
+     uint8_t*ImageData;
      Image SpritePre,Sprite;
      uint16_t Xoffset = 0, Yoffset = 0;
      float Rotation;
-     switch(A%3) {
+     switch(A%4) {
       case 0:
-       uint8_t*ImageData = malloc(255*255*4);
+       ImageData = malloc(512*512*4);
        CP2RGBA(ImageData, sys.MEM+IMM, ceil((GPU[ID].X[1]*GPU[ID].Y[1])/2.0), GPU[ID].CP);
-       Sprite = Bytes2Image(ImageData, GPU[ID].X[1], GPU[ID].Y[1]);
+       Sprite = Bytes2ImageAlpha(ImageData, GPU[ID].X[1], GPU[ID].Y[1]);
        free(ImageData);
        break;
       case 1:
+       ImageData = malloc(512*512*4);
+       CP82RGBA(ImageData, sys.MEM+IMM, GPU[ID].X[1]*GPU[ID].Y[1], GPU[ID].CP);
+       Sprite = Bytes2ImageAlpha(ImageData, GPU[ID].X[1], GPU[ID].Y[1]);
+       free(ImageData);
+       break;
+      case 2:
        Sprite = GenImageColor(GPU[ID].X[1], GPU[ID].Y[1], VOID);
        SpritePre = Bytes2Image(sys.MEM+IMM, GPU[ID].X[1], GPU[ID].Y[1]);
        ImageDraw(&Sprite, SpritePre, (Rectangle){0,0, SpritePre.width,SpritePre.height}, (Rectangle){0,0, Sprite.width,Sprite.height}, WHITE);
+       UnloadImage(SpritePre);
        break;
-      case 2:
+      case 3:
        Sprite = Bytes2ImageAlpha(sys.MEM+IMM, GPU[ID].X[1], GPU[ID].Y[1]);
        break;
      }
@@ -1135,11 +1203,11 @@ void*GPUCore(uint8_t ID) {
       ImageRotate2(&Sprite, Rotation);
       //printf("Rotated by %f\n", Rotation);
      }
-     if (A%6 > 2) Xoffset = Sprite.width/2, Yoffset = Sprite.height/2;
+     if (A%8 > 3) Xoffset = Sprite.width/2, Yoffset = Sprite.height/2;
     
      //printf("SPRITE: Drawing at %dx%d on Layer[%d], resized to %dx%d (was %dx%d), fixed float: [%d, %d] -> %f\n", GPU[ID].X[0], GPU[ID].Y[0],  GPU[ID].Layer, Sprite.width, Sprite.height, GPU[ID].X[3], GPU[ID].Y[3], GPU[ID].X[2], GPU[ID].Y[2], Rotation);
-     ImageDraw(&GPUctl.Layers[GPU[ID].Layer], Sprite, (Rectangle){0,0, Sprite.width,Sprite.height}, (Rectangle){(uint16_t)GPU[ID].X[0]-Xoffset,(uint16_t)GPU[ID].Y[0]-Yoffset, Sprite.width,Sprite.height}, WHITE);
-     UnloadImage(Sprite); UnloadImage(SpritePre);
+     ImageDraw(&GPUctl.Layers[GPU[ID].Layer], Sprite, (Rectangle){0,0, Sprite.width,Sprite.height}, (Rectangle){GPU[ID].X[0]-Xoffset,GPU[ID].Y[0]-Yoffset, Sprite.width,Sprite.height}, WHITE);
+     UnloadImage(Sprite);
      break;
     
     case 0x7E:// LimitFPS
@@ -1173,14 +1241,15 @@ void*GPUCore(uint8_t ID) {
      if (sys.Debug == true) { sprintf(msg,"%sUNKNOWN\n",msg); }
      sys.ErrorType = 2; sprintf(sys.Error,"GPU#%i: Unknown Operation 0x%02X at 0x%07X\n",ID,sys.MEM[TGR_MEM_VRAM+GPU[ID].IP],TGR_MEM_VRAM+GPU[ID].IP);
      GPU[ID].running = 0; break;
-   } GPU[ID].IP+=6; GPU[ID].IPS++; GPU[ID].TI++;
-   if (sys.DebugPause[ID+2]==1) { sys.DebugTick[ID+2] = true, sys.DebugPause[ID+2] = 00, sys.Debug = false; sprintf(msg, "%s[[BREAKPOINT DEACTIVATED!]] Debug mode is Disabled!\n"); FilterAnsi(msg); }
+   }GPU[ID].IP+=6; GPU[ID].IPS++; GPU[ID].TI++;
+   if (GPU[ID].IP>0x3FFFFFF) { sys.ErrorType = 2; sprintf(sys.Error, "GPU$%i: Instuction Pointer is overflowed! (0x%07X)", ID, GPU[ID].IP); GPU[ID].running=false; }
+   if (sys.DebugPause[ID+2]==1) { sys.DebugTick[ID+2] = true, sys.DebugPause[ID+2] = 00, sys.Debug = false; sprintf(msg, "%s[[BREAKPOINT DEACTIVATED!]] Debug mode is Disabled!\n",msg); FilterAnsi(msg); }
    else if (sys.DebugPause[ID+2]>0) { sprintf(msg,"%s%s%s[  #######  PRESS ENTER  #######  ]\n",msg,COLOR_RESET,COLOR_YELLOW); sys.DebugTick[ID+2] = false; }
    if (sys.Debug == true) { FilterAnsi(msg); } printError();
-   sprintf(msg,"\x00");  sprintf(GPUPrintString,"\x00");
-   if (sys.MEM[TGR_MEM_VRAM+GPU[ID].IP] == 0x1E) { usleep((IMM>0?IMM:GPU_REGR(ID, A))); }
+   sprintf(msg,"");  sprintf(GPUPrintString,"");
+   if (sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP)%0xD800000] == 0x1E) { usleep((uint32_t)(IMM>0?IMM:GPU_REGR(ID, A))); }
    loops_since_last_frame++;
-   if (GPUctl.ForceRender && sys.MEM[TGR_MEM_VRAM+GPU[ID].IP]!=0x7F) {
+   if (GPUctl.ForceRender && sys.MEM[(TGR_MEM_VRAM+GPU[ID].IP)&0x3FFFFFF]!=0x7F) {
      ImageDraw(&sys.CanvasBuffer, GPUctl.Layers[4],(Rectangle){0,0,sys.SW,sys.SH}, (Rectangle){0,0,sys.SW,sys.SH},WHITE);
      GPUctl.FrameRendering = false;
      GPUctl.FrameSeen = false;

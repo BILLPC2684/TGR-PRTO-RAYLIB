@@ -102,7 +102,7 @@ h = 7
  pop  {A}   => 0x1B @ A`4 @ 0`36
  
  call {A}, {B} => 0x1C @ A`4 @ B`4 @ 0`32
- call {IMM}    => 0x1C @ 0`8 @ 1`4 @ IMM`28
+ call {IMM}    => 0x1C @ 0`12 @ IMM`28
  
  ret  => 0x1D @ 0`40
  

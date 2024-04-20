@@ -15,7 +15,10 @@ TGR_LOGO_START_X = LINES_E+4 ; 2 bytes; X
 TGR_LOGO_START_Y = TGR_LOGO_START_X+2 ; 2 bytes; Y
 TGR_LOGO_DIRECTION = TGR_LOGO_START_Y+2 ; 1 bytes; E
 TGR_LOGO_SPIN = TGR_LOGO_DIRECTION+1 ; 2 bytes; X
-NEXT = TGR_LOGO_SPIN+2
+KF_SUPPORT_TIMER = TGR_LOGO_SPIN+2 ; 1 bytes
+KF_SUPPORT_Y = KF_SUPPORT_TIMER+1 ; 1 bytes
+KF_SUPPORT_DIR = KF_SUPPORT_Y+1 ; 1 bytes
+NEXT = KF_SUPPORT_DIR+1
 
 #addr ProgramAddr
 main:
@@ -35,6 +38,11 @@ main:
  GPU_load  GPU_O,  0
  GPU_wmemi GPU_O,  TGR_LOGO_SPIN
  GPU_wmemi GPU_O,  TGR_LOGO_SPIN+1
+
+ GPU_load  GPU_O,  180
+ GPU_wmemi GPU_O,  KF_SUPPORT_Y
+ GPU_load  GPU_O,  255
+ GPU_wmemi GPU_O,  KF_SUPPORT_TIMER
 
  GPU_load  GPU_E, 0x60
  GPU_wmemi GPU_E, LINES_G
@@ -67,23 +75,66 @@ main:
  GPU_mov  GPU_G, GPU_R
  GPU_mov  GPU_B, GPU_R
  GPU_frect ; clears the drawing layer
-
-
+ 
+ ;GPU_break  0
+ GPU_rmemi  GPU_X,   KF_SUPPORT_DIR
+ GPU_rmemi  GPU_X2,  KF_SUPPORT_TIMER
+ GPU_rmemi  GPU_Y,   KF_SUPPORT_Y
+ 
+ ;update timer
+ GPU_subi   GPU_X2,   1, GPU_X2
+ GPU_cmpeqi GPU_X2,   0, 2
+  GPU_load  GPU_X2, 255
+  GPU_addi  GPU_X, 1, GPU_X
+  GPU_andi  GPU_X, 3, GPU_X
+ GPU_wmemi  GPU_X2, KF_SUPPORT_TIMER
+ GPU_wmemi  GPU_X,  KF_SUPPORT_DIR
+ ;GPU_disp   GPU_X, GPU_X2, GPU_Y
+ 
+ ;if timer > 0 then tick
+ ; 0 = down
+ ; 1 = idle
+ ; 2 = up
+ ; 3 = idle
+ GPU_andi   GPU_X, 1, GPU_U
+ GPU_cmpeqi GPU_U, 1, 1
+  GPU_load  GPU_IP, .KF_SUPPORT
+ ;
+ GPU_cmpeqi GPU_X, 0, 3
+  GPU_cmplti GPU_Y, 180, 1
+   GPU_addi  GPU_Y,   1, GPU_Y
+  GPU_load  GPU_IP, .KF_SUPPORT
+ ;
+ GPU_cmpeqi GPU_X, 2, 2
+  GPU_cmpgti GPU_Y,  0, 2
+   GPU_subi  GPU_Y,  1, GPU_Y
+ ;
+ .KF_SUPPORT:
+ ;GPU_disp   GPU_Y
+ GPU_wmemi  GPU_Y, KF_SUPPORT_Y
+ GPU_cmpeqi GPU_Y, 0, 1
+  GPU_load  GPU_IP, .skip_KF_SUPPORT
+ 
  GPU_load GPU_X,     0 ;X[2] = Rotation[1/2]
  GPU_load GPU_Y,     0 ;Y[2] = Rotation[2/2]
  GPU_load GPU_X2,  360 ;X[3] = Resize Width  ;X[1] = Width
  GPU_load GPU_Y2,  180 ;Y[3] = Resize Height ;Y[1] = Height
  GPU_setout
  ;
- GPU_load   GPU_X,  60            ;X[0] = X 
+ GPU_load   GPU_X,     60         ;X[0] = X
+ ;
  GPU_rmemi  GPU_U,  CPLength+6    ;grabbing resolution height
  GPU_rmemi  GPU_O,  CPLength+6+1
- GPU_bsli   GPU_U,    8,    GPU_U
+ GPU_bsli   GPU_U,      8,  GPU_U
  GPU_or     GPU_U,  GPU_O,  GPU_O
- GPU_subi   GPU_O,  180,    GPU_Y ;Y[0] = Y
+ ;
+ ;GPU_addi   GPU_O,    360,  GPU_O ;Y[0] = Y
+ ;
+ GPU_rmemi  GPU_U,  KF_SUPPORT_Y
+ GPU_sub    GPU_O,  GPU_U,  GPU_Y ;Y[0] = Y
+ ;GPU_disp   GPU_O,  GPU_U,  GPU_Y
  GPU_sprite SPRITE_RGBA, kofi_banner
- GPU_mov    GPU_Y2, GPU_O
- 
+ .skip_KF_SUPPORT:
  
  GPU_rmemi GPU_O,  CPLength+4   ;grabbing resolution width
  GPU_rmemi GPU_I,  CPLength+4+1
@@ -272,8 +323,11 @@ main:
   GPU_load GPU_IP, colision_detect  
  
  colision_detect:
-  GPU_disp  GPU_E
-  GPU_cmplti GPU_X, 44, 6 ;Left collision
+  ;GPU_disp  GPU_E
+  ;GPU_addi GPU_X, 44, GPU_U
+  ;GPU_disp GPU_X, GPU_U
+  ;GPU_cmplti GPU_U, 0, 6 ; collision
+  GPU_cmplti GPU_X, -44, 6 ;Left collision
    GPU_cmpeqi GPU_E, 2, 2 ;Down-Left
     GPU_load GPU_E, 0
     GPU_load GPU_IP, .colision_detect_exit
@@ -284,7 +338,9 @@ main:
    ;GPU_disp GPU_E, GPU_X
   
   
-  GPU_cmplti GPU_Y, 44, 6 ;Top collision
+  ;GPU_addi GPU_Y, 44, GPU_U
+  ;GPU_cmplti GPU_U, 44, 6 ; collision
+  GPU_cmplti GPU_Y, -44, 6 ;Top collision
    GPU_cmpeqi GPU_E, 3, 2 ;Up-Left
     GPU_load GPU_E, 2
     GPU_load GPU_IP, .colision_detect_exit
@@ -294,7 +350,7 @@ main:
     GPU_load GPU_IP, .colision_detect_exit
    ;GPU_disp GPU_E, GPU_Y
   
-  GPU_subi GPU_X2, 44, GPU_X2
+  GPU_addi GPU_X2, 44, GPU_X2
   GPU_cmpgt GPU_X, GPU_X2, 6 ;Right collision
    GPU_cmpeqi GPU_E, 1, 2 ;Up-Right
     GPU_load GPU_E, 3
@@ -306,7 +362,7 @@ main:
    ;GPU_disp GPU_E, GPU_X, GPU_X2
   
   
-  GPU_subi GPU_Y2, 44, GPU_Y2
+  GPU_addi GPU_Y2, 44, GPU_Y2
   GPU_cmpgt GPU_Y, GPU_Y2, 6 ;Bottom collision
    GPU_cmpeqi GPU_E, 2, 2 ;Down-Left
     GPU_load GPU_E, 3

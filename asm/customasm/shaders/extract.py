@@ -22,9 +22,6 @@ if len(sys.argv)>2:
  MY_HEADER => 0`8 @ "TGR" @ 0`8 @ "'''+name+"\x00"*(16-len(name))+'''" @ "v00.00.00   "`96 @ 0xFF
 }
 MY_HEADER
-jmp init
-payload:
-'''+'\n'.join([f" payload_data{i}" for i in range(len(Str))])+'''
 init:
  lload A, B, payload
  lload C, D, 0x09800000+ProgramAddr ; VRAM
@@ -50,5 +47,7 @@ init:
   wait 1000000
   ;put your code here!
   halt 0
-  jmp .while_true''')
+  jmp .while_true
+payload:
+'''+'\n'.join([f" payload_data{i}" for i in range(len(Str))]))
   print(f'File "{sys.argv[2]}" was written...')
