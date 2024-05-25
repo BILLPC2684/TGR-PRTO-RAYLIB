@@ -121,7 +121,7 @@ loop0_resetX:
  GPU_sub   GPU_X, GPU_O, GPU_X
 
 DrawTile16x: ; requests SpritePointer, X and Y
- ;GPU_disp GPU_sp, GPU_X, GPU_Y
+ GPU_disp GPU_sp, GPU_X, GPU_Y
  GPU_push GPU_X2
  GPU_push GPU_Y2
  GPU_push GPU_X

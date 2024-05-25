@@ -1,0 +1,55 @@
+Loading [1m[33mTGR-PRTO v0.0.47e Nightly build 3 [34mAlpha [mBuild...
+\ [1m[31mTheGameRazer [33m(C) [32m2017-2024 Koranva-Forest[39m
+ \ [3m[32mHelp us on Github[m: [1m[34m[4mhttps://github.com/BILLPC2684/TGR-PRTO-RAYLIB🡕[m
+  \ [3m[32mDonate at[m: [1m[34m[4mhttps://Ko-Fi.com/BILLPC2684🡕[m
+
+
+[35m> [33mUsage: [1m[31m./TGR [34m[Arguments] [m[35m<Path/To/ROM.tgr>
+ 
+ [1mArguments:
+  [31mDebugging:
+  [34m--debug        -d        [33m- Enables  Debug Mode. (Overrides Config)
+  [34m--nodebug      -nd       [33m- Disables Debug Mode. (Overrides Config)
+  [34m--pauseload    -pl       [33m- Pauses for terminal input after ROM loads.
+  [34m--waitinput    -wi       [33m- Forces you to step through every instruction.
+  [34m--rapiddebug   -rd       [33m- Allows you to blaze past debug requests.
+  [34m--debuggpu     -dg       [33m- Forces you to step through every GPU instruction.
+  
+  [31mBIOS Override:
+  [34m--skipbios     -sb       [33m- Skips the BIOS and goes directly into the ROM.
+  [34m--allowbios    -ab       [33m- Enters into the BIOS before ROM.
+  [34m--extbios      -bios
+   [33m\ [35m<Path>                [33m- Give your BIOS file to TGR. (Overrides Config)
+  
+  [35mPrinting:
+  [34m--blockdisp    -bd       [33m- Blocks Disp command Prints from appearing.
+  
+  [34mDisplay Overrides:
+  [34m--keepaspect   -ka       [33m- Keep the Display's Aspect Ratio.
+  [34m--loseaspect   -la       [33m- Lose the Display's Aspect Ratio.
+  
+  [34m--forcerender  -fr       [33m- Force the GPU to render every instruction.
+  
+  [m[33mHUD Override:[1m
+  [34m--minhud                 [33m- Enables the HUD Text.
+  [34m--fullhud                [33m- Disables the HUD Text.
+  [34m--showinput    -si       [33m- Show Player Inputs for HUD Text.
+  [34m--hideinput    -hi       [33m- Hide Player Inputs for HUD Text.
+  [34m--cancelintro  -ci       [33m- Cancel TGR's introduction animation.
+  
+  [31mTape: [34m(Working In Progress | [31mNot Finished[34m)
+  --tape         -tp       [33m- Gives TGR your TAPE file.
+   \ [34mstop [35m<Tape>           [33m- Does nothing and loads the Tape.
+   \ [34mplay [35m<Tape>           [33m- Plays the Tape.
+   \ [34mseek [35m<Tape> <Seconds> [33m- Seeks to and Plays the Tape.
+   \ [34mrecord [35m<Tape>         [33m- Continue Recording the Tape.
+   \ [34mformat [35m<Tape>         [33m- Clears the Tape.
+  
+  [m[31mROM Sav Override:[1m
+  [34m--extsav       -sav
+   [33m\ [35m<Path>                [33m- Give your SAV file to TGR.
+  
+  [m[35mMiscellaneous:[1m
+  [34m--help         -h        [33m- Lists Help.
+  [34m--version      -cfg      [33m- Returns the path to TGR's Config file.
+

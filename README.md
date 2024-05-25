@@ -22,7 +22,7 @@ Official ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRaz
 
 3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
-## Current Build: v0.0.47e Alpha Nightly 2 (goal: v0.0.50x Alpha for Feb/2024)
+## Current Build: v0.0.47e Alpha Nightly 4 (goal: v0.0.50x Alpha for Feb/2024)
 
 - Compile Errors: `No` Just some redudant warning from gcc
 
@@ -32,7 +32,7 @@ Official ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRaz
 
 - Stable Memory: `Yes` 128 MB of RAM | 64 MB of VRAM
 
-- Has Video: `No` Using raylib window | GPU pipeline is Unfinished (will be worked on soon)
+- Has Video: `Yes` Using raylib window | GPU pipeline is Unfinished (will be worked on soon)
 
 - Has Audio: `No` Requesting Help!!!
 

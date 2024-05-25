@@ -7,6 +7,10 @@
 #define CPLength 0x5A0
 #define PtrLenth 0x29
 
+#define GPU_RENDER_NODE_LEN 0xFFF
+#define GPU_CORE_COUNT 4
+#define GPU_LAYER_COUNT 5
+
 #define TGR_MEM_ROM_SIZE        0x0800000
 #define TGR_MEM_ROM0            0x0000000
 #define TGR_MEM_ROM1            0x0800000
@@ -42,10 +46,10 @@
 static const uint32_t TGR_MEM_WRAM_FULL = TGR_MEM_WRAM_SIZE+TGR_MEM_STACK_SIZE *2+TGR_MEM_IO_SIZE+TGR_MEM_SRAMEXT_SIZE;
 static const uint32_t TGR_MEM_VRAM_FULL = TGR_MEM_VRAM_SIZE+TGR_MEM_VSTACK_SIZE*4+                TGR_MEM_VRAMEXT_SIZE;
 
+static const uint16_t DefaultKEYS[2][14] = {{KEY_Z,KEY_X,KEY_C,KEY_A,KEY_S,KEY_D,KEY_Q,KEY_W,KEY_ENTER,KEY_BACKSPACE,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT},{KEY_KP_1,KEY_KP_5,KEY_KP_3,KEY_KP_7,KEY_KP_DIVIDE,KEY_KP_9,KEY_KP_0,KEY_KP_DECIMAL,KEY_KP_ENTER,KEY_KP_ADD,KEY_KP_8,KEY_KP_2,KEY_KP_4,KEY_KP_6}};
 static const uint8_t*ErrorTexts[3] = {"Warning", "Error", "Fatal"};
 static const uint8_t*TypeHelpForHelp = "Use \"./TGR --help\" for help\n\n";
 static const Vector2 Vector2_ZERO = (Vector2){0,0};
-
 static const Color VOID = {0};
 
 #define min(x,y) ({__typeof__(x)_x=(x);__typeof__(y)_y=(y);_y>_x?_x:_y;})
@@ -57,10 +61,10 @@ static const Color VOID = {0};
 #define LIME  CLITERAL(Color){0,158,47,255}
 
 typedef struct {
- bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,BlockDisp,ROMloaded,SilentRun,EXTSAV,KeepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync,RapidDebug,Resetting,HelpOnError;
+ bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,BlockDisp,ROMloaded,SilentRun,EXTSAV,KeepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync,RapidDebug,Resetting,HelpOnError, ControllerScantype[2][32], DebugGPUstart;
  uint8_t MF, MB, CursorDepth, HeaderSize, *MEM,PageID[2],ROMBANK[33][TGR_MEM_ROM_SIZE],ErrorType,LED[3],Controller[2][32],ControllerType[2],Title[16],ControllerDevice[2],GUIOpacity,
         *REG, *Error, *BN, *RN, *SN, NETWORK_IP[256], BoarderThiccness;
- uint16_t MFT, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],ControllerKey[2][32],NETWORK_PORT, IntroductionCutscene;
+ uint16_t MFT, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],ControllerScancode[2][32],NETWORK_PORT, IntroductionCutscene;
  uint32_t DebugPause[6], Clock, skip;
  uint64_t tmp[8];
  double IPS[2],MemUse,VMemUse;
@@ -109,17 +113,24 @@ typedef struct GPU_Worker {
 } GPU_Worker;
 */
 typedef struct GPU_CORE {
- bool CoreReady[4],FrameRendering,FrameSeen,ForceRender;
+ bool CoreReady[GPU_CORE_COUNT],FrameRendering,FrameSeen,ForceRender;
  uint8_t Rez,NewRez;
  uint16_t frames,RenderDelta;
- Image Sprites[0x10000],Layers[5];
- Texture Canvas[4];
+ Image Sprites[0x10000],Layers[GPU_LAYER_COUNT];
+ Texture Canvas[GPU_LAYER_COUNT];
 
 // bool      Workers_InUsed[16];
 // uint8_t   Workers_GPUID[16];
 // pthread_t call_GPU_Workers[16];
 } GPU_INIT;
 GPU_INIT GPUctl;
+
+typedef struct GPU_RENDER_NODE {
+ uint8_t Oper,R,G,B,A,Layer,CP[256][4],OperA,OperB,OperC;
+ int16_t X[4],Y[4];
+ uint32_t sp,cp,OperIMM;
+} GPU_RENDER_NODE;
+GPU_RENDER_NODE GPU_RENDER_NODES[GPU_CORE_COUNT][GPU_RENDER_NODE_LEN];
 
 typedef struct {
  bool running,Pause;
@@ -140,7 +151,7 @@ typedef struct {
  //   MP:  MaxPointer (Stack)
  //   CP:  ColorPallet
 } GPU_CORE;
-GPU_CORE GPU[4];
+GPU_CORE GPU[GPU_CORE_COUNT];
 static const uint16_t GPU_Resolutions[4][2] = {{480,360},{800,600},{852,480},{1280,720}};
 
 typedef struct TapeFrame {
@@ -176,7 +187,7 @@ enum TapeState {
 enum TGR_Controller_type {
  TGR_CONTROLTYPE_NONE=0,
  TGR_CONTROLTYPE_STANDARD, // . . 14 BUTTON, 0 JOT
- TGR_CONTROLTYPE_ARCADE, // . . . 8  BUTTON, 1 JOY
+ TGR_CONTROLTYPE_ARCADE, // . . . 10 BUTTON, 1 JOY
  TGR_CONTROLTYPE_STEERINGWHEEL,// 9  BUTTON, 1 JOY 
 };
 

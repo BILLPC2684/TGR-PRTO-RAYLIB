@@ -39,7 +39,7 @@ static const uint16_t Tape_Resolution[2];
 
 #define ScreenSise 2764800
 
-#define version "v0.0.47e Nightly build 3"
+#define version "v0.0.47e Nightly build 4"
 
 uint8_t MainPrintString[0xFFFF] = "";
 DIR* dir;
@@ -687,17 +687,27 @@ void TapeEject() {
 }
 
 void ArgStrError(uint8_t*string) {
- sprintf(sys.Error,"Invalid Argument \"%s\"...\n%s",string,(uint8_t*)(sys.HelpOnError?"":TypeHelpForHelp));
+ sprintf(sys.Error,"Invalid Argument \"%s\"...\n%s",string,sys.HelpOnError?"":TypeHelpForHelp);
  sys.ErrorType=1; printError();
 }
 void ArgIntError(uint32_t intager, uint8_t*expects) {
- sprintf(sys.Error,"Not Enough Arguments Given! (Expected %s got %i)\n%s",expects, intager, (uint8_t*)(sys.HelpOnError?"":TypeHelpForHelp));
+ sprintf(sys.Error,"Not Enough Arguments Given! (Expected %s got %i)\n%s",expects, intager, sys.HelpOnError?"":TypeHelpForHelp);
  sys.ErrorType=1; printError();
 }
 void ArgTypeError(uint8_t*got, uint8_t*expects) {
  sprintf(sys.Error,"Invalid FileType Given! (Expected %s got \"%s\")!\n", expects, got);
  sys.ErrorType=1; printError();
 }
+
+void ResetControllers() {
+ uint8_t i,j;
+ for(j=0;j<2;j++) {
+  sys.ControllerDevice[j] = 0;
+  sys.ControllerType[j] = TGR_CONTROLTYPE_STANDARD;
+  for(i=0;i<14;i++) {
+   sys.ControllerScantype[j][i] = 0;
+   sys.ControllerScancode[j][i] = DefaultKEYS[j][i];
+}}}
 
 void main(uint8_t argc, uint8_t*argv[]) {
  setlocale(LC_ALL, "");
@@ -730,17 +740,13 @@ void main(uint8_t argc, uint8_t*argv[]) {
  uint32_t i,j,k,l;
  for (i=0;i<unilist_size;i++) { TGR_chars[95+i] = utf16(TGR_uni[i]); }
  
- bool SystemHUD=false,ShowInput=false,ShowDump=false,FullHUD=false,StartWithOverlay=false,INITFullscreen=false,FullscreenType=true,ForceSkipIntro=false,SkipIntro=false, UInput[2][32]={0};
- uint16_t DefaultKEYS[2][14] = {{KEY_Z,KEY_X,KEY_C,KEY_A,KEY_S,KEY_D,KEY_Q,KEY_W,KEY_ENTER,KEY_BACKSPACE,KEY_UP,KEY_DOWN,KEY_LEFT,KEY_RIGHT},{KEY_KP_1,KEY_KP_5,KEY_KP_3,KEY_KP_7,KEY_KP_DIVIDE,KEY_KP_9,KEY_KP_0,KEY_KP_DECIMAL,KEY_KP_ENTER,KEY_KP_ADD,KEY_KP_8,KEY_KP_2,KEY_KP_4,KEY_KP_6}};
+ bool SystemHUD=false,ShowInput=false,ShowDump=false,FullHUD=false,StartWithOverlay=false,INITFullscreen=false,FullscreenType=true,ForceSkipIntro=false,SkipIntro=false;
+  int8_t UInput[2][32]={0};
  uint8_t hour_offset = 0, min_offset = 0;
  Color FadeMask = {0xFF,0xFF,0xFF,0x00};
  
- for(j=0;j<2;j++) {
-  sys.ControllerDevice[j] = 0;
-  sys.ControllerType[j] = TGR_CONTROLTYPE_STANDARD;
-  for(i=0;i<14;i++) {
-   sys.ControllerKey[j][i] = DefaultKEYS[j][i];
- }}
+ ResetControllers();
+
  FILE *fp;
  dir = opendir(CFGPATH); if (!dir) { if (_mkdir(CFGPATH)<0) { sprintf(sys.Error, "Failed to create system's folder\n"); sys.ErrorType=1; printError(); } } closedir(dir);
  cJSON *json,*jsonItem,*jsonSubItem; uint8_t cfgdata[1024];
@@ -791,19 +797,26 @@ void main(uint8_t argc, uint8_t*argv[]) {
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "min_offset");
    if(cJSON_IsNumber(jsonItem)) min_offset = jsonItem->valueint;
    for(j=0;j<2;j++) {
-    jsonItem = cJSON_GetObjectItemCaseSensitive(json, (uint8_t*)(j==0?"Player0":"Player1"));
+    jsonItem = cJSON_GetObjectItemCaseSensitive(json, j==0?"Player0":"Player1");
     jsonSubItem = cJSON_GetObjectItemCaseSensitive(jsonItem, "device");
     if(cJSON_IsNumber(jsonSubItem)) sys.ControllerDevice[j] = jsonSubItem->valueint;
     jsonSubItem = cJSON_GetObjectItemCaseSensitive(jsonItem, "type");
     if(cJSON_IsNumber(jsonSubItem)) sys.ControllerType[j] = jsonSubItem->valueint;
     
     jsonSubItem = cJSON_GetObjectItemCaseSensitive(jsonItem, "keys");
+    if(!cJSON_IsArray(jsonItem))
+     jsonSubItem = cJSON_GetObjectItemCaseSensitive(jsonItem, "scancodes");
     if(cJSON_IsArray(jsonSubItem)) {
      for(i=0;i<32;i++) {
-      sys.ControllerKey[j][i] = cJSON_GetArrayItem(jsonSubItem, i)->valueint;
+      sys.ControllerScancode[j][i] = cJSON_GetArrayItem(jsonSubItem, i)->valueint;
+    }}
+    jsonSubItem = cJSON_GetObjectItemCaseSensitive(jsonItem, "scantypes");
+    if(cJSON_IsArray(jsonSubItem)) {
+     for(i=0;i<32;i++) {
+      sys.ControllerScantype[j][i] = cJSON_GetArrayItem(jsonSubItem, i)->valueint;
    }}}
  }}
- sprintf(MainPrintString,"%s%s%sTGR-PRTO %s %sAlpha %sBuild...\n\\ %s%sTheGameRazer %s(C) %s2017-2024 Koranva-Forest%s\n \\ %s%sHelp us on Github%s: %s%s%shttps://github.com/BILLPC2684/TGR-PRTO-RAYLIB%s%s\n  \\ %s%sDonate at%s: %s%s%shttps://Ko-Fi.com/BILLPC2684%s%s\n", (uint8_t*)(VersionPrint?"":"Loading "), COLOR_BOLD,COLOR_YELLOW,version,COLOR_BLUE,COLOR_RESET,COLOR_BOLD,COLOR_RED,COLOR_YELLOW,COLOR_GREEN,COLOR_DEFAULT,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET);
+ sprintf(MainPrintString,"%s%s%sTGR-PRTO %s %sAlpha %sBuild...\n\\ %s%sTheGameRazer %s(C) %s2017-2024 Koranva-Forest%s\n \\ %s%sHelp us on Github%s: %s%s%shttps://github.com/BILLPC2684/TGR-PRTO-RAYLIB%s%s\n  \\ %s%sDonate at%s: %s%s%shttps://Ko-Fi.com/BILLPC2684%s%s\n", VersionPrint?"":"Loading ", COLOR_BOLD,COLOR_YELLOW,version,COLOR_BLUE,COLOR_RESET,COLOR_BOLD,COLOR_RED,COLOR_YELLOW,COLOR_GREEN,COLOR_DEFAULT,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET);
  FilterAnsi(MainPrintString);
  //printf(">>> %i\n",argc);
  for (int i=1; i<argc; i++) {
@@ -811,17 +824,18 @@ void main(uint8_t argc, uint8_t*argv[]) {
   //printf("ARG[%d/%d]: %s\n",i,argc-1,argv[i]);
 //  if (!strcmp(TextToLower(argv[i]),"--slow"         ) | !strcmp(TextToLower(argv[i]),"-s"   )) { i++; slowdown   = (int) strtol(argv[i], (char **)NULL, 10); } else
   if (!strcmp(TextToLower(argv[i]),"--version"      ) | !strcmp(TextToLower(argv[i]),"-v"    )) { exit(0); }
-  if (!strcmp(TextToLower(argv[i]),"--debug"        ) | !strcmp(TextToLower(argv[i]),"-d"    )) { sys.Debug       = true; printf("true\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--nodebug"      ) | !strcmp(TextToLower(argv[i]),"-nd"   )) { sys.Debug       = false; printf("false\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--pauseload"    ) | !strcmp(TextToLower(argv[i]),"-pl"   )) { sys.Debug       = true, sys.DebugPause[0] = 1; printf("true\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--waitinput"    ) | !strcmp(TextToLower(argv[i]),"-wi"   )) { sys.Debug       = true, sys.DebugPause[0] = INT32_MAX; printf("infinite\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--rapiddebug"   ) | !strcmp(TextToLower(argv[i]),"-rd"   )) { sys.RapidDebug = true; printf("true\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--debug"        ) | !strcmp(TextToLower(argv[i]),"-d"    )) { sys.Debug         = true; printf("true\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--nodebug"      ) | !strcmp(TextToLower(argv[i]),"-nd"   )) { sys.Debug         = false; printf("false\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--pauseload"    ) | !strcmp(TextToLower(argv[i]),"-pl"   )) { sys.Debug         = true, sys.DebugPause[0] = 1; printf("true\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--waitinput"    ) | !strcmp(TextToLower(argv[i]),"-wi"   )) { sys.Debug         = true, sys.DebugPause[0] = INT32_MAX; printf("infinite\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--debugGPU"     ) | !strcmp(TextToLower(argv[i]),"-dg"   )) { sys.DebugGPUstart = true; printf("GPU Force Debug\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--rapiddebug"   ) | !strcmp(TextToLower(argv[i]),"-rd"   )) { sys.RapidDebug    = true; printf("true\n"); } else
 //  if (!strcmp(TextToLower(argv[i]),"--skip"         ) | !strcmp(TextToLower(argv[i]),"-sk"  )) { sys.skip = (int) strtol(argv[++i], (char **)NULL, 10); sys.skipBIOS = true; printf("%d\n",argv[i]); } else
-  if (!strcmp(TextToLower(argv[i]),"--skipbios"     ) | !strcmp(TextToLower(argv[i]),"-sb"   )) { sys.skipBIOS    = true; printf("true\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--allowbios"    ) | !strcmp(TextToLower(argv[i]),"-ab"   )) { sys.skipBIOS    = false; printf("false\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--blockdisp"    ) | !strcmp(TextToLower(argv[i]),"-bd"   )) { sys.BlockDisp   = true; printf("true\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--keepaspect"   ) | !strcmp(TextToLower(argv[i]),"-ka"   )) { sys.KeepAspect  = true; printf("true\n"); } else
-  if (!strcmp(TextToLower(argv[i]),"--loseaspect"   ) | !strcmp(TextToLower(argv[i]),"-la"   )) { sys.KeepAspect  = false; printf("false\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--skipbios"     ) | !strcmp(TextToLower(argv[i]),"-sb"   )) { sys.skipBIOS      = true; printf("true\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--allowbios"    ) | !strcmp(TextToLower(argv[i]),"-ab"   )) { sys.skipBIOS      = false; printf("false\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--blockdisp"    ) | !strcmp(TextToLower(argv[i]),"-bd"   )) { sys.BlockDisp     = true; printf("true\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--keepaspect"   ) | !strcmp(TextToLower(argv[i]),"-ka"   )) { sys.KeepAspect    = true; printf("true\n"); } else
+  if (!strcmp(TextToLower(argv[i]),"--loseaspect"   ) | !strcmp(TextToLower(argv[i]),"-la"   )) { sys.KeepAspect    = false; printf("false\n"); } else
 //  if (!strcmp(TextToLower(argv[i]),"--devinfo"      ) | !strcmp(TextToLower(argv[i]),"-di"  )) { devInfo         = true; } else
   if (!strcmp(TextToLower(argv[i]),"--forcerender"  ) | !strcmp(TextToLower(argv[i]),"-fr"   )) { GPUctl.ForceRender = true; } else
 //  if (!strcmp(TextToLower(argv[i]),"--debugbios"    ) | !strcmp(TextToLower(argv[i]),"-db"  )) { debugBIOS       = true; } else
@@ -852,7 +866,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
     if (IsFileExtension(argv[i], ".sav")) {
      sprintf(extSAV,"%s",argv[++i]); printf("\"%s\"\n",extSAV);
     } else {
-     ArgTypeError((uint8_t*)(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4)), "\".sav\"");
+     ArgTypeError(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4), "\".sav\"");
    }} else { ArgIntError(argc-i,"2"); sys.HelpOnError?sprintf(argv[i], "-h"):exit(1); }
   } else
   if (!strcmp(TextToLower(argv[i]),"--extbios"      ) | !strcmp(TextToLower(argv[i]),"-bios" )) {
@@ -860,7 +874,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
     if (IsFileExtension(argv[i], ".bin")) {
      sprintf(BIOSPath,"%s",argv[++i]); printf("\"%s\"\n",BIOSPath);
     } else {
-     ArgTypeError((uint8_t*)(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4)), "\".bin\"");
+     ArgTypeError(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4), "\".bin\"");
    }} else { ArgIntError(argc-i,"2"); sys.HelpOnError?sprintf(argv[i], "-h"):exit(1); }
   } else
   if (!strcmp(TextToLower(argv[i]),"--help"         ) | !strcmp(TextToLower(argv[i]),"-h"    )) { /*DUMMY FOR CHECK*/ }
@@ -871,57 +885,101 @@ void main(uint8_t argc, uint8_t*argv[]) {
     if (IsFileExtension(argv[i], ".tgr")) {
      sprintf(NewROMPATH,"%s",argv[i]);
     } else {
-      ArgTypeError((uint8_t*)(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4)), "\".tgr\"");
+      ArgTypeError(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4), "\".tgr\"");
   }}}
   if (!strcmp(TextToLower(argv[i]),"--help"         ) | !strcmp(TextToLower(argv[i]),"-h"    )) {
-   printf("\n\n\
-> Usage: ./TGR [Arguments] <Path/To/ROM.tgr>\n\
+   sprintf(MainPrintString,"\n\n\
+%s> %sUsage: %s%s./TGR%s %s[Arguments] %s%s<Path/To/ROM.tgr>\n\
  \n\
- Arguments:\n\
-  Debugging:\n\
-  --debug        -d        - Enables  Debug Mode. (Overrides Config)\n\
-  --nodebug      -nd       - Disables Debug Mode. (Overrides Config)\n\
-  --pauseload    -pl       - Pauses for terminal input after ROM loads.\n\
-  --waitinput    -wi       - Forces you to step through every instruction.\n\
-  --rapiddebug   -rd       - Allows you to blaze past debug requests.\n\
+ %sArguments:\n\
+  %sDebugging:\n\
+  %s--debug        -d        %s- Enables  Debug Mode. (Overrides Config)\n\
+  %s--nodebug      -nd       %s- Disables Debug Mode. (Overrides Config)\n\
+  %s--pauseload    -pl       %s- Pauses for terminal input after ROM loads.\n\
+  %s--waitinput    -wi       %s- Forces you to step through every instruction.\n\
+  %s--rapiddebug   -rd       %s- Allows you to blaze past debug requests.\n\
+  %s--debuggpu     -dg       %s- Forces you to step through every GPU instruction.\n\
   \n\
-  BIOS Override:\n\
-  --skipbios     -sb       - Skips the BIOS and goes directly into the ROM.\n\
-  --allowbios    -ab       - Enters into the BIOS before ROM.\n\
-  --extbios      -bios\n\
-   \\ <Path>                - Give your BIOS file to TGR. (Overrides Config)\n\
+  %sBIOS Override:\n\
+  %s--skipbios     -sb       %s- Skips the BIOS and goes directly into the ROM.\n\
+  %s--allowbios    -ab       %s- Enters into the BIOS before ROM.\n\
+  %s--extbios      -bios\n\
+   %s\\ %s<Path>                %s- Give your BIOS file to TGR. (Overrides Config)\n\
   \n\
-  Printing:\n\
-  --blockdisp    -bd       - Blocks Disp command Prints from appearing.\n\
+  %sPrinting:\n\
+  %s--blockdisp    -bd       %s- Blocks Disp command Prints from appearing.\n\
   \n\
-  Display Overrides:\n\
-  --keepaspect   -ka       - Keep the Display's Aspect Ratio.\n\
-  --loseaspect   -la       - Lose the Display's Aspect Ratio.\n\
+  %s%sDisplay Overrides:%s\n\
+  %s--keepaspect   -ka       %s- Keep the Display's Aspect Ratio.\n\
+  %s--loseaspect   -la       %s- Lose the Display's Aspect Ratio.\n\
   \n\
-  --forcerender  -fr       - Force the GPU to render every instruction.\n\
+  %s--forcerender  -fr       %s- Force the GPU to render every instruction.\n\
   \n\
-  HUD Override:\n\
-  --minhud                 - Enables the HUD Text.\n\
-  --fullhud                - Disables the HUD Text.\n\
-  --showinput    -si       - Show Player Inputs for HUD Text.\n\
-  --hideinput    -hi       - Hide Player Inputs for HUD Text.\n\
-  --cancelintro  -ci       - Cancel TGR's introduction animation.\n\
+  %s%sHUD Override:%s\n\
+  %s--minhud                 %s- Enables the HUD Text.\n\
+  %s--fullhud                %s- Disables the HUD Text.\n\
+  %s--showinput    -si       %s- Show Player Inputs for HUD Text.\n\
+  %s--hideinput    -hi       %s- Hide Player Inputs for HUD Text.\n\
+  %s--cancelintro  -ci       %s- Cancel TGR's introduction animation.\n\
   \n\
-  Tape: (Working In Progress | Not Finished)\n\
-  --tape         -tp       - Gives TGR your TAPE file.\n\
-   \\ stop <Tape>           - Does nothing and loads the Tape.\n\
-   \\ play <Tape>           - Plays the Tape.\n\
-   \\ seek <Tape> <Seconds> - Seeks to and Plays the Tape.\n\
-   \\ record <Tape>         - Continue Recording the Tape.\n\
-   \\ format <Tape>         - Clears the Tape.\n\
+  %sTape: %s(Working In Progress | %sNot Finished%s)\n\
+  --tape         -tp       %s- Gives TGR your TAPE file.\n\
+   \\ %sstop %s<Tape>           %s- Does nothing and loads the Tape.\n\
+   \\ %splay %s<Tape>           %s- Plays the Tape.\n\
+   \\ %sseek %s<Tape> <Seconds> %s- Seeks to and Plays the Tape.\n\
+   \\ %srecord %s<Tape>         %s- Continue Recording the Tape.\n\
+   \\ %sformat %s<Tape>         %s- Clears the Tape.\n\
   \n\
-  ROM Sav Override:\n\
-  --extsav       -sav\n\
-   \\ <Path>                - Give your SAV file to TGR.\n\
+  %s%sROM Sav Override:%s\n\
+  %s--extsav       -sav\n\
+   %s\\ %s<Path>                %s- Give your SAV file to TGR.\n\
   \n\
-  Miscellaneous:\n\
-  --help         -h        - Lists Help.\n\
-  --version      -cfg      - Returns the path to TGR's Config file.\n\n");
+  %s%sMiscellaneous:%s\n\
+  %s--help         -h        %s- Lists Help.\n\
+  %s--version      -v        %s- Returns just the init text.\n\
+  %s--config       -cfg      %s- Returns the path to TGR's Config file.\n\n",
+  
+  COLOR_MAGENTA, COLOR_YELLOW, COLOR_BOLD, COLOR_RED, (SEPERATOR=="\\")?".exe":"", COLOR_BLUE, COLOR_RESET,COLOR_MAGENTA,
+  COLOR_BOLD,
+  COLOR_RED,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_RED,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_MAGENTA, COLOR_YELLOW,
+  COLOR_MAGENTA,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_RESET, COLOR_BLUE, COLOR_BOLD,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_RESET, COLOR_YELLOW, COLOR_BOLD,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_RED, COLOR_BLUE, COLOR_RED, COLOR_BLUE,
+  COLOR_YELLOW,
+  COLOR_BLUE, COLOR_MAGENTA, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_MAGENTA, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_MAGENTA, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_MAGENTA, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_MAGENTA, COLOR_YELLOW,
+  COLOR_RESET,COLOR_RED,COLOR_BOLD,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_MAGENTA, COLOR_YELLOW,
+  COLOR_RESET,COLOR_MAGENTA,COLOR_BOLD,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW,
+  COLOR_BLUE, COLOR_YELLOW);
+   FilterAnsi(MainPrintString);
    exit(0);
   }
  }
@@ -992,10 +1050,10 @@ void main(uint8_t argc, uint8_t*argv[]) {
  Wave Thunder_Wave = LoadWaveFromMemory(".wav", Thunder_Data, 760024);
  Sound Thunder = LoadSoundFromWave(Thunder_Wave);
  uint8_t inDialog = 0;
- CPU_init();
+ CPU_Init();
  
  
-// CPU_load("./ROMS/fib-endless.tgr");
+// CPU_Load("./ROMS/fib-endless.tgr");
  
 // CPU_start();
 // CPU_ResetCore(0); CPU_ResetCore(1);
@@ -1041,7 +1099,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
  for(GPUctl.Rez=0;GPUctl.Rez<4;GPUctl.Rez++) { GPUctl.Canvas[GPUctl.Rez] = LoadTextureFromImage((Image){NULL,GPU_Resolutions[GPUctl.Rez][0],GPU_Resolutions[GPUctl.Rez][1],1,PIXELFORMAT_UNCOMPRESSED_R8G8B8}); }
 
  uint8_t hexdump[1024*1024]={0},cursor=0;
- uint32_t hexdumpi=0;
+ uint32_t Hexdumpi=0;
 
  GPUctl.Rez = GPUctl.NewRez = 0; reset_GPUlayers();
 
@@ -1080,6 +1138,9 @@ void main(uint8_t argc, uint8_t*argv[]) {
  struct timespec start, end;
  uint16_t delta;
  uint8_t fade;
+ 
+ Hexdumpi = TGR_MEM_IO;
+ 
  while(MainRunning) {
   time(&rawtime);
   clock_gettime(CLOCK_MONOTONIC, &end);
@@ -1206,9 +1267,9 @@ void main(uint8_t argc, uint8_t*argv[]) {
    }
    if (strcmp(NewROMPATH,ROMPATH)) {
     strcpy(ROMPATH,NewROMPATH);
-    CPU_stop(); CPU_load(ROMPATH);
-    if (strlen(extSAV)>0) {CPU_extsav(extSAV);}
-    if (sys.StartOnLoad) CPU_start();
+    CPU_Stop(); CPU_Load(ROMPATH);
+    if (strlen(extSAV)>0) {CPU_ExtSAV(extSAV);}
+    if (sys.StartOnLoad) CPU_Start();
    }
    sprintf(text,"TheGameRazer - [%s] - %i/%i FPS",(uint8_t*)(sys.ROMloaded?(!sys.Title[0]?"No Title":sys.Title):"NO-ROM"),sys.FPS,GetFPS());
    SetWindowTitle(text);
@@ -1220,10 +1281,10 @@ void main(uint8_t argc, uint8_t*argv[]) {
     if(IsKeyPressed(KEY_U)){ sprintf(MainPrintString,"ShowInput\n"); FilterAnsi(MainPrintString); ShowInput = 1-ShowInput; }
     if(IsKeyPressed(KEY_G)){ sprintf(MainPrintString,"ShowDump\n"); FilterAnsi(MainPrintString); ShowDump = 1-ShowDump; }
     if(IsKeyPressed(KEY_O)){ sprintf(MainPrintString,"OPEN DA MENU!!\n"); FilterAnsi(MainPrintString); inDialog = 1; }
-    if(IsKeyPressed(KEY_R)){ CPU_reset(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT)); sprintf(MainPrintString,"%s\n",(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT))?"Hard Reset!":"Soft Reset..."); FilterAnsi(MainPrintString); inDialog = 1; }
+    if(IsKeyPressed(KEY_R)){ CPU_Reset(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT)); sprintf(MainPrintString,"%s\n",(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT))?"Hard Reset!":"Soft Reset..."); FilterAnsi(MainPrintString); inDialog = 1; }
     if((sys.Debug&&sys.RapidDebug)?IsKeyDown(KEY_D):IsKeyPressed(KEY_D)){ sys.Debug=1-sys.Debug; sprintf(MainPrintString,"Debug mode: %s\n",sys.Debug?"Enabled":"Disabled"); FilterAnsi(MainPrintString); inDialog = 1; }
     if(IsKeyPressed(KEY_P)){ sys.Pause=1-sys.Pause; sprintf(MainPrintString,"System: %s!\n",sys.Pause?"Paused":"Unpause"); FilterAnsi(MainPrintString); }
-    if(IsKeyPressed(KEY_Z)){ CPU_start(); }
+    if(IsKeyPressed(KEY_Z)){ CPU_Start(); }
    }if((IsKeyDown(KEY_LEFT_ALT)||IsKeyDown(KEY_RIGHT_ALT)) && IsKeyPressed(KEY_ENTER)){
     if(FullscreenType){ToggleBorderlessWindowed();}else{ToggleFullscreen();} INITFullscreen=!INITFullscreen;
     SetWindowMinSize((IsWindowFullscreen)?sys.SW+4:sys.HostWidth,(IsWindowFullscreen)?sys.SH+4:sys.HostHeight);
@@ -1231,20 +1292,36 @@ void main(uint8_t argc, uint8_t*argv[]) {
    for(j=0;j<2;j++) {
     if (sys.ControllerDevice[j] == 0) {
      for(i=0;i<32;i++)
-      UInput[j][i] = IsKeyDown(sys.ControllerKey[j][i]);
+      UInput[j][i] = IsKeyDown(sys.ControllerScancode[j][i])*127;
     } else if(IsGamepadAvailable(sys.ControllerDevice[j]-1)) {
-     for(i=0;i<32;i++)
-      UInput[j][i] = IsGamepadButtonDown(sys.ControllerDevice[j]-1, sys.ControllerKey[j][i]);
+     for(i=0;i<32;i++) {
+      if (sys.ControllerScantype[j][i]) //JOYSTICK
+       UInput[j][i] = GetGamepadAxisMovement(sys.ControllerDevice[j]-1, sys.ControllerScancode[j][i]);
+      else // BUTTON
+       UInput[j][i] = IsGamepadButtonDown(sys.ControllerDevice[j]-1, sys.ControllerScancode[j][i]);
+     }
     } else { sys.ControllerType[j] = 0; }
+    //printf("\n\n");
+    for(i=0;i<32;i++) {
+     if (!(i%8)) sys.MEM[TGR_MEM_IO+(j*8)+(i/8)] = 0;
+     if (!sys.ControllerScantype[j][i])
+      sys.MEM[TGR_MEM_IO+(j*8)+(i/8)] |= (UInput[j][i]>63)<<(i%8);
+      //printf("UInput[%i][%i]<<%i: %i | sys.MEM[0x%07X]: %i\n", j,i,i, UInput[j][i]<<(i%8), TGR_MEM_IO+(j*8)+(i/8), sys.MEM[TGR_MEM_IO+(j*8)+(i/8)]);
+    }
+    for(i=0;i<8;i++) {
+     sys.MEM[TGR_MEM_IO+(j*8)+4+i] = 0;
+     if (sys.ControllerScantype[j][i])
+      sys.MEM[TGR_MEM_IO+(j*8)+4+i] = 0x7F; //UInput[j][i];
+    }
    }
 
 
    if(!GPUctl.FrameSeen || GPUctl.ForceRender) { GPUctl.FrameSeen = true; }
    BeginDrawing();
     ClearBackground((Color){16,16,16,255});
-    if(!(CPU[0].running||CPU[1].running||GPU[0].running||GPU[1].running||GPU[2].running||GPU[3].running)){
+    if(!(CPU[0].running||CPU[1].running||GPU[0].running||GPU[1].running||GPU[2].running||GPU[3].running)) {
      ImageClearBackground(&sys.Canvas,(Color){0x16,0x51,0xED,0xFF});
-     i = timeinfo->tm_hour+hour_offset, j = timeinfo->tm_min+min_offset;
+     i = timeinfo->tm_hour+hour_offset+timeinfo->tm_isdst, j = timeinfo->tm_min+min_offset;
      sprintf(text,"%2d:%s%d",(i==0)?12:i%13,(j<10)?"0":"",j);
      getChar(text,  sys.SW-6*16,1*16,WHITE, 1, 2);
      getChar("CH3", sys.SW-5*16,2*16,WHITE, 1, 2);
@@ -1335,6 +1412,28 @@ void main(uint8_t argc, uint8_t*argv[]) {
         if (UInput[j][13]) { getChar("RIGHT",  48*8, sys.SH-(3-j)*8,  BLUET,true,1); }
         getChar("]", 53*8, sys.SH-(3-j)*8, BLUET, true,1);
         break;
+       case 2:
+        getChar("[", 5*8, sys.SH-(3-j)*8, BLUET, true,1);
+        if (UInput[j][ 0]) { getChar("A",       6*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 1]) { getChar("B",       8*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 2]) { getChar("C",      10*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 3]) { getChar("D",      12*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 4]) { getChar("E",      14*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 5]) { getChar("F",      16*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 6]) { getChar("G",      18*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 7]) { getChar("H",      20*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 8]) { getChar("START",  22*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 9]) { getChar("SELECT", 28*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        if (abs(UInput[j][10])>0) {
+         sprintf(text,"%c: %3d", (UInput[j][10]>-1)?'U':'D', abs(UInput[j][10]));
+         getChar(text,     35*8, sys.SH-(3-j)*8,  BLUET,true,1);
+        }
+        if (abs(UInput[j][11])>0) {
+         sprintf(text,"%c: %3d", (UInput[j][11]>-1)?'R':'L', abs(UInput[j][11]));
+         getChar(text,     42*8, sys.SH-(3-j)*8,  BLUET,true,1);
+        }
+        getChar("]", 48*8, sys.SH-(3-j)*8, BLUET, true,1);
+        break;
        default:
         sprintf(text,"P%i: UNKNOWN Controller",j+1);
         getChar(text, 2*8, sys.SH-(3*8), BLUET, true,1);
@@ -1346,7 +1445,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
     }
     
     if (ShowDump) {
-     uint32_t hexdump_addr = hexdumpi;
+     uint32_t hexdump_addr = Hexdumpi;
      uint16_t hexdump_x[2] = {sys.SW/2.0-29*8-4,sys.SW/2.0+29*8},
               hexdump_y[2] = {sys.SH/2.0-20*8-4,sys.SH/2.0+20*8};
      ImageDrawRectangle(&sys.UI,hexdump_x[0],hexdump_y[0],hexdump_x[1],hexdump_y[1],(Color){0,0xFF,0,0xFF});
@@ -1389,14 +1488,14 @@ void main(uint8_t argc, uint8_t*argv[]) {
       hexdump_addr+=0x10;
      }
      if(IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)) {
-      if(UInput[0][10]) hexdumpi=((int32_t)hexdumpi-0x100000)<=0?0:hexdumpi-0x100000;
-      if(UInput[0][11]) hexdumpi=((int32_t)hexdumpi+0x100000)>=TGR_MEM_TOTAL?TGR_MEM_TOTAL:hexdumpi+0x100000;
+      if(UInput[0][10]) Hexdumpi=((int32_t)Hexdumpi-0x100000)<=0?0:Hexdumpi-0x100000;
+      if(UInput[0][11]) Hexdumpi=((int32_t)Hexdumpi+0x100000)>=TGR_MEM_TOTAL?TGR_MEM_TOTAL:Hexdumpi+0x100000;
      } else if(IsKeyDown(KEY_LEFT_CONTROL) || IsKeyDown(KEY_RIGHT_CONTROL)) {
-      if(UInput[0][10]) hexdumpi=((int32_t)hexdumpi-0x200)<=0?0:hexdumpi-0x200;
-      if(UInput[0][11]) hexdumpi=((int32_t)hexdumpi+0x200)>=TGR_MEM_TOTAL?TGR_MEM_TOTAL:hexdumpi+0x200;
+      if(UInput[0][10]) Hexdumpi=((int32_t)Hexdumpi-0x200)<=0?0:Hexdumpi-0x200;
+      if(UInput[0][11]) Hexdumpi=((int32_t)Hexdumpi+0x200)>=TGR_MEM_TOTAL?TGR_MEM_TOTAL:Hexdumpi+0x200;
      } else {
-      if(UInput[0][10]) hexdumpi=((int32_t)hexdumpi-0x10)<=0?0:hexdumpi-0x10;
-      if(UInput[0][11]) hexdumpi=((int32_t)hexdumpi+0x10)>=TGR_MEM_TOTAL?TGR_MEM_TOTAL:hexdumpi+0x10;
+      if(UInput[0][10]) Hexdumpi=((int32_t)Hexdumpi-0x10)<=0?0:Hexdumpi-0x10;
+      if(UInput[0][11]) Hexdumpi=((int32_t)Hexdumpi+0x10)>=TGR_MEM_TOTAL?TGR_MEM_TOTAL:Hexdumpi+0x10;
      }
     }
     
@@ -1472,7 +1571,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
     sys.DistRect = (sys.KeepAspect)?(Rectangle){sys.ResizeDict[2],sys.ResizeDict[3], sys.ResizeDict[0],sys.ResizeDict[1]}:(Rectangle){sys.BoarderThiccness,sys.BoarderThiccness, sys.SW*(((sys.HostWidth>>1<<1)-sys.BoarderThiccness)*128/sys.SW)/128,sys.SH*(((sys.HostHeight>>1<<1)-sys.BoarderThiccness)*128/sys.SH)/128};
     sys.ScreenReady = true;
   }}
- } CPU_stop(); sprintf(MainPrintString,"%s%s\n[EMU Notice] Shutting Down...%s\n",COLOR_BOLD,COLOR_BLUE,COLOR_RESET); FilterAnsi(MainPrintString);
+ } CPU_Stop(); sprintf(MainPrintString,"%s%s\n[EMU Notice] Shutting Down...%s\n",COLOR_BOLD,COLOR_BLUE,COLOR_RESET); FilterAnsi(MainPrintString);
  for(l=0,i=0; i<6; i++) l+=sys.DebugPause[0]>0;
  if (l>0) { sys.Debug = sys.BreakDebug; }
 
@@ -1497,14 +1596,19 @@ void main(uint8_t argc, uint8_t*argv[]) {
   cJSON_AddStringToObject(json2, "BIOSPath", BIOSPath);
   cJSON_AddNumberToObject(json2, "hour_offset", hour_offset);
   cJSON_AddNumberToObject(json2, "min_offset", min_offset);
-  cJSON *Player,*PlayerKeys;
+  cJSON *Player,*PlayerScancodes,*PlayerScantypes;
   for(j=0;j<2;j++) {
    Player = cJSON_CreateObject();
    cJSON_AddNumberToObject(Player, "device", sys.ControllerDevice[j]);
    cJSON_AddNumberToObject(Player, "type", sys.ControllerType[j]);
-   PlayerKeys = cJSON_CreateArray(); 
-   for(i=0;i<32;i++) cJSON_AddItemToArray(PlayerKeys, cJSON_CreateNumber(sys.ControllerKey[j][i]));
-   cJSON_AddItemToObject(Player, "keys", PlayerKeys);
+   PlayerScancodes = cJSON_CreateArray();
+   PlayerScantypes = cJSON_CreateArray();
+   for(i=0;i<32;i++) {
+    cJSON_AddItemToArray(PlayerScantypes, cJSON_CreateNumber(sys.ControllerScantype[j][i]));
+    cJSON_AddItemToArray(PlayerScancodes, cJSON_CreateNumber(sys.ControllerScancode[j][i]));
+   }
+   cJSON_AddItemToObject(Player, "scancodes", PlayerScancodes);
+   cJSON_AddItemToObject(Player, "scantypes", PlayerScantypes);
    cJSON_AddItemToObject(json2,j==0?"Player0":"Player1",Player);
   }
   uint8_t *json_str = cJSON_Print(json2);

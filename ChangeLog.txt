@@ -38,6 +38,8 @@ CommandLine Changes:
  * Added "--help" or "-h", to list all the arguments
  * Added "--cancelintro" or "-ci" to skip the intro (this does not effect the Setting "SkipIntro")
  * Added "--tape <PlayState> <TapePath.grtp>" or "-tp <PlayState> <TapePath.grtp>" to load a tape as soon as posssible  (WIP)
+ * Added "--debuggpu" or "--dg", for debugging the GPU when it starts
+ * Improved "--help" updated with new information and added color support
  
 Keybind Changes:
  * CTRL + G, opens and closes memory MAP
@@ -55,3 +57,5 @@ Minor Small Fixes:
 
 Major Small Fixes:
  * Stack System was fixed
+
+(I'm probbly forgetting some things)
