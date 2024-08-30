@@ -1,10 +1,14 @@
 #if _WIN32
  #include <cJSON.h> // . . . . \.
+ #include "raylib_win32.h"
+ #define _mkdir(path) mkdir(path)
 #else                  //        https://github.com/DaveGasys.MBle/cJSON
  #include <cjson/cJSON.h> // . /
+ #define _mkdir(path) mkdir(path, 0777)
 #endif
+
 #include <raylib.h> // . . . . . https://github.com/raysan5/raylib
-//#include "discord_game_sdk.h" // https://discord.com/developers/docs/game-sdk/sdk-starter-guide
+#include "discord_game_sdk.h" // https://discord.com/developers/docs/game-sdk/sdk-starter-guide
 
 #include <math.h>
 #include <time.h>
@@ -20,31 +24,27 @@
 #include <locale.h>
 #include <stdbool.h>
 #include <sys/stat.h>
+//#include <sys/socket.h>
 #include "netlib.h"
 #include "color.h"
 #include "TGR.h"
+#include "assets.h"
 
 #define RLGL_ENABLE_OPENGL_DEBUG_CONTEXT 1
 #define SUPPORT_TRACELOG_DEBUG 1
 
-#if _WIN32
- #define _mkdir(path) mkdir(path)
-#else
- #define _mkdir(path) mkdir(path, 0777)
-#endif
-
 static volatile bool MainRunning = 1;
-static const uint16_t GPU_Resolutions[4][2];
-static const uint16_t Tape_Resolution[2];
 
 #define ScreenSise 2764800
 
 #define version "v0.0.47e Nightly build 4"
 
+#include "discord.h"
+
 uint8_t MainPrintString[0xFFFF] = "";
 DIR* dir;
 
-Tape CurrentTape;
+TGR_Tape CurrentTape;
 Font font;
 Color
  TGR_RED       = (Color){255,128,128,255},
@@ -62,7 +62,7 @@ void DebugPauseExit() {
  for(uint8_t i=0; i<6; i++) sys.DebugTick[i] = true, sys.DebugPause[i] = 0;
  sys.Debug = sys.BreakDebug;
  sprintf(MainPrintString, "[[BREAKPOINT DEACTIVATED!]] Debug mode is %s\n",sys.Debug?"Still Enabled, my dear chap! (You're a feisty debugger aren't ya?)":"Disabled!");
- FilterAnsi(MainPrintString);
+ TGR_FilterAnsi(MainPrintString);
 }
 
 void intHandler(int dummy) {
@@ -111,7 +111,7 @@ void getAspectRatio(uint16_t out[4]) {
 }
 
 // Rotate image in degrees
-void ImageRotate2(Image *image, int degrees) {
+void RL_ImageRotate2(Image *image, int degrees) {
  // Security check to avoid program crash
  if ((image->data == NULL) || (image->width == 0) || (image->height == 0)) return;
  
@@ -169,25 +169,25 @@ uint32_t getDecint(float data) {
  } return out;
 }
 
-Image Bytes2ImageAlpha(uint8_t data[], uint16_t width, uint16_t height) {
+Image RL_Bytes2ImageAlpha(uint8_t data[], uint16_t width, uint16_t height) {
  Color *pixels = (Color *)RL_CALLOC(width*height, sizeof(Color));
  memcpy(pixels,data,width*height*4);
  return (Image){pixels,width,height,1,PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
 }
-Image PtrBytes2ImageAlpha(uint8_t data[], uint16_t width, uint16_t height) {
+Image RL_PtrBytes2ImageAlpha(uint8_t data[], uint16_t width, uint16_t height) {
  return (Image){data,width,height,1,PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
 }
 
-Image Bytes2Image(uint8_t data[], uint16_t width, uint16_t height) {
+Image RL_Bytes2Image(uint8_t data[], uint16_t width, uint16_t height) {
  Color *pixels = (Color *)RL_CALLOC(width*height, sizeof(Color));
  memcpy(pixels,data,width*height*3);
  return (Image){pixels,width,height,1,PIXELFORMAT_UNCOMPRESSED_R8G8B8};
 }
-Image PtrBytes2Image(uint8_t data[], uint16_t width, uint16_t height) {
+Image RL_PtrBytes2Image(uint8_t data[], uint16_t width, uint16_t height) {
  return (Image){data,width,height,1,PIXELFORMAT_UNCOMPRESSED_R8G8B8};
 }
 
-void CP2RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPallet[16][4]) {
+void TGR_CP2RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPallet[16][4]) {
  uint32_t j=0,k;
  for(uint32_t i=0;i<length;i++) {
   if (data[i]>>4&0xF0 == 0) { j+=4; }
@@ -196,15 +196,15 @@ void CP2RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPallet
   else { for(k=0; k<4; k++) { out[j++] = ColorPallet[data[i]&0xF][k]; } }
  }
 }
-void CP82RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPallet[256][4]) {
+void TGR_CP82RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPallet[256][4]) {
  uint32_t j=0;
  for(uint32_t i=0; i<length*4; i++) {
   //if (i%4 == 0) printf("ColorPallet[ data[ i:%10i ]: 0x%02X ]\n", i/4, data[i/4]);
   out[j++] = ColorPallet[data[i/4]][i%4];
- } //printf("Generated Image from CP8: did  %i out of %i\n",j,length*4);
+ } //printf("Generated Image from TGR_CP8: did  %i out of %i\n",j,length*4);
 }
 
-uint8_t* concat(const uint8_t *s1, const uint8_t *s2) {
+uint8_t*concat(const uint8_t *s1, const uint8_t *s2) {
  const size_t len[2] = {strlen(s1), strlen(s2)};
  uint8_t *result = malloc(len[0]+len[1]+1);//+1 for the null-terminator
  //in real code you would check for errors in malloc here
@@ -472,13 +472,13 @@ void GenerateFont() {
   TGR_fontImages[i] = (Image){symbols[i],8,8,1,PIXELFORMAT_UNCOMPRESSED_R8G8B8A8};
  }
  sprintf(MainPrintString,"\\%s%sFont has been Generated!!%s\n\n",COLOR_BOLD,COLOR_GREEN,COLOR_BOTH_DEFAULT);
- FilterAnsi(MainPrintString);
+ TGR_FilterAnsi(MainPrintString);
 }
 /*
 Font GenerateFont() {
  #define img_sz 128
  sprintf(MainPrintString,"\n%sGenerating TGR Font...\n",COLOR_MAGENTA);
- FilterAnsi(MainPrintString);
+ TGR_FilterAnsi(MainPrintString);
  Color *pixels = (Color *)RL_CALLOC(img_sz*img_sz, sizeof(Color));
  
  //ASSEMBLE GLYPHS
@@ -534,11 +534,11 @@ Font GenerateFont() {
  
  UnloadImage(fontClear);
  sprintf(MainPrintString,"\\%s%sFont has been Generated!!%s\n\n",COLOR_BOLD,COLOR_GREEN,COLOR_BOTH_DEFAULT);
- FilterAnsi(MainPrintString);
+ TGR_FilterAnsi(MainPrintString);
  return font;
 }*/
 
-void UpdateColors() {
+void TGR_UpdateColors() {
  TGR_RED       = (Color){255,128,128,255},
  TGR_REDT      = (Color){TGR_RED.r,TGR_RED.g,TGR_RED.b,sys.GUIOpacity/100.f*255},
  TGR_DIM_RED   = (Color){255, 64, 64,255},
@@ -550,10 +550,10 @@ void UpdateColors() {
  TGR_DIM_BLUET = (Color){TGR_DIM_BLUE.r,TGR_DIM_BLUE.g,TGR_DIM_BLUE.b,sys.GUIOpacity/100.f*255},
  BLUET         = (Color){  0,  0,255,sys.GUIOpacity/100.f*255};
 // sprintf(MainPrintString,">>> %i, %i",sys.GUIOpacity,(int)(sys.GUIOpacity/100.f*255));
-// FilterAnsi(MainPrintString);
+// TGR_FilterAnsi(MainPrintString);
 }
 
-void FilterAnsi(uint8_t*str) {
+void TGR_FilterAnsi(uint8_t*str) {
  if (sys.AnsiPrinting) {
   printf("%s",str);
  } else {
@@ -569,33 +569,33 @@ void FilterAnsi(uint8_t*str) {
   printf("%s",string);
 }}
 
-void printError() {
+void TGR_printError() {
  if((strlen(sys.Error)>0) && (sys.ErrorType<3)) {
   uint8_t msg[1024] = {0};
   sprintf(msg,"%s%s%s[EMU %s] %s%s%s%s",COLOR_BG_DEFAULT,COLOR_BOLD,COLOR_YELLOW,ErrorTexts[sys.ErrorType],(sys.ErrorType<2?"":COLOR_NORMAL),(sys.ErrorType<1?"":COLOR_RED),sys.Error,COLOR_BOTH_DEFAULT); memset(sys.Error, 0, sizeof(sys.Error));
-  FilterAnsi(msg); sys.ErrorType = 3;
+  TGR_FilterAnsi(msg); sys.ErrorType = 3;
 }}
 
 uint64_t zeroup(int64_t x) { return (x>=0)?x:0; }
 
-void Init_GPUsprites() {
+void TAYLOR_GPU_InitSprites() {
  uint32_t i=TGR_MEM_VRAM+CPLength+PtrLenth+2; uint16_t l=0;
- do {GPUctl.Sprites[l] = PtrBytes2ImageAlpha(sys.MEM+TGR_MEM_VRAM+((sys.MEM[i+l*11+3]&7)<<24|sys.MEM[i+l*11+2]<<16|sys.MEM[i+l*11+1]<<8|sys.MEM[i+l*11+0]),
+ do {GPUctl.Sprites[l] = RL_PtrBytes2ImageAlpha(sys.MEM+TGR_MEM_VRAM+((sys.MEM[i+l*11+3]&7)<<24|sys.MEM[i+l*11+2]<<16|sys.MEM[i+l*11+1]<<8|sys.MEM[i+l*11+0]),
  sys.MEM[i+l*11+5],sys.MEM[i+l*11+6]); } while(l++<(sys.MEM[i-2]<<8|sys.MEM[i-1]));
 }
 
-void reset_GPUlayers() {
+void TAYLOR_GPU_ResetLayers() {
  uint32_t i; uint16_t l=0; for(i=0;i<4;i++) GPU[i].Pause = true;
- Init_GPUsprites();
+ TAYLOR_GPU_InitSprites();
  i = TGR_MEM_VSTACK0; sys.MEM[i] = 0xFF;
  for (l=4;l!=65535;l--) {
-  i-=GPU_Resolutions[GPUctl.Rez][0]*GPU_Resolutions[GPUctl.Rez][1]*4;
+  i-=TGR_GPU_Resolutions[GPUctl.Rez][0]*TGR_GPU_Resolutions[GPUctl.Rez][1]*4;
   //printf("l: %d | i: 0x%07X\n",l,i);
   sys.MEM[TGR_MEM_VRAM+CPLength+l*8+0] = (i>>24)&0xFF; sys.MEM[TGR_MEM_VRAM+CPLength+l*8+1] = (i>>16)&0xFF;
   sys.MEM[TGR_MEM_VRAM+CPLength+l*8+2] = (i>> 8)&0xFF; sys.MEM[TGR_MEM_VRAM+CPLength+l*8+3] =  i     &0xFF;
-  sys.MEM[TGR_MEM_VRAM+CPLength+l*8+4] = (GPU_Resolutions[GPUctl.Rez][0]>>8)&0xFF; sys.MEM[TGR_MEM_VRAM+CPLength+l*8+5] = GPU_Resolutions[GPUctl.Rez][0]&0xFF;
-  sys.MEM[TGR_MEM_VRAM+CPLength+l*8+6] = (GPU_Resolutions[GPUctl.Rez][1]>>8)&0xFF; sys.MEM[TGR_MEM_VRAM+CPLength+l*8+7] = GPU_Resolutions[GPUctl.Rez][1]&0xFF;
-  GPUctl.Layers[l] = PtrBytes2ImageAlpha(&sys.MEM[i],GPU_Resolutions[GPUctl.Rez][0],GPU_Resolutions[GPUctl.Rez][1]);
+  sys.MEM[TGR_MEM_VRAM+CPLength+l*8+4] = (TGR_GPU_Resolutions[GPUctl.Rez][0]>>8)&0xFF; sys.MEM[TGR_MEM_VRAM+CPLength+l*8+5] = TGR_GPU_Resolutions[GPUctl.Rez][0]&0xFF;
+  sys.MEM[TGR_MEM_VRAM+CPLength+l*8+6] = (TGR_GPU_Resolutions[GPUctl.Rez][1]>>8)&0xFF; sys.MEM[TGR_MEM_VRAM+CPLength+l*8+7] = TGR_GPU_Resolutions[GPUctl.Rez][1]&0xFF;
+  GPUctl.Layers[l] = RL_PtrBytes2ImageAlpha(&sys.MEM[i],TGR_GPU_Resolutions[GPUctl.Rez][0],TGR_GPU_Resolutions[GPUctl.Rez][1]);
   //printf("l: %d, i: 0x%08X | 0x%02X%02X%02X%02X, %dx%d] Ptr: 0x%X\n",l,i,sys.MEM[TGR_MEM_VRAM+CPLength+l*8+0],sys.MEM[TGR_MEM_VRAM+CPLength+l*8+1],sys.MEM[TGR_MEM_VRAM+CPLength+l*8+2],sys.MEM[TGR_MEM_VRAM+CPLength+l*8+3],(sys.MEM[TGR_MEM_VRAM+CPLength+l*8+4]<<8)|sys.MEM[TGR_MEM_VRAM+CPLength+l*8+5],(sys.MEM[TGR_MEM_VRAM+CPLength+l*8+6]<<8)|sys.MEM[TGR_MEM_VRAM+CPLength+l*8+7],GPUctl.Layers[l].data);
  } for(i=0;i<4;i++) GPU[i].Pause = false;
 }
@@ -632,8 +632,8 @@ void TapeNew(uint8_t path) {
  sprintf(CurrentTape.Path,"%s",path)
  CurrentTape.Loaded = CurrentTape.JustLoaded = true;
  CurrentTape.FramesPerSaveState = 24;
- CurrentTape.FrameData = malloc(Tape_Resolution[0],Tape_Resolution[1]*2);
- CurrentTape.Frame = (Image){&CurrentTape.FrameData,Tape_Resolution[0],Tape_Resolution[1],1,PIXELFORMAT_UNCOMPRESSED_R5G6B5};
+ CurrentTape.FrameData = malloc(TGR_Tape_Resolution[0],TGR_Tape_Resolution[1]*2);
+ CurrentTape.Frame = (Image){&CurrentTape.FrameData,TGR_Tape_Resolution[0],TGR_Tape_Resolution[1],1,PIXELFORMAT_UNCOMPRESSED_R5G6B5};
  
  CurrentTape.State = CurrentTape.Length = CurrentTape.seek = 0;
  CurrentTape.FrameBuffer = calloc(255,sizeof(TapeFrame));
@@ -643,18 +643,18 @@ void TapeNew(uint8_t path) {
 void TapeLoad() {
  printf("TapeLoad\n");
  /*
- if ((ROMfp = fopen(sys.RN,"rb")) == NULL) { sprintf(sys.Error,"Failed to access ROM file\n"); sys.ErrorType = 1; printError(); return -1; }
+ if ((ROMfp = fopen(sys.RN,"rb")) == NULL) { sprintf(sys.Error,"Failed to access ROM file\n"); sys.ErrorType = 1; TGR_printError(); return -1; }
  for(uint8_t i=0;i<32;i++){ if(feof(ROMfp)){break;} fread(&sys.ROMBANK[i], TGR_MEM_ROM_SIZE, 1, ROMfp); }
  
  if (!strcmp("","\x00TGRTAPE"))
- if(LoadCart()<0) { sys.Title[0] = 0; sys.ROMloaded = 0; sys.ErrorType = 1; sprintf(sys.Error,"%sFailed to load ROM: \"%s\"...\n",sys.Error,sys.RN); printError(); }
-  else { CPU_LoadPage(0,0); CPU_LoadPage(1,1); sprintf(sys.Title, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",sys.ROMBANK[0][5],sys.ROMBANK[0][6],sys.ROMBANK[0][7],sys.ROMBANK[0][8],sys.ROMBANK[0][9],sys.ROMBANK[0][10],sys.ROMBANK[0][11],sys.ROMBANK[0][12],sys.ROMBANK[0][13],sys.ROMBANK[0][14],sys.ROMBANK[0][15],sys.ROMBANK[0][16],sys.ROMBANK[0][17],sys.ROMBANK[0][18],sys.ROMBANK[0][19],sys.ROMBANK[0][20]); sys.ROMloaded = 1; sys.HeaderSize = CARTINIT(); }
+ if(TAYLOR_LoadCart()<0) { sys.Title[0] = 0; sys.ROMloaded = 0; sys.ErrorType = 1; sprintf(sys.Error,"%sFailed to load ROM: \"%s\"...\n",sys.Error,sys.RN); TGR_printError(); }
+  else { TAYLOR_CPU_LoadPage(0,0); TAYLOR_CPU_LoadPage(1,1); sprintf(sys.Title, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",sys.ROMBANK[0][5],sys.ROMBANK[0][6],sys.ROMBANK[0][7],sys.ROMBANK[0][8],sys.ROMBANK[0][9],sys.ROMBANK[0][10],sys.ROMBANK[0][11],sys.ROMBANK[0][12],sys.ROMBANK[0][13],sys.ROMBANK[0][14],sys.ROMBANK[0][15],sys.ROMBANK[0][16],sys.ROMBANK[0][17],sys.ROMBANK[0][18],sys.ROMBANK[0][19],sys.ROMBANK[0][20]); sys.ROMloaded = 1; sys.HeaderSize = CARTINIT(); }
 
 
  CurrentTape.JustLoaded = true;
    // TO-DO //
    if (CurrentTape.Loaded) {
-    CurrentTape.Frame = (Image){&CurrentTape.FrameData,Tape_Resolution[0],Tape_Resolution[1],1,PIXELFORMAT_UNCOMPRESSED_R5G6B5};
+    CurrentTape.Frame = (Image){&CurrentTape.FrameData,TGR_Tape_Resolution[0],TGR_Tape_Resolution[1],1,PIXELFORMAT_UNCOMPRESSED_R5G6B5};
    }
    CurrentTape.JustLoaded = false;
   }
@@ -688,15 +688,15 @@ void TapeEject() {
 
 void ArgStrError(uint8_t*string) {
  sprintf(sys.Error,"Invalid Argument \"%s\"...\n%s",string,sys.HelpOnError?"":TypeHelpForHelp);
- sys.ErrorType=1; printError();
+ sys.ErrorType=1; TGR_printError();
 }
 void ArgIntError(uint32_t intager, uint8_t*expects) {
  sprintf(sys.Error,"Not Enough Arguments Given! (Expected %s got %i)\n%s",expects, intager, sys.HelpOnError?"":TypeHelpForHelp);
- sys.ErrorType=1; printError();
+ sys.ErrorType=1; TGR_printError();
 }
 void ArgTypeError(uint8_t*got, uint8_t*expects) {
  sprintf(sys.Error,"Invalid FileType Given! (Expected %s got \"%s\")!\n", expects, got);
- sys.ErrorType=1; printError();
+ sys.ErrorType=1; TGR_printError();
 }
 
 void ResetControllers() {
@@ -709,7 +709,45 @@ void ResetControllers() {
    sys.ControllerScancode[j][i] = DefaultKEYS[j][i];
 }}}
 
-void main(uint8_t argc, uint8_t*argv[]) {
+void init_discord() {
+ //////////////////////////
+ // DISCORD INTERGRATION //
+ //////////////////////////
+ //struct Application sys.DiscordApp;
+ memset(&sys.DiscordApp, 0, sizeof(sys.DiscordApp));
+
+ struct IDiscordUserEvents users_events;
+ memset(&users_events, 0, sizeof(users_events));
+ users_events.on_current_user_update = OnUserUpdated;
+
+ struct IDiscordActivityEvents activities_events;
+ memset(&activities_events, 0, sizeof(activities_events));
+
+ struct DiscordCreateParams params;
+ DiscordCreateParamsSetDefault(&params);
+ params.client_id = 1149758048399798292;
+ params.flags = DiscordCreateFlags_Default;
+ params.event_data = &sys.DiscordApp;
+ params.activity_events = &activities_events;
+ params.user_events = &users_events;
+ DISCORD_REQUIRE(DiscordCreate(DISCORD_VERSION, &params, &sys.DiscordApp.core));
+ 
+ sys.DiscordApp.users = sys.DiscordApp.core->get_user_manager(sys.DiscordApp.core);
+ //sys.DiscordApp.achievements = sys.DiscordApp.core->get_achievement_manager(sys.DiscordApp.core);
+ sys.DiscordApp.activities = sys.DiscordApp.core->get_activity_manager(sys.DiscordApp.core);
+ sys.DiscordApp.application = sys.DiscordApp.core->get_application_manager(sys.DiscordApp.core);
+ //sys.DiscordApp.lobbies = sys.DiscordApp.core->get_lobby_manager(sys.DiscordApp.core);
+
+ //sys.DiscordApp.lobbies->connect_lobby_with_activity_secret(sys.DiscordApp.lobbies, "invalid_secret", &sys.DiscordApp, OnLobbyConnect);
+ 
+ //sys.DiscordApp.application->get_oauth2_token(sys.DiscordApp.application, &sys.DiscordApp, OnOAuth2Token);
+ 
+ DiscordBranch branch;
+ sys.DiscordApp.application->get_current_branch(sys.DiscordApp.application, &branch);
+ ///////////////////////////////////////////////
+}
+
+void main(int argc, char *argv[]) {
  setlocale(LC_ALL, "");
  #if _WIN32
   #define CFGPATH concat(getenv("APPDATA"),"\\TheGameRazer\\")
@@ -735,7 +773,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
  sys.Error = malloc(1024); sys.ErrorType = 4;
  uint8_t NewROMPATH[1024]={0},ROMPATH[1024]={0},extSAV[1024]={0},BIOSPath[1024]={0};
  sprintf(BIOSPath,"%s%s%s%s",CFGPATH,"bin",SEPERATOR,"BIOS.bin");
- sys.HelpOnError = sys.StartOnLoad = true, sys.BlockDisp = sys.KeepAspect = sys.Debug = sys.skipBIOS = GPUctl.ForceRender = sys.RapidDebug = false, sys.GUIOpacity = 80, sys.Cutscene0Speed = 8;
+ sys.HelpOnError = sys.StartOnLoad = sys.SoloPlay = sys.NumOfPlayers = true, sys.Online = sys.BlockDisp = sys.KeepAspect = sys.Debug = sys.skipBIOS = GPUctl.ForceRender = sys.RapidDebug = sys.DiscordEnrichment = sys.DiscordEnrichmentInited = false, sys.GUIOpacity = 80, sys.Cutscene0Speed = 8;
 
  uint32_t i,j,k,l;
  for (i=0;i<unilist_size;i++) { TGR_chars[95+i] = utf16(TGR_uni[i]); }
@@ -748,13 +786,16 @@ void main(uint8_t argc, uint8_t*argv[]) {
  ResetControllers();
 
  FILE *fp;
- dir = opendir(CFGPATH); if (!dir) { if (_mkdir(CFGPATH)<0) { sprintf(sys.Error, "Failed to create system's folder\n"); sys.ErrorType=1; printError(); } } closedir(dir);
+ dir = opendir(CFGPATH); if (!dir) { if (_mkdir(CFGPATH)<0) { sprintf(sys.Error, "Failed to create system's folder\n"); sys.ErrorType=1; TGR_printError(); } } closedir(dir);
  cJSON *json,*jsonItem,*jsonSubItem; uint8_t cfgdata[1024];
- if ((fp = fopen(concat(CFGPATH,"settings.cfg"), "r")) == NULL) { sprintf(sys.Error,"Unable to open Settings, Using Default Settings...\n"); sys.ErrorType=1; printError(); }
+ if ((fp = fopen(concat(CFGPATH,"settings.cfg"), "r")) == NULL) { sprintf(sys.Error,"Unable to open Settings, Using Default Settings...\n"); sys.ErrorType=1; TGR_printError(); }
  else {
   int len = fread(cfgdata, 1, sizeof(cfgdata), fp); fclose(fp);
   if ((json = cJSON_Parse(cfgdata)) == NULL) { cJSON_Delete(json); }
   else {
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "sys.DiscordEnrichment");
+   if(cJSON_IsBool(jsonItem)) sys.DiscordEnrichment = cJSON_IsTrue(jsonItem);
+
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "StartOnLoad");
    if(cJSON_IsBool(jsonItem)) sys.StartOnLoad = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "AnsiPrinting");
@@ -817,7 +858,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
    }}}
  }}
  sprintf(MainPrintString,"%s%s%sTGR-PRTO %s %sAlpha %sBuild...\n\\ %s%sTheGameRazer %s(C) %s2017-2024 Koranva-Forest%s\n \\ %s%sHelp us on Github%s: %s%s%shttps://github.com/BILLPC2684/TGR-PRTO-RAYLIB%s%s\n  \\ %s%sDonate at%s: %s%s%shttps://Ko-Fi.com/BILLPC2684%s%s\n", VersionPrint?"":"Loading ", COLOR_BOLD,COLOR_YELLOW,version,COLOR_BLUE,COLOR_RESET,COLOR_BOLD,COLOR_RED,COLOR_YELLOW,COLOR_GREEN,COLOR_DEFAULT,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET);
- FilterAnsi(MainPrintString);
+ TGR_FilterAnsi(MainPrintString);
  //printf(">>> %i\n",argc);
  for (int i=1; i<argc; i++) {
   //printf("got \"%s\": ",argv[i]);
@@ -853,8 +894,8 @@ void main(uint8_t argc, uint8_t*argv[]) {
      if (i+1<argc) {
       if (isNumber(argv[i]))
        TapeSeek((int)strtol(argv[i], (char **)NULL, 10));
-      else { sprintf(sys.Error,"Intager Error, got \"%s\" expected number!\n",argv[i]); sys.ErrorType=1; printError(); sprintf(argv[i], "-h"); }
-     } else { sprintf(sys.Error,"Not Enough Arguments Given! (Expected 4 got %i)\n",argc-(i-2)); sys.ErrorType=1; printError(); sprintf(argv[--i], "-h"); }
+      else { sprintf(sys.Error,"Intager Error, got \"%s\" expected number!\n",argv[i]); sys.ErrorType=1; TGR_printError(); sprintf(argv[i], "-h"); }
+     } else { sprintf(sys.Error,"Not Enough Arguments Given! (Expected 4 got %i)\n",argc-(i-2)); sys.ErrorType=1; TGR_printError(); sprintf(argv[--i], "-h"); }
     } else
     if (!strcmp(TextToLower(argv[i-1]),"record")) { TapeSeek(CurrentTape.Length); TapeRecord(); }
     printf("\"%s\"\n",CurrentTape.Path);
@@ -979,7 +1020,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
   COLOR_BLUE, COLOR_YELLOW,
   COLOR_BLUE, COLOR_YELLOW,
   COLOR_BLUE, COLOR_YELLOW);
-   FilterAnsi(MainPrintString);
+   TGR_FilterAnsi(MainPrintString);
    exit(0);
   }
  }
@@ -1002,8 +1043,8 @@ void main(uint8_t argc, uint8_t*argv[]) {
 // 
 // DiscordCreate(DISCORD_VERSION, &params, &app.core);
  
- UpdateColors();
- sys.SW = GPU_Resolutions[GPUctl.Rez][0],sys.SH = GPU_Resolutions[GPUctl.Rez][1];
+ TGR_UpdateColors();
+ sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
  sys.LED[0]=128,sys.LED[1]=0,sys.LED[2]=0;
  Color display_LED;
  
@@ -1016,29 +1057,28 @@ void main(uint8_t argc, uint8_t*argv[]) {
  //font = 
  GenerateFont();
  
- #include "assets.h"
  #if !_WIN32
-  Image Icon = Bytes2ImageAlpha(TGR_app_icon_data, 23,24);
+  Image Icon = RL_Bytes2ImageAlpha(TGR_app_icon_data, 23,24);
   ImageResizeNN(&Icon,23*2,24*2);
   SetWindowIcon(Icon);
   UnloadImage(Icon);
  #endif
  
  uint8_t text[1024] = {0}, TGR_full_logo_data[3872] = {0};
- Image TGR_logo = Bytes2ImageAlpha(TGR_logo_animation_data[33], 44, 22);
+ Image TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[33], 44, 22);
  ImageResizeNN(&TGR_logo,44*8,22*8);
- ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},VOID);
+ ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},TGR_COLOR_VOID);
  Image TGR_logo8x = ImageCopy(TGR_logo);
 
- Image KF_logo = Bytes2ImageAlpha(koranva_forest_splash_logo_data, 312, 93);
+ Image KF_logo = RL_Bytes2ImageAlpha(koranva_forest_splash_logo_data, 312, 93);
  //Image KF_logo = GenImageColor(8*8,8*8,RAYWHITE);
- //CP2RGBA(TGR_full_logo_data,TGR_full_logo_data_raw[0],484,TGR_full_logo_data_cp);
- //Image TGR_logo = PtrBytes2ImageAlpha(TGR_full_logo_data,44,22);
+ //TGR_CP2RGBA(TGR_full_logo_data,TGR_full_logo_data_raw[0],484,TGR_full_logo_data_cp);
+ //Image TGR_logo = RL_PtrBytes2ImageAlpha(TGR_full_logo_data,44,22);
  //TGR_full_logo_data[10*4] = 0xFF; TGR_full_logo_data[10*4+3] = 0xFF;
  //ImageDrawPixel(&Logo_original,11,0,(Color){0,0xFF,0,0xFF});
  //printf("%d\n",TGR_full_logo_data[11*4+1]);
  
- Image RL_logo = Bytes2ImageAlpha(RL_logo_data, 64,64);
+ Image RL_logo = RL_Bytes2ImageAlpha(RL_logo_data, 64,64);
  ImageResizeNN(&RL_logo,128,128);
  
  //int AudioStream_sampleRate = 44100;
@@ -1050,26 +1090,26 @@ void main(uint8_t argc, uint8_t*argv[]) {
  Wave Thunder_Wave = LoadWaveFromMemory(".wav", Thunder_Data, 760024);
  Sound Thunder = LoadSoundFromWave(Thunder_Wave);
  uint8_t inDialog = 0;
- CPU_Init();
+ TAYLOR_CPU_Init();
  
  
-// CPU_Load("./ROMS/fib-endless.tgr");
+// TAYLOR_CPU_Load("./ROMS/fib-endless.tgr");
  
-// CPU_start();
-// CPU_ResetCore(0); CPU_ResetCore(1);
+// TAYLOR_CPU_start();
+// TAYLOR_CPU_ResetCore(0); TAYLOR_CPU_ResetCore(1);
 // CPU[0].running = true;
 // CPU[1].running = true;
  sprintf(sys.NETWORK_IP,"localhost"); sys.NETWORK_PORT=1213;
- if (netlib_init() == -1) { sprintf(sys.Error,"netlib_init: %s\n", netlib_get_error()); sys.ErrorType=2; printError(); exit(2); }
+ if (netlib_init() == -1) { sprintf(sys.Error,"netlib_init: %s\n", netlib_get_error()); sys.ErrorType=2; TGR_printError(); exit(2); }
  else {
   ip_address ip;
   tcp_socket sock;
   uint32_t sent;
   char message[1024];
-  if (netlib_resolve_host(&ip, sys.NETWORK_IP,sys.NETWORK_PORT) == -1) { sprintf(sys.Error,"netlib_resolve_host: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; printError(); }
-  else if (!(sock = netlib_tcp_open(&ip))) { sprintf(sys.Error,"netlib_tcp_open: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; printError(); }
+  if (netlib_resolve_host(&ip, sys.NETWORK_IP,sys.NETWORK_PORT) == -1) { sprintf(sys.Error,"netlib_resolve_host: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); }
+  else if (!(sock = netlib_tcp_open(&ip))) { sprintf(sys.Error,"netlib_tcp_open: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); }
   else {
-   sprintf(MainPrintString,"%s%sConnected to server (IP: %s:%i)%s\n",COLOR_BOLD,COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); FilterAnsi(MainPrintString);
+   sprintf(MainPrintString,"%s%sConnected to server (IP: %s:%i)%s\n",COLOR_BOLD,COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
    netlib_byte_buf* buf = netlib_alloc_byte_buf(20);
    netlib_write_uint32(buf,'t');
    netlib_write_uint32(buf,'e');
@@ -1077,34 +1117,35 @@ void main(uint8_t argc, uint8_t*argv[]) {
    netlib_write_uint32(buf,'t');
    netlib_write_uint32(buf,'1');
    sent = netlib_tcp_send_buf(sock, buf);
-   if (sent < buf->length) { sprintf(sys.Error, "netlib_tcp_send: %s\n", netlib_get_error()); sys.ErrorType=0; printError(); }
-   sprintf(MainPrintString,"%sSent %i bytes to (IP: %s:%i)\nData: \"%s",COLOR_GREEN,sent,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_MAGENTA); FilterAnsi(MainPrintString);
+   if (sent < buf->length) { sprintf(sys.Error, "netlib_tcp_send: %s\n", netlib_get_error()); sys.ErrorType=0; TGR_printError(); }
+   sprintf(MainPrintString,"%sSent %i bytes to (IP: %s:%i)\nData: \"%s",COLOR_GREEN,sent,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_MAGENTA); TGR_FilterAnsi(MainPrintString);
    for (sent=0;sent<buf->length;sent++) { printf("%c", buf->data[sent]); }
-   sprintf(MainPrintString,"%s\"%s\n",COLOR_GREEN,COLOR_RESET); FilterAnsi(MainPrintString);
+   sprintf(MainPrintString,"%s\"%s\n",COLOR_GREEN,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
    netlib_free_byte_buf(buf);
    netlib_tcp_close(sock);
-   sprintf(MainPrintString,"%sClosed connection to server (IP: %s:%i)%s\n",COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); FilterAnsi(MainPrintString);
+   sprintf(MainPrintString,"%sClosed connection to server (IP: %s:%i)%s\n",COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
    netlib_quit();
  }}
 
- uint8_t Data720p[GPU_Resolutions[3][0]*GPU_Resolutions[3][1]*3];
- Image OverlayUI        = GenImageColor(GPU_Resolutions[3][0],GPU_Resolutions[3][1],VOID);
- sys.UI                 = GenImageColor(GPU_Resolutions[3][0],GPU_Resolutions[3][1],VOID);
- sys.Canvas             = Bytes2Image(Data720p, GPU_Resolutions[3][0],GPU_Resolutions[3][1]);
- sys.CanvasBuffer       = Bytes2Image(Data720p, GPU_Resolutions[3][0],GPU_Resolutions[3][1]);
+ printf("TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3]: %d\n",TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3);
+ uint8_t Data720p[TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3];
+ Image OverlayUI        = GenImageColor(TGR_GPU_Resolutions[3][0],TGR_GPU_Resolutions[3][1],TGR_COLOR_VOID);
+ sys.UI                 = GenImageColor(TGR_GPU_Resolutions[3][0],TGR_GPU_Resolutions[3][1],TGR_COLOR_VOID);
+ sys.Canvas             = RL_Bytes2Image(Data720p, TGR_GPU_Resolutions[3][0],TGR_GPU_Resolutions[3][1]);
+ sys.CanvasBuffer       = RL_Bytes2Image(Data720p, TGR_GPU_Resolutions[3][0],TGR_GPU_Resolutions[3][1]);
  Texture OverlayTexture = LoadTextureFromImage(OverlayUI);
  Texture CanvasTexture  = LoadTextureFromImage(sys.Canvas);
  Texture UITexture      = LoadTextureFromImage(sys.UI);
- //for(GPUctl.Rez=0;GPUctl.Rez<4;GPUctl.Rez++) { GPUctl.Canvas[GPUctl.Rez] = LoadTextureFromImage(GenImageColor(GPU_Resolutions[GPUctl.Rez][0],GPU_Resolutions[GPUctl.Rez][1],BLACK)); }
- for(GPUctl.Rez=0;GPUctl.Rez<4;GPUctl.Rez++) { GPUctl.Canvas[GPUctl.Rez] = LoadTextureFromImage((Image){NULL,GPU_Resolutions[GPUctl.Rez][0],GPU_Resolutions[GPUctl.Rez][1],1,PIXELFORMAT_UNCOMPRESSED_R8G8B8}); }
+ //for(GPUctl.Rez=0;GPUctl.Rez<4;GPUctl.Rez++) { GPUctl.Canvas[GPUctl.Rez] = LoadTextureFromImage(GenImageColor(TGR_GPU_Resolutions[GPUctl.Rez][0],TGR_GPU_Resolutions[GPUctl.Rez][1],BLACK)); }
+ for(GPUctl.Rez=0;GPUctl.Rez<4;GPUctl.Rez++) { GPUctl.Canvas[GPUctl.Rez] = LoadTextureFromImage((Image){NULL,TGR_GPU_Resolutions[GPUctl.Rez][0],TGR_GPU_Resolutions[GPUctl.Rez][1],1,PIXELFORMAT_UNCOMPRESSED_R8G8B8}); }
 
  uint8_t hexdump[1024*1024]={0},cursor=0;
  uint32_t Hexdumpi=0;
 
- GPUctl.Rez = GPUctl.NewRez = 0; reset_GPUlayers();
+ GPUctl.Rez = GPUctl.NewRez = 0; TAYLOR_GPU_ResetLayers();
 
  HideCursor(); sys.MF = sys.MFT = 1; //CURSOR SETUP
- Image MouseSymbol = GenImageColor(8,8,VOID);
+ Image MouseSymbol = GenImageColor(8,8,TGR_COLOR_VOID);
  getCharExt(&MouseSymbol, "+",0,0, WHITE, 0, 1);
 
  Rectangle SrcRect = {0,0,sys.SW,sys.SH};
@@ -1164,7 +1205,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
    if (sys.Cutscene0Timer < 32*8) {} else //does nothing
    // TGR Logo: Fade in
    if (sys.Cutscene0Timer < 32*17) {
-    sys.Cutscene0Background = VOID;
+    sys.Cutscene0Background = TGR_COLOR_VOID;
     uint16_t localCSNum = (sys.Cutscene0Timer-32*8);
     if ((localCSNum>79 && localCSNum<88) || (localCSNum>119 && localCSNum<128) || (localCSNum>255 && localCSNum<264)) {
      if(localCSNum == 80 || localCSNum==120 || localCSNum==256) { StopSound(Thunder); PlaySound(Thunder); }
@@ -1179,9 +1220,9 @@ void main(uint8_t argc, uint8_t*argv[]) {
     if (localCSNum%8==0) {
      UnloadImage(TGR_logo);
      //printf("sys.Cutscene0Timer: %d | %d\n",sys.Cutscene0Timer,sys.Cutscene0Timer-32*8);
-     TGR_logo = Bytes2ImageAlpha(TGR_logo_animation_data[(localCSNum/8<34)?localCSNum/8:33], 44, 22);
+     TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[(localCSNum/8<34)?localCSNum/8:33], 44, 22);
      ImageResizeNN(&TGR_logo,44*8,22*8);
-     ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},VOID);
+     ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},TGR_COLOR_VOID);
     } sys.Cutscene0Fade1 = (sys.Cutscene0Fade1+sys.Cutscene0Speed<0xFF)?sys.Cutscene0Fade1+sys.Cutscene0Speed:0xFF;
    } else
    // TGR Logo: Move up
@@ -1204,13 +1245,13 @@ void main(uint8_t argc, uint8_t*argv[]) {
     sys.Cutscene0Fade3 = (sys.Cutscene0Fade3+sys.Cutscene0Speed<0xFF)?sys.Cutscene0Fade3+sys.Cutscene0Speed:0xFF;
     if ((sys.Cutscene0Timer == 32*28)%31==0) {
      UnloadImage(TGR_logo);
-     Image TGR_logo = Bytes2ImageAlpha(TGR_logo_animation_data[34], 44, 22);
+     Image TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[34], 44, 22);
      ImageResizeNN(&TGR_logo,44*8,22*8);
-     ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},VOID);
+     ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},TGR_COLOR_VOID);
    } else
    if (sys.Cutscene0Timer == 32*29) {
      UnloadImage(TGR_logo);
-     Image TGR_logo = Bytes2ImageAlpha(TGR_logo_animation_data[33], 44, 22);
+     Image TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[33], 44, 22);
      sys.Cutscene0Position = sys.Cutscene0Fade1 = sys.Cutscene0Fade2 = sys.Cutscene0Fade3 = 0;
    }} sys.Cutscene0Timer++;
   }
@@ -1247,10 +1288,10 @@ void main(uint8_t argc, uint8_t*argv[]) {
   if (GPUctl.Rez != GPUctl.NewRez) {
    sys.ScreenReady = false;
    GPUctl.Rez=GPUctl.NewRez=(GPUctl.NewRez%4);
-   sys.SW = GPU_Resolutions[GPUctl.Rez][0],sys.SH = GPU_Resolutions[GPUctl.Rez][1];
+   sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
    SetWindowMinSize(sys.SW+4,sys.SH+4);
    printf("%s%sNew Resolution: %s%dx%d%s\n",COLOR_BOLD,COLOR_YELLOW,COLOR_BLUE,sys.SW,sys.SH,COLOR_RESET);
-   reset_GPUlayers(); SrcRect = (Rectangle){0,0,sys.SW,sys.SH};
+   TAYLOR_GPU_ResetLayers(); SrcRect = (Rectangle){0,0,sys.SW,sys.SH};
   }
   if(IsWindowReady()) {
    if (IsFileDropped()) {
@@ -1261,15 +1302,15 @@ void main(uint8_t argc, uint8_t*argv[]) {
     } else if (!strcmp(TextToLower(&droppedFiles.paths[0][strlen(droppedFiles.paths[0])-3]),"sav")) {
      sprintf(extSAV,"%s",droppedFiles.paths[0]);
     } else {
-     sprintf(sys.Error,"Unknown FileType Given!\n"); sys.ErrorType=1; printError();
+     sprintf(sys.Error,"Unknown FileType Given!\n"); sys.ErrorType=1; TGR_printError();
     }
     UnloadDroppedFiles(droppedFiles);
    }
    if (strcmp(NewROMPATH,ROMPATH)) {
     strcpy(ROMPATH,NewROMPATH);
-    CPU_Stop(); CPU_Load(ROMPATH);
-    if (strlen(extSAV)>0) {CPU_ExtSAV(extSAV);}
-    if (sys.StartOnLoad) CPU_Start();
+    TAYLOR_CPU_Stop(); TAYLOR_CPU_Load(ROMPATH);
+    if (strlen(extSAV)>0) {TAYLOR_CPU_ExtSAV(extSAV);}
+    if (sys.StartOnLoad) TAYLOR_CPU_Start();
    }
    sprintf(text,"TheGameRazer - [%s] - %i/%i FPS",(uint8_t*)(sys.ROMloaded?(!sys.Title[0]?"No Title":sys.Title):"NO-ROM"),sys.FPS,GetFPS());
    SetWindowTitle(text);
@@ -1277,14 +1318,14 @@ void main(uint8_t argc, uint8_t*argv[]) {
    if(IsKeyDown(KEY_LEFT_CONTROL)||IsKeyDown(KEY_RIGHT_CONTROL)) {
     if(IsKeyDown(KEY_LEFT_ALT)||IsKeyDown(KEY_RIGHT_ALT))
      if (IsKeyReleased(KEY_SPACE)) sys.Cutscene0Timer = 0;
-    if(IsKeyPressed(KEY_I)){ sprintf(MainPrintString,"FullHUD\n"); FilterAnsi(MainPrintString); FullHUD = 1-FullHUD; }
-    if(IsKeyPressed(KEY_U)){ sprintf(MainPrintString,"ShowInput\n"); FilterAnsi(MainPrintString); ShowInput = 1-ShowInput; }
-    if(IsKeyPressed(KEY_G)){ sprintf(MainPrintString,"ShowDump\n"); FilterAnsi(MainPrintString); ShowDump = 1-ShowDump; }
-    if(IsKeyPressed(KEY_O)){ sprintf(MainPrintString,"OPEN DA MENU!!\n"); FilterAnsi(MainPrintString); inDialog = 1; }
-    if(IsKeyPressed(KEY_R)){ CPU_Reset(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT)); sprintf(MainPrintString,"%s\n",(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT))?"Hard Reset!":"Soft Reset..."); FilterAnsi(MainPrintString); inDialog = 1; }
-    if((sys.Debug&&sys.RapidDebug)?IsKeyDown(KEY_D):IsKeyPressed(KEY_D)){ sys.Debug=1-sys.Debug; sprintf(MainPrintString,"Debug mode: %s\n",sys.Debug?"Enabled":"Disabled"); FilterAnsi(MainPrintString); inDialog = 1; }
-    if(IsKeyPressed(KEY_P)){ sys.Pause=1-sys.Pause; sprintf(MainPrintString,"System: %s!\n",sys.Pause?"Paused":"Unpause"); FilterAnsi(MainPrintString); }
-    if(IsKeyPressed(KEY_Z)){ CPU_Start(); }
+    if(IsKeyPressed(KEY_I)){ sprintf(MainPrintString,"FullHUD\n"); TGR_FilterAnsi(MainPrintString); FullHUD = 1-FullHUD; }
+    if(IsKeyPressed(KEY_U)){ sprintf(MainPrintString,"ShowInput\n"); TGR_FilterAnsi(MainPrintString); ShowInput = 1-ShowInput; }
+    if(IsKeyPressed(KEY_G)){ sprintf(MainPrintString,"ShowDump\n"); TGR_FilterAnsi(MainPrintString); ShowDump = 1-ShowDump; }
+    if(IsKeyPressed(KEY_O)){ sprintf(MainPrintString,"OPEN DA MENU!!\n"); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
+    if(IsKeyPressed(KEY_R)){ TAYLOR_CPU_Reset(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT)); sprintf(MainPrintString,"%s\n",(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT))?"Hard Reset!":"Soft Reset..."); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
+    if((sys.Debug&&sys.RapidDebug)?IsKeyDown(KEY_D):IsKeyPressed(KEY_D)){ sys.Debug=1-sys.Debug; sprintf(MainPrintString,"Debug mode: %s\n",sys.Debug?"Enabled":"Disabled"); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
+    if(IsKeyPressed(KEY_P)){ sys.Pause=1-sys.Pause; sprintf(MainPrintString,"System: %s!\n",sys.Pause?"Paused":"Unpause"); TGR_FilterAnsi(MainPrintString); }
+    if(IsKeyPressed(KEY_Z)){ TAYLOR_CPU_Start(); }
    }if((IsKeyDown(KEY_LEFT_ALT)||IsKeyDown(KEY_RIGHT_ALT)) && IsKeyPressed(KEY_ENTER)){
     if(FullscreenType){ToggleBorderlessWindowed();}else{ToggleFullscreen();} INITFullscreen=!INITFullscreen;
     SetWindowMinSize((IsWindowFullscreen)?sys.SW+4:sys.HostWidth,(IsWindowFullscreen)?sys.SH+4:sys.HostHeight);
@@ -1321,8 +1362,8 @@ void main(uint8_t argc, uint8_t*argv[]) {
     ClearBackground((Color){16,16,16,255});
     if(!(CPU[0].running||CPU[1].running||GPU[0].running||GPU[1].running||GPU[2].running||GPU[3].running)) {
      ImageClearBackground(&sys.Canvas,(Color){0x16,0x51,0xED,0xFF});
-     i = timeinfo->tm_hour+hour_offset+timeinfo->tm_isdst, j = timeinfo->tm_min+min_offset;
-     sprintf(text,"%2d:%s%d",(i==0)?12:i%13,(j<10)?"0":"",j);
+     i = (timeinfo->tm_hour+hour_offset+timeinfo->tm_isdst), j = timeinfo->tm_min+min_offset;
+     sprintf(text,"%2d:%02d",(i%12==0)?12:i%13,j);
      getChar(text,  sys.SW-6*16,1*16,WHITE, 1, 2);
      getChar("CH3", sys.SW-5*16,2*16,WHITE, 1, 2);
      sprintf(text,"STOP\x7F\x59");
@@ -1335,8 +1376,8 @@ void main(uint8_t argc, uint8_t*argv[]) {
     }} else {
      ImageDraw(&sys.Canvas,sys.CanvasBuffer,(Rectangle){0,0,sys.SW,sys.SH}, (Rectangle){0,0,sys.SW,sys.SH},WHITE);
     }
-    ImageClearBackground(&sys.UI,VOID);
-    ImageClearBackground(&OverlayUI,(sys.Cutscene0Timer < 32*30)?sys.Cutscene0Background:VOID);
+    ImageClearBackground(&sys.UI,TGR_COLOR_VOID);
+    ImageClearBackground(&OverlayUI,(sys.Cutscene0Timer < 32*30)?sys.Cutscene0Background:TGR_COLOR_VOID);
  //   printf("System Canvas: 0x%02X\n",*(uint8_t*)&(sys.Canvas.data));
  //   printf("GPU Canvas: 0x%02X\n",*(uint8_t*)&(GPUctl.Canvas.data));
  //   ImageDraw(&sys.Canvas,GPUctl.Canvas[GPUctl.Rez], (Rectangle){0,0,sys.SW,sys.SH}, (Rectangle){0,0,sys.SW,sys.SH}, WHITE);
@@ -1373,7 +1414,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
      getChar(text, 2*8, sys.SH-(4*8), TGR_REDT,true,1);
     } else {
      //printf("2*8: %d, sys.SH-(7*8): %d\n",2*8, sys.SH-(17*8));
-     sprintf(text,"CPU IP: [0x%07X, 0x%07X]",CPU[0].IP,CPU[1].IP);
+     sprintf(text,"TAYLOR_CPU IP: [0x%07X, 0x%07X]",CPU[0].IP,CPU[1].IP);
      getChar(text, 2*8, sys.SH-(8*8), TGR_BLUET,true,1);
      sprintf(text,"GPU IP: [0x%07X, 0x%07X,0x%07X, 0x%07X]",GPU[0].IP,GPU[1].IP,GPU[2].IP,GPU[3].IP);
      getChar(text, 2*8, sys.SH-(7*8), TGR_BLUET,true,1);
@@ -1479,9 +1520,9 @@ void main(uint8_t argc, uint8_t*argv[]) {
      for(i=0;i<32;i++) {
       sprintf(text,"|       |                                |                |");
       getCharExt(&sys.UI,text,hexdump_x[0],hexdump_y[0]+(3+i)*8,TGR_RED,1,1);
-      sprintf(text,"%02X  %02X  %02X  %02X  %02X  %02X  %02X  %02X   %c %c %c %c %c %c %c %c",sys.MEM[hexdump_addr],sys.MEM[hexdump_addr+2],sys.MEM[hexdump_addr+4],sys.MEM[hexdump_addr+6],sys.MEM[hexdump_addr+8],sys.MEM[hexdump_addr+10],sys.MEM[hexdump_addr+12],sys.MEM[hexdump_addr+14],ascii127[sys.MEM[hexdump_addr]],ascii127[sys.MEM[hexdump_addr+2]],ascii127[sys.MEM[hexdump_addr+4]],ascii127[sys.MEM[hexdump_addr+6]],ascii127[sys.MEM[hexdump_addr+8]],ascii127[sys.MEM[hexdump_addr+10]],ascii127[sys.MEM[hexdump_addr+12]],ascii127[sys.MEM[hexdump_addr+14]]);
+      sprintf(text,"%02X  %02X  %02X  %02X  %02X  %02X  %02X  %02X   %c %c %c %c %c %c %c %c",sys.MEM[hexdump_addr],sys.MEM[hexdump_addr+2],sys.MEM[hexdump_addr+4],sys.MEM[hexdump_addr+6],sys.MEM[hexdump_addr+8],sys.MEM[hexdump_addr+10],sys.MEM[hexdump_addr+12],sys.MEM[hexdump_addr+14],TAYLOR_ascii127[sys.MEM[hexdump_addr]],TAYLOR_ascii127[sys.MEM[hexdump_addr+2]],TAYLOR_ascii127[sys.MEM[hexdump_addr+4]],TAYLOR_ascii127[sys.MEM[hexdump_addr+6]],TAYLOR_ascii127[sys.MEM[hexdump_addr+8]],TAYLOR_ascii127[sys.MEM[hexdump_addr+10]],TAYLOR_ascii127[sys.MEM[hexdump_addr+12]],TAYLOR_ascii127[sys.MEM[hexdump_addr+14]]);
       getCharExt(&sys.UI,text,hexdump_x[0]+9*8,hexdump_y[0]+(3+i)*8,(hexdump_addr%32==0)?TGR_DIM_RED:TGR_RED,1,1);
-      sprintf(text,"%02X  %02X  %02X  %02X  %02X  %02X  %02X  %02X  %c %c %c %c %c %c %c %c",sys.MEM[hexdump_addr+1],sys.MEM[hexdump_addr+3],sys.MEM[hexdump_addr+5],sys.MEM[hexdump_addr+7],sys.MEM[hexdump_addr+9],sys.MEM[hexdump_addr+11],sys.MEM[hexdump_addr+13],sys.MEM[hexdump_addr+15],ascii127[sys.MEM[hexdump_addr+1]],ascii127[sys.MEM[hexdump_addr+3]],ascii127[sys.MEM[hexdump_addr+5]],ascii127[sys.MEM[hexdump_addr+7]],ascii127[sys.MEM[hexdump_addr+9]],ascii127[sys.MEM[hexdump_addr+11]],ascii127[sys.MEM[hexdump_addr+13]],ascii127[sys.MEM[hexdump_addr+15]]);
+      sprintf(text,"%02X  %02X  %02X  %02X  %02X  %02X  %02X  %02X  %c %c %c %c %c %c %c %c",sys.MEM[hexdump_addr+1],sys.MEM[hexdump_addr+3],sys.MEM[hexdump_addr+5],sys.MEM[hexdump_addr+7],sys.MEM[hexdump_addr+9],sys.MEM[hexdump_addr+11],sys.MEM[hexdump_addr+13],sys.MEM[hexdump_addr+15],TAYLOR_ascii127[sys.MEM[hexdump_addr+1]],TAYLOR_ascii127[sys.MEM[hexdump_addr+3]],TAYLOR_ascii127[sys.MEM[hexdump_addr+5]],TAYLOR_ascii127[sys.MEM[hexdump_addr+7]],TAYLOR_ascii127[sys.MEM[hexdump_addr+9]],TAYLOR_ascii127[sys.MEM[hexdump_addr+11]],TAYLOR_ascii127[sys.MEM[hexdump_addr+13]],TAYLOR_ascii127[sys.MEM[hexdump_addr+15]]);
       getCharExt(&sys.UI,text,hexdump_x[0]+11*8,hexdump_y[0]+(3+i)*8,(hexdump_addr%32==0)?TGR_RED:TGR_DIM_RED,1,1);
       sprintf(text,"%07X",hexdump_addr);
       getCharExt(&sys.UI,text,hexdump_x[0]+1*8,hexdump_y[0]+(3+i)*8,(hexdump_addr%32==0)?TGR_RED:TGR_DIM_RED,1,1);
@@ -1571,12 +1612,12 @@ void main(uint8_t argc, uint8_t*argv[]) {
     sys.DistRect = (sys.KeepAspect)?(Rectangle){sys.ResizeDict[2],sys.ResizeDict[3], sys.ResizeDict[0],sys.ResizeDict[1]}:(Rectangle){sys.BoarderThiccness,sys.BoarderThiccness, sys.SW*(((sys.HostWidth>>1<<1)-sys.BoarderThiccness)*128/sys.SW)/128,sys.SH*(((sys.HostHeight>>1<<1)-sys.BoarderThiccness)*128/sys.SH)/128};
     sys.ScreenReady = true;
   }}
- } CPU_Stop(); sprintf(MainPrintString,"%s%s\n[EMU Notice] Shutting Down...%s\n",COLOR_BOLD,COLOR_BLUE,COLOR_RESET); FilterAnsi(MainPrintString);
+ } TAYLOR_CPU_Stop(); sprintf(MainPrintString,"%s%s\n[EMU Notice] Shutting Down...%s\n",COLOR_BOLD,COLOR_BLUE,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
  for(l=0,i=0; i<6; i++) l+=sys.DebugPause[0]>0;
  if (l>0) { sys.Debug = sys.BreakDebug; }
 
- dir = opendir(CFGPATH); if (!dir) { if (_mkdir(CFGPATH)<0) { sprintf(sys.Error, "Failed to create system's folder\n"); sys.ErrorType=1; printError(); } } closedir(dir);
- if ((fp = fopen(concat(CFGPATH,"settings.cfg"), "w")) == NULL) { sprintf(sys.Error,"Unable to modify the config file!\n"); sys.ErrorType=1; printError(); }
+ dir = opendir(CFGPATH); if (!dir) { if (_mkdir(CFGPATH)<0) { sprintf(sys.Error, "Failed to create system's folder\n"); sys.ErrorType=1; TGR_printError(); } } closedir(dir);
+ if ((fp = fopen(concat(CFGPATH,"settings.cfg"), "w")) == NULL) { sprintf(sys.Error,"Unable to modify the config file!\n"); sys.ErrorType=1; TGR_printError(); }
  else {
   cJSON *json2 = cJSON_CreateObject();
   cJSON_AddBoolToObject(json2,"StartOnLoad",sys.StartOnLoad);
@@ -1612,7 +1653,7 @@ void main(uint8_t argc, uint8_t*argv[]) {
    cJSON_AddItemToObject(json2,j==0?"Player0":"Player1",Player);
   }
   uint8_t *json_str = cJSON_Print(json2);
-  sprintf(MainPrintString,"%s%s%s\n", COLOR_GREEN,json_str,COLOR_RESET); FilterAnsi(MainPrintString);
+  sprintf(MainPrintString,"%s%s%s\n", COLOR_GREEN,json_str,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
   fputs(json_str, fp); fclose(fp);
   cJSON_free(json_str); cJSON_Delete(json2);
   cJSON_Delete(json);

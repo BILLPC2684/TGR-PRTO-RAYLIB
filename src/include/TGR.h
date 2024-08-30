@@ -50,7 +50,7 @@ static const uint16_t DefaultKEYS[2][14] = {{KEY_Z,KEY_X,KEY_C,KEY_A,KEY_S,KEY_D
 static const uint8_t*ErrorTexts[3] = {"Warning", "Error", "Fatal"};
 static const uint8_t*TypeHelpForHelp = "Use \"./TGR --help\" for help\n\n";
 static const Vector2 Vector2_ZERO = (Vector2){0,0};
-static const Color VOID = {0};
+static const Color TGR_COLOR_VOID = {0};
 
 #define min(x,y) ({__typeof__(x)_x=(x);__typeof__(y)_y=(y);_y>_x?_x:_y;})
 #define max(x,y) ({__typeof__(x)_x=(x);__typeof__(y)_y=(y);_x>_y?_x:_y;})
@@ -60,18 +60,28 @@ static const Color VOID = {0};
 #define GREEN CLITERAL(Color){0,228,48,255}
 #define LIME  CLITERAL(Color){0,158,47,255}
 
+struct Application {
+ int64_t epoch;
+ struct IDiscordCore* core;
+ struct IDiscordUserManager* users;
+ struct IDiscordActivityManager* activities;
+ struct IDiscordApplicationManager* application;
+ struct IDiscordLobbyManager* lobbies;
+ DiscordUserId user_id;
+};
+
 typedef struct {
- bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,BlockDisp,ROMloaded,SilentRun,EXTSAV,KeepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync,RapidDebug,Resetting,HelpOnError, ControllerScantype[2][32], DebugGPUstart;
+ bool Debug,DebugTick[6],BreakDebug,Pause,skipBIOS,AsService,BlockDisp,ROMloaded,SilentRun,EXTSAV,KeepAspect,AnsiPrinting,StartOnLoad,TapePressent,TapeFramed,TapeFrame,ScreenReady,ClockSync,RapidDebug,Resetting,HelpOnError, ControllerScantype[2][32], DebugGPUstart, GPUoverDraw, SoloPlay, Online, DiscordEnrichment, DiscordEnrichmentInited;
  uint8_t MF, MB, CursorDepth, HeaderSize, *MEM,PageID[2],ROMBANK[33][TGR_MEM_ROM_SIZE],ErrorType,LED[3],Controller[2][32],ControllerType[2],Title[16],ControllerDevice[2],GUIOpacity,
         *REG, *Error, *BN, *RN, *SN, NETWORK_IP[256], BoarderThiccness;
- uint16_t MFT, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],ControllerScancode[2][32],NETWORK_PORT, IntroductionCutscene;
+ uint16_t MFT, FPS, SW,SH, HostWidth,HostHeight, ResizeDict[4],ControllerScancode[2][32],NETWORK_PORT, IntroductionCutscene, NumOfPlayers;
  uint32_t DebugPause[6], Clock, skip;
  uint64_t tmp[8];
  double IPS[2],MemUse,VMemUse;
   int8_t fade, MS;
  int16_t MX, MY, pMX, pMY;
- 
- 
+ int64_t epoch;
+
  uint16_t Cutscene0Timer;
  uint8_t Cutscene0Speed, Cutscene0Fade0, Cutscene0Fade1, Cutscene0Fade2, Cutscene0Fade3, Cutscene0Position;
  Color   Cutscene0Background;
@@ -82,14 +92,15 @@ typedef struct {
  Image Canvas,CanvasBuffer,UI;
  Color CursorColor;
  Rectangle DistRect;
+ struct Application DiscordApp;
  //TI:    Total Instructions
  //FN:    BIOS FileName
  //RN:    ROM  FileName
  //SN:    SAV  FileName
-} System;
-System sys;
+} TGR_System;
+TGR_System sys;
 
-typedef struct CPU_INIT {
+typedef struct {
  uint16_t REGs[8];
  bool running,flag[8],ticked;
  uint32_t IP,SP,BP,MP,Clock;
@@ -100,8 +111,8 @@ typedef struct CPU_INIT {
  //MP: Max Value of StackPointer
  //IPS:   InstructionsPerSecond
  //TI:    Total Instructions
-} CPU_INIT;
-CPU_INIT CPU[2];
+} TGR_CPU_INIT;
+TGR_CPU_INIT CPU[2];
 
 
 /*
@@ -112,7 +123,7 @@ typedef struct GPU_Worker {
  uint32_t sp,cp;
 } GPU_Worker;
 */
-typedef struct GPU_CORE {
+typedef struct {
  bool CoreReady[GPU_CORE_COUNT],FrameRendering,FrameSeen,ForceRender;
  uint8_t Rez,NewRez;
  uint16_t frames,RenderDelta;
@@ -122,15 +133,15 @@ typedef struct GPU_CORE {
 // bool      Workers_InUsed[16];
 // uint8_t   Workers_GPUID[16];
 // pthread_t call_GPU_Workers[16];
-} GPU_INIT;
-GPU_INIT GPUctl;
+} TGR_GPU_INIT;
+TGR_GPU_INIT GPUctl;
 
-typedef struct GPU_RENDER_NODE {
+typedef struct {
  uint8_t Oper,R,G,B,A,Layer,CP[256][4],OperA,OperB,OperC;
  int16_t X[4],Y[4];
  uint32_t sp,cp,OperIMM;
-} GPU_RENDER_NODE;
-GPU_RENDER_NODE GPU_RENDER_NODES[GPU_CORE_COUNT][GPU_RENDER_NODE_LEN];
+} TGR_GPU_RENDER_NODE;
+TGR_GPU_RENDER_NODE GPU_RENDER_NODES[GPU_CORE_COUNT][GPU_RENDER_NODE_LEN];
 
 typedef struct {
  bool running,Pause;
@@ -150,19 +161,19 @@ typedef struct {
  //   BP:  BasePoint  (Stack)
  //   MP:  MaxPointer (Stack)
  //   CP:  ColorPallet
-} GPU_CORE;
-GPU_CORE GPU[GPU_CORE_COUNT];
-static const uint16_t GPU_Resolutions[4][2] = {{480,360},{800,600},{852,480},{1280,720}};
+} TGR_GPU_CORE;
+TGR_GPU_CORE GPU[GPU_CORE_COUNT];
+static const uint16_t TGR_GPU_Resolutions[4][2] = {{480,360},{800,600},{852,480},{1280,720}};
 
-typedef struct TapeFrame {
+typedef struct TGR_TapeFrame {
  bool FrameHasSaveState; // Does this frame contain a SaveState?
  uint8_t SaveState[TGR_MEM_TOTAL+1024]; // SaveState data
- Sound Audio; // 20 kHz; should contain for the whole frame
+ Sound Audio; // 20 kHz; should contain data from current frame to next frame (the whole frame)
  Image Frame; // The Frame duh...
  uint32_t seek; // the seek position for this frame
-} TapeFrame;
+} TGR_TapeFrame;
 
-typedef struct Tape {
+typedef struct TGR_Tape {
  FILE *fp; // The Tape's File
  bool Loaded, JustLoaded; // Is the Tape Loaded or did it Just get Loaded?
  uint8_t FramesPerSaveState, // How many Frames is there per SaveState
@@ -171,17 +182,17 @@ typedef struct Tape {
          State; // Is it STOPPED, PLAYING, REWINDING, FAST-FORWARDING or EJECTING?
  Image Frame; // The Current Frame being recorded
  uint32_t Length,seek; // The Length and Seek Both Counted in Frames
- TapeFrame*FrameBuffer[255]; // 127 frame buffer for Rewind and Play/ FastF
-} Tape; // max is 5 hours @ 24-FPS is 24*60*60*5
-static const uint16_t Tape_Resolution[2] = {335,576};
+ TGR_TapeFrame*FrameBuffer[255]; // 127 frame buffer for Rewind and Play/ FastF
+} TGR_Tape; // max is 5 hours @ 24-FPS is 24*60*60*5
+static const uint16_t TGR_Tape_Resolution[2] = {335,576};
 
-enum TapeState {
- TAPE_STOP=0,
- TAPE_PLAY,
- TAPE_RECORD,
- TAPE_REWIND,
- TAPE_FASTFORWARD,
- TAPE_EJECT,
+enum TGR_TapeState {
+ TGR_TAPE_STOP=0,
+ TGR_TAPE_PLAY,
+ TGR_TAPE_RECORD,
+ TGR_TAPE_REWIND,
+ TGR_TAPE_FASTFORWARD,
+ TGR_TAPE_EJECT,
 };
 
 enum TGR_Controller_type {

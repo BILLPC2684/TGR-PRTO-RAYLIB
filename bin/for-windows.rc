@@ -1,8 +1,8 @@
 GLFW_ICON ICON "TGR-logo(alone).ico"
 
 1 VERSIONINFO
-FILEVERSION     0,0,47,3
-PRODUCTVERSION  0,0,47,3
+FILEVERSION     0,0,47,5
+PRODUCTVERSION  0,0,47,5
 BEGIN
  BLOCK "StringFileInfo"
  BEGIN
@@ -12,10 +12,10 @@ BEGIN
    VALUE "FileDescription", "TheGameRazer Powered By RayLib"
    VALUE "FileVersion", "0.0.47"
    VALUE "InternalName", "TheGameRazer"
-   VALUE "LegalCopyright", "(C) 2017-2023 Koranva-Forest"
+   VALUE "LegalCopyright", "(C) 2017-2024 Koranva-Forest"
    VALUE "OriginalFilename", "TheGameRazer.exe"
    VALUE "ProductName", "TheGameRazer"
-   VALUE "ProductVersion", "0.0.47c"
+   VALUE "ProductVersion", "0.0.47e"
   END
  END
  BLOCK "VarFileInfo"
