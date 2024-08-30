@@ -34,6 +34,16 @@ else
  rm netlib.0.2.win64.zip
  echo -e "\n\e[32;1m[✓] netlib.dll is now acquired!\e[m"
 fi
+echo -e "\n\e[33mChecking Discord Game SDK...\e[m"
+if [ -d ./discord_game_sdk ]; then
+ echo -e "\e[32;1m[✓] Discord Game SDK was found!\e[m"
+else
+ echo -e "\e[31;1m[X] Discord Game SDK Was not found! \e[33mGrabbing now...\e[m"
+ wget https://dl-game-sdk.discordapp.net/3.2.1/discord_game_sdk.zip
+ unzip discord_game_sdk.zip -d discord_game_sdk
+ rm discord_game_sdk.zip
+ echo -e "\n\e[32;1m[✓] Discord Game SDK is now acquired!\e[m"
+fi
 
 echo -e "\n\e[33mBONUS: customasm...\e[m"
 if [ -f ../asm/customasm/customasm ]; then

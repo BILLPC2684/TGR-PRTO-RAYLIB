@@ -4,7 +4,8 @@ if gcc src/main.c -o TGR -pg -I./src/include -lraylib -lcjson -lGL -lm -lpthread
 else
  echo -e "\n\e[31;1m[X] \e[33mBuild for TGR was \e[31;1mUnsuccessful\e[33m...\e[m"
  echo "Please make sure the following libraries are installed:"
- echo "\\raylib:                    https://github.com/raysan5/raylib"
- echo "\\cJSON:                     https://github.com/DaveGamble/cJSON"
- echo "\\libnetlib.so: at /usr/lib/ https://github.com/univrsal/netlib/releases"
+ echo "\\raylib:                     https://github.com/raysan5/raylib"
+ echo "\\cJSON:                      https://github.com/DaveGamble/cJSON"
+ echo "\\Discord Game SDK: at ./bin/ https://discord.com/developers/docs/developer-tools/game-sdk"
+ echo "\\libnetlib.so: at /usr/lib/  https://github.com/univrsal/netlib/releases"
 fi
