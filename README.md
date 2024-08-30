@@ -7,6 +7,7 @@ TheGameRazer is a modern, retro styled 16-bit emulator(Fantasy Console) made in 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/BILLPC2684)
 
 Every little bit helps!! :3
+If you are a programmer, feel free to critice with a helpful push in the right direction!
 
 # Links:
 
@@ -18,7 +19,7 @@ Discord Server: [TheGameRazer Official Discord](https://discord.gg/PWAf8ek)
 
 Official Wiki Page: [FantasyConsole/TheGameRazer](https://fantasyconsoles.org/wiki/TheGameRazer)
 
-Official ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRazer/ROMs)~~ Not setted up yet! [404]
+Official ROMs: ~~[Koranva-Forest/Shop/TGR-Cartriges](https://Koranva-Forest.com/shop/cartriges)~~ Not setted up yet! [404]
 
 3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
@@ -26,7 +27,7 @@ Official ROMs: ~~[Koranva-Forest/TGR ROMs](https://Koranva-Forest.com/TheGameRaz
 
 - Compile Errors: `No` Just some redudant warning from gcc
 
-- Runnable Build: `Mostly` Functional, working on it...
+- Runnable Build: `Yes, but No` Functional, but crashes for no reason...
 
 - CPU Utilization: `Unstable` Functional, Not Finished Implementing Yet!! (still adding functionality to instructions)
 
@@ -96,12 +97,21 @@ mingw32-make PLATFORM=PLATFORM_DESKTOP
 cd ../..
 ```
 
+##### \\`Discord Game SDK` at `.\bin\raylib\` [Discord-Developer-Tools/Game-SDK]( https://discord.com/developers/docs/developer-tools/game-sdk) (extract)
+
+```shell
+wget https://dl-game-sdk.discordapp.net/3.2.1/discord_game_sdk.zip
+unzip discord_game_sdk.zip -d discord_game_sdk
+ln discord_game_sdk/lib/x86_64/discord_game_sdk.dll ../discord_game_sdk.dll #you neex this to run
+rm discord_game_sdk.zip
+```
+
 ##### \\`cJSON`: `.\bin\cJSON\` [GitHub@DaveGamble/cJSON](https://github.com/DaveGamble/cJSON) (clone & compile)
 
 ```shell
 git clone https://github.com/DaveGamble/cJSON
 cd cJSON
-make
+mingw32-make
 cd ..
 ```
 
@@ -159,6 +169,14 @@ sudo make install
 cd ../..
 
 rm -rf raylib # optional clean up
+```
+
+##### \\`Discord Game SDK` at `.\bin\raylib\` [Discord-Developer-Tools/Game-SDK](https://discord.com/developers/docs/developer-tools/game-sdk) (extract)
+
+```shell
+wget https://dl-game-sdk.discordapp.net/3.2.1/discord_game_sdk.zip
+unzip discord_game_sdk.zip -d discord_game_sdk
+rm discord_game_sdk.zip
 ```
 
 ##### \\`cJSON`: [GitHub@DaveGamble/cJSON](https://github.com/DaveGamble/cJSON) (clone & compile)

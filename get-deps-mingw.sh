@@ -19,7 +19,7 @@ else
  echo -e "\e[31;1m[X] cJSON Was not found! \e[33mGrabbing now...\e[m"
  git clone https://github.com/DaveGamble/cJSON
  cd cJSON
- make
+ mingw32-make
  echo -e "\n\e[32;1m[✓] cJSON is now acquired!\e[m"
  cd ..
 fi
@@ -41,6 +41,7 @@ else
  echo -e "\e[31;1m[X] Discord Game SDK Was not found! \e[33mGrabbing now...\e[m"
  wget https://dl-game-sdk.discordapp.net/3.2.1/discord_game_sdk.zip
  unzip discord_game_sdk.zip -d discord_game_sdk
+ ln discord_game_sdk/lib/x86_64/discord_game_sdk.dll ../discord_game_sdk.dll
  rm discord_game_sdk.zip
  echo -e "\n\e[32;1m[✓] Discord Game SDK is now acquired!\e[m"
 fi
