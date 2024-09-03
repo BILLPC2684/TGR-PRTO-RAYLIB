@@ -15,16 +15,16 @@ Official Wiki Page: [FantasyConsole/TheGameRazer](https://fantasyconsoles.org/wi
 Official ROMs: ~~[Koranva-Forest/Shop/TGR-Cartriges](https://Koranva-Forest.com/shop/cartriges)~~ Not setted up yet! [404]\
 3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
-## Current Build: v0.0.47e Alpha Nightly 4 (goal: v0.0.50x Alpha for Jun/2025)
-- Compile Errors: `No` Just some redudant warning from gcc
-- Runnable Build: `Yes, but No` Functional, but crashes for no reason...
+## Current Build: v0.0.47e Alpha Nightly 5 (goal: v0.0.50x Alpha for Jun/2025)
+- Compile Errors: `No`  Just some redudant warning from gcc
+- Runnable Build: `Yes` Functional (For both windows and linux)
 - CPU Utilization: `Unstable` Functional, Not Finished Implementing Yet!! (still adding functionality to instructions)
-- Stable Memory: `Yes` 128 MB of RAM | 64 MB of VRAM
+- Stable Memory: `Yes` 128 MB of RAM total | 64 MB of VRAM total
 - Has Video: `Yes` Using raylib window | GPU pipeline is Unfinished (will be worked on soon)
 - Has Audio: `No` Requesting Help!!!
 - Has Inputs: `Yes`  Using raylib input | Check the [Settings.cfg]() File (if generated)
-- Has Network: `Somewhat` Networking is usable but not connected to Utilization
-- SAV-able data: `Somewhat` Yes, haven't tested | Note: all ROMs ran will generate 8MiB files
+- Has Network: `Somewhat` Networking will be underway but not connected to Utilization
+- SAV-able data: `Somewhat` Yes, haven't tested | Note: all ROMs ran will generate 8 MiB files
 - Compiler Status: `Inactive` This project is currently on hold, Please Wait... Please use CustomASM for now
 
 ### NOTE: if theres emulation errors, crashes or glitch out, check your ROM before reporting... (if someone else made the ROM then contact them first)
@@ -204,7 +204,7 @@ Tapes will also act as rewindable savestates, when recording it takes a snapshot
 
 ## How to load a ROM?
 The Open Menuis currently not implemented yet but will be soon\
-You can open a ROM by dragging and dropping your `.tgr` file into it\
+You can open a ROM by dragging and dropping your `.tgr` file into the window\
 or you can simply run it with TGR via terminal with: `./TGR(.exe) <.tgr>`
 
 # How to make Programs Assembly Files and Compile ROMs:

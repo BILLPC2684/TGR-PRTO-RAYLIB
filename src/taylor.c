@@ -282,7 +282,7 @@ void*TAYLOR_Clock() {
    GPU[0].running?GPU[0].Clock++:0, GPU[1].running?GPU[1].Clock++:0,
    GPU[2].running?GPU[2].Clock++:0, GPU[3].running?GPU[3].Clock++:0;
   } if((sys.Clock%41)==0 && (i%1000)==0) { sys.TapeFrame++, sys.TapeFramed = true; }
-  //if((sys.Clock%1000)==0 && (i%1000)==0) { printf("HEY0!!\n"); }
+  if((sys.Clock%1000)==0 && (i%1000)==0 && sys.DiscordEnrichmentInited) { OnUserUpdated(&sys.DiscordApp); }
   i++;
 }}
 void*TAYLOR_MemCheck() {

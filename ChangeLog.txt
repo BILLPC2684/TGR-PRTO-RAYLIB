@@ -6,7 +6,7 @@ TheGameRazer Change Log:
 Firsts Change Log (idk why i never made eny before)
 
 Graphics Processing still in works
- * functional Test ROM was made!!
+ * functional Test ROMs was made!!
  * Drawable Lines(fast), and Pixels(slow)
  * Drawable Sprites, Strech and Rotatable
  * Sprites can be rendered past the screen boarder
@@ -54,6 +54,7 @@ Keybind Changes:
 
 Minor Small Fixes:
  * Fixed Asni Printing for windows
+ * Slightly optimized the Intro's Memory issue
 
 Major Small Fixes:
  * Stack System was fixed

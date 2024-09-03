@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////
-//discord.c // where discord intergration code goes //
+//discord.h // where discord intergration code goes //
 //////////////////////////////////////////////////////
 
 #include <assert.h>
@@ -19,7 +19,6 @@ void DISCORD_CALLBACK OnUserUpdated(void* data) {
  uint8_t NumOfPlayers[5], Title[16];
  sprintf(NumOfPlayers, "(%i)", sys.NumOfPlayers);
  sprintf(Title, "%s", (uint8_t*)(sys.ROMloaded?(!sys.Title[0]?"No Title":sys.Title):"NO-ROM"));
- 
  
  memset(&activity, 0, sizeof(activity));
  sprintf(activity.name, "TheGameRazer");

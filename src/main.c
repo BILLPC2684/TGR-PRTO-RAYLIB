@@ -37,7 +37,7 @@ static volatile bool MainRunning = 1;
 
 #define ScreenSise 2764800
 
-#define version "v0.0.47e Nightly build 4"
+#define version "v0.0.47e Nightly build 5"
 
 #include "discord.h"
 
@@ -709,7 +709,8 @@ void ResetControllers() {
    sys.ControllerScancode[j][i] = DefaultKEYS[j][i];
 }}}
 
-void init_discord() {
+int init_discord() {
+ if (sys.DiscordEnrichmentInited) return
  //////////////////////////
  // DISCORD INTERGRATION //
  //////////////////////////
@@ -744,6 +745,7 @@ void init_discord() {
  
  DiscordBranch branch;
  sys.DiscordApp.application->get_current_branch(sys.DiscordApp.application, &branch);
+ sys.DiscordEnrichmentInited = true;
  ///////////////////////////////////////////////
 }
 
@@ -773,7 +775,9 @@ void main(int argc, char *argv[]) {
  sys.Error = malloc(1024); sys.ErrorType = 4;
  uint8_t NewROMPATH[1024]={0},ROMPATH[1024]={0},extSAV[1024]={0},BIOSPath[1024]={0};
  sprintf(BIOSPath,"%s%s%s%s",CFGPATH,"bin",SEPERATOR,"BIOS.bin");
- sys.HelpOnError = sys.StartOnLoad = sys.SoloPlay = sys.NumOfPlayers = true, sys.Online = sys.BlockDisp = sys.KeepAspect = sys.Debug = sys.skipBIOS = GPUctl.ForceRender = sys.RapidDebug = sys.DiscordEnrichment = sys.DiscordEnrichmentInited = false, sys.GUIOpacity = 80, sys.Cutscene0Speed = 8;
+ sys.HelpOnError = sys.StartOnLoad = sys.SoloPlay = sys.NumOfPlayers = true,
+ sys.Online = sys.BlockDisp = sys.KeepAspect = sys.Debug = sys.skipBIOS = GPUctl.ForceRender = sys.RapidDebug = sys.DiscordEnrichment = sys.DiscordEnrichmentInited = false,
+ sys.GUIOpacity = 80, sys.Cutscene0Speed = 8;
 
  uint32_t i,j,k,l;
  for (i=0;i<unilist_size;i++) { TGR_chars[95+i] = utf16(TGR_uni[i]); }
@@ -793,7 +797,7 @@ void main(int argc, char *argv[]) {
   int len = fread(cfgdata, 1, sizeof(cfgdata), fp); fclose(fp);
   if ((json = cJSON_Parse(cfgdata)) == NULL) { cJSON_Delete(json); }
   else {
-   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "sys.DiscordEnrichment");
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "DiscordEnrichment");
    if(cJSON_IsBool(jsonItem)) sys.DiscordEnrichment = cJSON_IsTrue(jsonItem);
 
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "StartOnLoad");
@@ -1042,7 +1046,8 @@ void main(int argc, char *argv[]) {
 // params.event_data = &app;
 // 
 // DiscordCreate(DISCORD_VERSION, &params, &app.core);
- 
+ if (sys.DiscordEnrichment) init_discord();
+
  TGR_UpdateColors();
  sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
  sys.LED[0]=128,sys.LED[1]=0,sys.LED[2]=0;
@@ -1065,10 +1070,15 @@ void main(int argc, char *argv[]) {
  #endif
  
  uint8_t text[1024] = {0}, TGR_full_logo_data[3872] = {0};
- Image TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[33], 44, 22);
- ImageResizeNN(&TGR_logo,44*8,22*8);
- ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},TGR_COLOR_VOID);
- Image TGR_logo8x = ImageCopy(TGR_logo);
+ 
+ Image TGR_logo[34];
+ uint8_t TGR_logo_SLOT = 0;
+ for(i=0;i<35;i++) {
+  TGR_logo[i] = RL_Bytes2ImageAlpha(TGR_logo_animation_data[i], 44, 22);
+  ImageColorReplace(&TGR_logo[i],(Color){0,0,0,0xFF},TGR_COLOR_VOID);
+  ImageResizeNN(&TGR_logo[i],44*8,22*8);
+ }
+ Image TGR_logo8x = ImageCopy(TGR_logo[33]);
 
  Image KF_logo = RL_Bytes2ImageAlpha(koranva_forest_splash_logo_data, 312, 93);
  //Image KF_logo = GenImageColor(8*8,8*8,RAYWHITE);
@@ -1087,7 +1097,7 @@ void main(int argc, char *argv[]) {
  //float trackLengthInSeconds = 4.3;
  //int sampleSize = GenSampleSize(AudioStream_sampleRate, AudioStream_seconds, AudioStream_bitDepth, AudioStream_channels)
  //AudioStream ThunderStream = LoadAudioStream(AudioStream_sampleRate, sampleSize, AudioStream_channels);
- Wave Thunder_Wave = LoadWaveFromMemory(".wav", Thunder_Data, 760024);
+ Wave Thunder_Wave = LoadWaveFromMemory(".wav", Thunder_Wave_Data, 760024);
  Sound Thunder = LoadSoundFromWave(Thunder_Wave);
  uint8_t inDialog = 0;
  TAYLOR_CPU_Init();
@@ -1128,7 +1138,7 @@ void main(int argc, char *argv[]) {
  }}
 
  printf("TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3]: %d\n",TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3);
- uint8_t Data720p[TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3];
+ uint8_t *Data720p = malloc(TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3);
  Image OverlayUI        = GenImageColor(TGR_GPU_Resolutions[3][0],TGR_GPU_Resolutions[3][1],TGR_COLOR_VOID);
  sys.UI                 = GenImageColor(TGR_GPU_Resolutions[3][0],TGR_GPU_Resolutions[3][1],TGR_COLOR_VOID);
  sys.Canvas             = RL_Bytes2Image(Data720p, TGR_GPU_Resolutions[3][0],TGR_GPU_Resolutions[3][1]);
@@ -1183,6 +1193,7 @@ void main(int argc, char *argv[]) {
  Hexdumpi = TGR_MEM_IO;
  
  while(MainRunning) {
+  if (sys.DiscordEnrichmentInited) DISCORD_REQUIRE(sys.DiscordApp.core->run_callbacks(sys.DiscordApp.core));
   time(&rawtime);
   clock_gettime(CLOCK_MONOTONIC, &end);
   delta = (end.tv_sec-start.tv_sec)*1000000+(end.tv_nsec-start.tv_nsec)/1000;
@@ -1218,11 +1229,9 @@ void main(int argc, char *argv[]) {
      sys.Cutscene0Background = (Color){0xF1,0xDC,0x69,0xFF};
     }
     if (localCSNum%8==0) {
-     UnloadImage(TGR_logo);
-     //printf("sys.Cutscene0Timer: %d | %d\n",sys.Cutscene0Timer,sys.Cutscene0Timer-32*8);
-     TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[(localCSNum/8<34)?localCSNum/8:33], 44, 22);
-     ImageResizeNN(&TGR_logo,44*8,22*8);
-     ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},TGR_COLOR_VOID);
+     //printf("0: sys.Cutscene0Timer: %d | %d\n",sys.Cutscene0Timer,sys.Cutscene0Timer-32*8);
+     //UnloadImage(TGR_logo);
+     TGR_logo_SLOT = (localCSNum/8<34)?localCSNum/8:33;
     } sys.Cutscene0Fade1 = (sys.Cutscene0Fade1+sys.Cutscene0Speed<0xFF)?sys.Cutscene0Fade1+sys.Cutscene0Speed:0xFF;
    } else
    // TGR Logo: Move up
@@ -1244,14 +1253,12 @@ void main(int argc, char *argv[]) {
     sys.Cutscene0Fade2 = (sys.Cutscene0Fade2-sys.Cutscene0Speed>0)?sys.Cutscene0Fade2-sys.Cutscene0Speed:0;
     sys.Cutscene0Fade3 = (sys.Cutscene0Fade3+sys.Cutscene0Speed<0xFF)?sys.Cutscene0Fade3+sys.Cutscene0Speed:0xFF;
     if ((sys.Cutscene0Timer == 32*28)%31==0) {
-     UnloadImage(TGR_logo);
-     Image TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[34], 44, 22);
-     ImageResizeNN(&TGR_logo,44*8,22*8);
-     ImageColorReplace(&TGR_logo,(Color){0,0,0,0xFF},TGR_COLOR_VOID);
+     //printf("1: sys.Cutscene0Timer: %d | %d\n",sys.Cutscene0Timer,sys.Cutscene0Timer-32*8);
+     //UnloadImage(TGR_logo);
+     TGR_logo_SLOT = 34;
    } else
    if (sys.Cutscene0Timer == 32*29) {
-     UnloadImage(TGR_logo);
-     Image TGR_logo = RL_Bytes2ImageAlpha(TGR_logo_animation_data[33], 44, 22);
+     TGR_logo_SLOT = 33;
      sys.Cutscene0Position = sys.Cutscene0Fade1 = sys.Cutscene0Fade2 = sys.Cutscene0Fade3 = 0;
    }} sys.Cutscene0Timer++;
   }
@@ -1290,7 +1297,8 @@ void main(int argc, char *argv[]) {
    GPUctl.Rez=GPUctl.NewRez=(GPUctl.NewRez%4);
    sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
    SetWindowMinSize(sys.SW+4,sys.SH+4);
-   printf("%s%sNew Resolution: %s%dx%d%s\n",COLOR_BOLD,COLOR_YELLOW,COLOR_BLUE,sys.SW,sys.SH,COLOR_RESET);
+   sprintf(MainPrintString, "%s%sNew Resolution: %s%dx%d%s\n",COLOR_BOLD,COLOR_YELLOW,COLOR_BLUE,sys.SW,sys.SH,COLOR_RESET);
+   TGR_FilterAnsi(MainPrintString);
    TAYLOR_GPU_ResetLayers(); SrcRect = (Rectangle){0,0,sys.SW,sys.SH};
   }
   if(IsWindowReady()) {
@@ -1398,7 +1406,7 @@ void main(int argc, char *argv[]) {
      ImageDraw(&OverlayUI,RL_logo,(Rectangle){0,0,RL_logo.width,RL_logo.height},(Rectangle){((((sys.SW/8)*8)/2)-64)+10*8, ((((sys.SH/8)*8)/2)-64)+12*8, 128,128},(Color){0xFF,0xFF,0xFF,sys.Cutscene0Fade2});
     }
     if (sys.Cutscene0Fade1>0)
-     ImageDraw(&OverlayUI,TGR_logo,(Rectangle){0,0,TGR_logo.width,TGR_logo.height},(Rectangle){((((sys.SW/8)*8)/2)-((TGR_logo.width/8)*8)/2)-0*8, (((sys.SH/8)*8)/2)-((TGR_logo.height/8)*8)/2-(sys.Cutscene0Position/255.0)*(7*8), 44*8,22*8},(Color){0xFF,0xFF,0xFF,sys.Cutscene0Fade1});
+     ImageDraw(&OverlayUI,TGR_logo[TGR_logo_SLOT],(Rectangle){0,0,TGR_logo[TGR_logo_SLOT].width,TGR_logo[TGR_logo_SLOT].height},(Rectangle){((((sys.SW/8)*8)/2)-((TGR_logo[TGR_logo_SLOT].width/8)*8)/2)-0*8, (((sys.SH/8)*8)/2)-((TGR_logo[TGR_logo_SLOT].height/8)*8)/2-(sys.Cutscene0Position/255.0)*(7*8), 44*8,22*8},(Color){0xFF,0xFF,0xFF,sys.Cutscene0Fade1});
     //DrawText("Powered By:", 120, 250, 20, RAYWHITE);
     //sprintf(text, "sys.MFT: %3d | sys.MF: %3d", sys.MFT,sys.MF);
     //sprintf(text, "Draw Delta: %d\nRender Delta: %d", delta,GPUctl.RenderDelta);
@@ -1620,6 +1628,7 @@ void main(int argc, char *argv[]) {
  if ((fp = fopen(concat(CFGPATH,"settings.cfg"), "w")) == NULL) { sprintf(sys.Error,"Unable to modify the config file!\n"); sys.ErrorType=1; TGR_printError(); }
  else {
   cJSON *json2 = cJSON_CreateObject();
+  cJSON_AddBoolToObject(json2,"DiscordEnrichment",sys.DiscordEnrichment);
   cJSON_AddBoolToObject(json2,"StartOnLoad",sys.StartOnLoad);
   cJSON_AddBoolToObject(json2,"AnsiPrinting",sys.AnsiPrinting);
   cJSON_AddBoolToObject(json2,"BlockDisp",sys.BlockDisp);
