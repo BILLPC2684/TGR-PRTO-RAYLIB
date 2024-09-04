@@ -11,10 +11,13 @@ if [ -f $libwinpthread_1_dll ]; then
  cp $libwinpthread_1_dll ./win-package
  cp discord_game_sdk.dll ./win-package
  cp netlib.dll ./win-package
+ cp "bin/URL Links/Support the project on Ko-fi!.url" ./win-package
+ cp "bin/URL Links/Official Github - TGR-PRTO-RAYLIB.url" ./win-package
+ cp "bin/URL Links/Official Wiki - Fantasy Console Wiki.url" ./win-package
  cd win-package
- tar.exe -a -c -f ../TGR-win.tar *
+ tar.exe -czvf ../TGR-win.tar.gz *
  cd ..
- echo -e "\e[32;1m[✓] Done! \e[33mOutput should be ./TGR-win.tar\e[m"
+ echo -e "\e[32;1m[✓] Done! \e[33mOutput should be ./TGR-win.tar.gz\e[m"
 else
  echo -e "\e[31;1m[X] $libwinpthread_1_dll Was not found!\e[m"
  echo "Please Edit this file with the correct path, and ensure mingw64 is installed!"

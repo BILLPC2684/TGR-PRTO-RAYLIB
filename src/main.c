@@ -24,7 +24,6 @@
 #include <locale.h>
 #include <stdbool.h>
 #include <sys/stat.h>
-//#include <sys/socket.h>
 #include "netlib.h"
 #include "color.h"
 #include "TGR.h"
@@ -926,7 +925,7 @@ void main(int argc, char *argv[]) {
   else {
    if (argv[i][0] == '-') { ArgStrError(argv[i]); sys.HelpOnError?sprintf(argv[i], "-h"):exit(1); }
    else {
-    printf("FILE\n");
+    printf("FILE \"$s\"\n",argv[i]);
     if (IsFileExtension(argv[i], ".tgr")) {
      sprintf(NewROMPATH,"%s",argv[i]);
     } else {
@@ -1097,8 +1096,9 @@ void main(int argc, char *argv[]) {
  //float trackLengthInSeconds = 4.3;
  //int sampleSize = GenSampleSize(AudioStream_sampleRate, AudioStream_seconds, AudioStream_bitDepth, AudioStream_channels)
  //AudioStream ThunderStream = LoadAudioStream(AudioStream_sampleRate, sampleSize, AudioStream_channels);
- Wave Thunder_Wave = LoadWaveFromMemory(".wav", Thunder_Wave_Data, 760024);
- Sound Thunder = LoadSoundFromWave(Thunder_Wave);
+ //Wave Thunder_Wave = ;
+ Sound Thunder = LoadSoundFromWave(LoadWaveFromMemory(".wav", Thunder_Wave_Data, 760024));
+ SetSoundVolume(Thunder,0.5);
  uint8_t inDialog = 0;
  TAYLOR_CPU_Init();
  
