@@ -790,15 +790,16 @@ void main(int argc, char *argv[]) {
 
  FILE *fp;
  dir = opendir(CFGPATH); if (!dir) { if (_mkdir(CFGPATH)<0) { sprintf(sys.Error, "Failed to create system's folder\n"); sys.ErrorType=1; TGR_printError(); } } closedir(dir);
- cJSON *json,*jsonItem,*jsonSubItem; uint8_t cfgdata[1024];
+ cJSON *json,*jsonItem,*jsonSubItem; uint8_t cfgdata[4096];
  if ((fp = fopen(concat(CFGPATH,"settings.cfg"), "r")) == NULL) { sprintf(sys.Error,"Unable to open Settings, Using Default Settings...\n"); sys.ErrorType=1; TGR_printError(); }
  else {
   int len = fread(cfgdata, 1, sizeof(cfgdata), fp); fclose(fp);
-  if ((json = cJSON_Parse(cfgdata)) == NULL) { cJSON_Delete(json); }
+  if ((json = cJSON_Parse(cfgdata)) == NULL) { cJSON_Delete(json); sprintf(sys.Error,"Failed to parse Settings, Using Default Settings...\n"); sys.ErrorType=1; TGR_printError(); }
   else {
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "DiscordEnrichment");
-   if(cJSON_IsBool(jsonItem)) sys.DiscordEnrichment = cJSON_IsTrue(jsonItem);
-
+   if(cJSON_IsBool(jsonItem)) {
+    sys.DiscordEnrichment = cJSON_IsTrue(jsonItem);
+   }
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "StartOnLoad");
    if(cJSON_IsBool(jsonItem)) sys.StartOnLoad = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "AnsiPrinting");
@@ -1045,7 +1046,10 @@ void main(int argc, char *argv[]) {
 // params.event_data = &app;
 // 
 // DiscordCreate(DISCORD_VERSION, &params, &app.core);
- if (sys.DiscordEnrichment) init_discord();
+ if (sys.DiscordEnrichment) { init_discord();
+        sprintf(MainPrintString, "Discord has Initalized!\n");} 
+ else { sprintf(MainPrintString, "Discord was not initalized...\n"); }
+ TGR_FilterAnsi(MainPrintString);
 
  TGR_UpdateColors();
  sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
