@@ -1,9 +1,11 @@
 #if _WIN32
  #include <cJSON.h> // . . . . \.
  #include "raylib_win32.h"
+ #include <winsock2.h>
  #define _mkdir(path) mkdir(path)
 #else                  //        https://github.com/DaveGasys.MBle/cJSON
  #include <cjson/cJSON.h> // . /
+ #include <sys/socket.h>
  #define _mkdir(path) mkdir(path, 0777)
 #endif
 
@@ -24,10 +26,10 @@
 #include <locale.h>
 #include <stdbool.h>
 #include <sys/stat.h>
-#include "netlib.h"
 #include "color.h"
 #include "TGR.h"
 #include "assets.h"
+
 
 #define RLGL_ENABLE_OPENGL_DEBUG_CONTEXT 1
 #define SUPPORT_TRACELOG_DEBUG 1
@@ -700,12 +702,12 @@ void ArgTypeError(uint8_t*got, uint8_t*expects) {
 
 void ResetControllers() {
  uint8_t i,j;
- for(j=0;j<2;j++) {
+ for(j=0;j<4;j++) { // Players 3-4 are not defined by default
   sys.ControllerDevice[j] = 0;
-  sys.ControllerType[j] = TGR_CONTROLTYPE_STANDARD;
+  sys.ControllerType[j] = j<2?TGR_CONTROLTYPE_STANDARD:TGR_CONTROLTYPE_NONE;
   for(i=0;i<14;i++) {
    sys.ControllerScantype[j][i] = 0;
-   sys.ControllerScancode[j][i] = DefaultKEYS[j][i];
+   sys.ControllerScancode[j][i] = j<2?DefaultKEYS[j][i]:0;
 }}}
 
 int init_discord() {
@@ -782,7 +784,7 @@ void main(int argc, char *argv[]) {
  for (i=0;i<unilist_size;i++) { TGR_chars[95+i] = utf16(TGR_uni[i]); }
  
  bool SystemHUD=false,ShowInput=false,ShowDump=false,FullHUD=false,StartWithOverlay=false,INITFullscreen=false,FullscreenType=true,ForceSkipIntro=false,SkipIntro=false;
-  int8_t UInput[2][32]={0};
+  int8_t UInput[4][32]={0};
  uint8_t hour_offset = 0, min_offset = 0;
  Color FadeMask = {0xFF,0xFF,0xFF,0x00};
  
@@ -828,7 +830,7 @@ void main(int argc, char *argv[]) {
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "DebugMode");
    if(cJSON_IsBool(jsonItem)) sys.Debug = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "GUIOpacity");
-   if(cJSON_IsNumber(jsonItem)) sys.GUIOpacity = jsonItem->valueint;
+   if(cJSON_IsNumber(jsonItem)) sys.GUIOpacity = (int)jsonItem->valueint;
    
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "SkipBIOS");
    if(cJSON_IsBool(jsonItem)) sys.skipBIOS = cJSON_IsTrue(jsonItem);
@@ -841,8 +843,8 @@ void main(int argc, char *argv[]) {
    if(cJSON_IsNumber(jsonItem)) hour_offset = jsonItem->valueint;
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "min_offset");
    if(cJSON_IsNumber(jsonItem)) min_offset = jsonItem->valueint;
-   for(j=0;j<2;j++) {
-    jsonItem = cJSON_GetObjectItemCaseSensitive(json, j==0?"Player0":"Player1");
+   for(j=0;j<4;j++) {
+    jsonItem = cJSON_GetObjectItemCaseSensitive(json, j==0?"Player0":j==1?"Player1":j==2?"Player2":"Player3");
     jsonSubItem = cJSON_GetObjectItemCaseSensitive(jsonItem, "device");
     if(cJSON_IsNumber(jsonSubItem)) sys.ControllerDevice[j] = jsonSubItem->valueint;
     jsonSubItem = cJSON_GetObjectItemCaseSensitive(jsonItem, "type");
@@ -861,7 +863,7 @@ void main(int argc, char *argv[]) {
       sys.ControllerScantype[j][i] = cJSON_GetArrayItem(jsonSubItem, i)->valueint;
    }}}
  }}
- sprintf(MainPrintString,"%s%s%sTGR-PRTO %s %sAlpha %sBuild...\n\\ %s%sTheGameRazer %s(C) %s2017-2024 Koranva-Forest%s\n \\ %s%sHelp us on Github%s: %s%s%shttps://github.com/BILLPC2684/TGR-PRTO-RAYLIB%s%s\n  \\ %s%sDonate at%s: %s%s%shttps://Ko-Fi.com/BILLPC2684%s%s\n", VersionPrint?"":"Loading ", COLOR_BOLD,COLOR_YELLOW,version,COLOR_BLUE,COLOR_RESET,COLOR_BOLD,COLOR_RED,COLOR_YELLOW,COLOR_GREEN,COLOR_DEFAULT,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET);
+ sprintf(MainPrintString,"%s%s%sTGR-PRTO %s %sAlpha %sBuild...\n\\ %s%sTheGameRazer %s(C) %s2017-2024 Koranva Forest Foundation%s\n \\ %s%sHelp us on Github%s: %s%s%shttps://github.com/BILLPC2684/TGR-PRTO-RAYLIB%s%s\n  \\ %s%sDonate at%s: %s%s%shttps://Ko-Fi.com/BILLPC2684%s%s\n", VersionPrint?"":"Loading ", COLOR_BOLD,COLOR_YELLOW,version,COLOR_BLUE,COLOR_RESET,COLOR_BOLD,COLOR_RED,COLOR_YELLOW,COLOR_GREEN,COLOR_DEFAULT,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET,COLOR_ITALIC,COLOR_GREEN,COLOR_RESET,COLOR_BOLD,COLOR_BLUE,COLOR_UNDERLINE,linkuni,COLOR_RESET);
  TGR_FilterAnsi(MainPrintString);
  //printf(">>> %i\n",argc);
  for (int i=1; i<argc; i++) {
@@ -926,11 +928,13 @@ void main(int argc, char *argv[]) {
   else {
    if (argv[i][0] == '-') { ArgStrError(argv[i]); sys.HelpOnError?sprintf(argv[i], "-h"):exit(1); }
    else {
-    printf("FILE \"$s\"\n",argv[i]);
+    printf("FILE \"%s\"\n",argv[i]);
     if (IsFileExtension(argv[i], ".tgr")) {
      sprintf(NewROMPATH,"%s",argv[i]);
+     printf("0NewROMPATH \"%s\"\n",NewROMPATH);
     } else {
       ArgTypeError(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4), "\".tgr\"");
+      printf("1NewROMPATH \"%s\"\n",NewROMPATH);
   }}}
   if (!strcmp(TextToLower(argv[i]),"--help"         ) | !strcmp(TextToLower(argv[i]),"-h"    )) {
    sprintf(MainPrintString,"\n\n\
@@ -1028,6 +1032,7 @@ void main(int argc, char *argv[]) {
    exit(0);
   }
  }
+ printf("2NewROMPATH \"%s\"\n",NewROMPATH);
 //### Can't get discord_game_sdk.so to work .w. ###///
 // struct Application {
 //  struct IDiscordCore* core;
@@ -1056,6 +1061,7 @@ void main(int argc, char *argv[]) {
  sys.LED[0]=128,sys.LED[1]=0,sys.LED[2]=0;
  Color display_LED;
  
+ printf("3NewROMPATH \"%s\"\n",NewROMPATH);
  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
  InitWindow(sys.SW+4, sys.SH+4, "TheGameRazer");
  SetWindowMinSize(sys.SW+4,sys.SH+4);
@@ -1072,10 +1078,11 @@ void main(int argc, char *argv[]) {
   UnloadImage(Icon);
  #endif
  
+ printf("4NewROMPATH \"%s\"\n",NewROMPATH);
  uint8_t text[1024] = {0}, TGR_full_logo_data[3872] = {0};
- 
- Image TGR_logo[34];
+ Image TGR_logo[35];
  uint8_t TGR_logo_SLOT = 0;
+ printf("4.1NewROMPATH \"%s\"\n",NewROMPATH); 
  for(i=0;i<35;i++) {
   TGR_logo[i] = RL_Bytes2ImageAlpha(TGR_logo_animation_data[i], 44, 22);
   ImageColorReplace(&TGR_logo[i],(Color){0,0,0,0xFF},TGR_COLOR_VOID);
@@ -1101,6 +1108,7 @@ void main(int argc, char *argv[]) {
  //int sampleSize = GenSampleSize(AudioStream_sampleRate, AudioStream_seconds, AudioStream_bitDepth, AudioStream_channels)
  //AudioStream ThunderStream = LoadAudioStream(AudioStream_sampleRate, sampleSize, AudioStream_channels);
  //Wave Thunder_Wave = ;
+ printf("5NewROMPATH \"%s\"\n",NewROMPATH);
  Sound Thunder = LoadSoundFromWave(LoadWaveFromMemory(".wav", Thunder_Wave_Data, 760024));
  SetSoundVolume(Thunder,0.5);
  uint8_t inDialog = 0;
@@ -1113,33 +1121,6 @@ void main(int argc, char *argv[]) {
 // TAYLOR_CPU_ResetCore(0); TAYLOR_CPU_ResetCore(1);
 // CPU[0].running = true;
 // CPU[1].running = true;
- sprintf(sys.NETWORK_IP,"localhost"); sys.NETWORK_PORT=1213;
- if (netlib_init() == -1) { sprintf(sys.Error,"netlib_init: %s\n", netlib_get_error()); sys.ErrorType=2; TGR_printError(); exit(2); }
- else {
-  ip_address ip;
-  tcp_socket sock;
-  uint32_t sent;
-  char message[1024];
-  if (netlib_resolve_host(&ip, sys.NETWORK_IP,sys.NETWORK_PORT) == -1) { sprintf(sys.Error,"netlib_resolve_host: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); }
-  else if (!(sock = netlib_tcp_open(&ip))) { sprintf(sys.Error,"netlib_tcp_open: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); }
-  else {
-   sprintf(MainPrintString,"%s%sConnected to server (IP: %s:%i)%s\n",COLOR_BOLD,COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
-   netlib_byte_buf* buf = netlib_alloc_byte_buf(20);
-   netlib_write_uint32(buf,'t');
-   netlib_write_uint32(buf,'e');
-   netlib_write_uint32(buf,'s');
-   netlib_write_uint32(buf,'t');
-   netlib_write_uint32(buf,'1');
-   sent = netlib_tcp_send_buf(sock, buf);
-   if (sent < buf->length) { sprintf(sys.Error, "netlib_tcp_send: %s\n", netlib_get_error()); sys.ErrorType=0; TGR_printError(); }
-   sprintf(MainPrintString,"%sSent %i bytes to (IP: %s:%i)\nData: \"%s",COLOR_GREEN,sent,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_MAGENTA); TGR_FilterAnsi(MainPrintString);
-   for (sent=0;sent<buf->length;sent++) { printf("%c", buf->data[sent]); }
-   sprintf(MainPrintString,"%s\"%s\n",COLOR_GREEN,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
-   netlib_free_byte_buf(buf);
-   netlib_tcp_close(sock);
-   sprintf(MainPrintString,"%sClosed connection to server (IP: %s:%i)%s\n",COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
-   netlib_quit();
- }}
 
  printf("TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3]: %d\n",TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3);
  uint8_t *Data720p = malloc(TGR_GPU_Resolutions[3][0]*TGR_GPU_Resolutions[3][1]*3);
@@ -1158,6 +1139,7 @@ void main(int argc, char *argv[]) {
 
  GPUctl.Rez = GPUctl.NewRez = 0; TAYLOR_GPU_ResetLayers();
 
+ printf("6NewROMPATH \"%s\"\n",NewROMPATH);
  HideCursor(); sys.MF = sys.MFT = 1; //CURSOR SETUP
  Image MouseSymbol = GenImageColor(8,8,TGR_COLOR_VOID);
  getCharExt(&MouseSymbol, "+",0,0, WHITE, 0, 1);
@@ -1196,8 +1178,9 @@ void main(int argc, char *argv[]) {
  
  Hexdumpi = TGR_MEM_IO;
  
+ printf("7NewROMPATH \"%s\"\n",NewROMPATH);
+ if (sys.DiscordEnrichmentInited) DISCORD_REQUIRE(sys.DiscordApp.core->run_callbacks(sys.DiscordApp.core));
  while(MainRunning) {
-  if (sys.DiscordEnrichmentInited) DISCORD_REQUIRE(sys.DiscordApp.core->run_callbacks(sys.DiscordApp.core));
   time(&rawtime);
   clock_gettime(CLOCK_MONOTONIC, &end);
   delta = (end.tv_sec-start.tv_sec)*1000000+(end.tv_nsec-start.tv_nsec)/1000;
@@ -1319,6 +1302,7 @@ void main(int argc, char *argv[]) {
     UnloadDroppedFiles(droppedFiles);
    }
    if (strcmp(NewROMPATH,ROMPATH)) {
+    printf("NewROMPATH: \"%s\"(%p)\nROMPATH: \"%s\"\n",NewROMPATH,ROMPATH, NewROMPATH);
     strcpy(ROMPATH,NewROMPATH);
     TAYLOR_CPU_Stop(); TAYLOR_CPU_Load(ROMPATH);
     if (strlen(extSAV)>0) {TAYLOR_CPU_ExtSAV(extSAV);}
@@ -1342,7 +1326,7 @@ void main(int argc, char *argv[]) {
     if(FullscreenType){ToggleBorderlessWindowed();}else{ToggleFullscreen();} INITFullscreen=!INITFullscreen;
     SetWindowMinSize((IsWindowFullscreen)?sys.SW+4:sys.HostWidth,(IsWindowFullscreen)?sys.SH+4:sys.HostHeight);
    }
-   for(j=0;j<2;j++) {
+   for(j=0;j<4;j++) {
     if (sys.ControllerDevice[j] == 0) {
      for(i=0;i<32;i++)
       UInput[j][i] = IsKeyDown(sys.ControllerScancode[j][i])*127;
@@ -1423,73 +1407,72 @@ void main(int argc, char *argv[]) {
     
     if (FullHUD == false) {
      sprintf(text,"FPS: %2i",sys.FPS);
-     getChar(text, 2*8, sys.SH-(4*8), TGR_REDT,true,1);
+     getChar(text, 2*8, sys.SH-((4+ShowInput*2)*8), TGR_REDT,true,1);
     } else {
-     //printf("2*8: %d, sys.SH-(7*8): %d\n",2*8, sys.SH-(17*8));
+     //printf("2*8: %d, sys.SH-((7+ShowInput*2)*8): %d\n",2*8, sys.SH-((17+ShowInput*2)*8));
      sprintf(text,"TAYLOR_CPU IP: [0x%07X, 0x%07X]",CPU[0].IP,CPU[1].IP);
-     getChar(text, 2*8, sys.SH-(8*8), TGR_BLUET,true,1);
+     getChar(text, 2*8, sys.SH-((8+ShowInput*2)*8), TGR_BLUET,true,1);
      sprintf(text,"GPU IP: [0x%07X, 0x%07X,0x%07X, 0x%07X]",GPU[0].IP,GPU[1].IP,GPU[2].IP,GPU[3].IP);
-     getChar(text, 2*8, sys.SH-(7*8), TGR_BLUET,true,1);
+     getChar(text, 2*8, sys.SH-((7+ShowInput*2)*8), TGR_BLUET,true,1);
      sprintf(text," RAM Usage: %9i/%9i bytes(%03.2f%%) full)",(uint32_t)sys.MemUse,TGR_MEM_WRAM_FULL,(sys.MemUse/TGR_MEM_WRAM_FULL)*100);
-     getChar(text, 1*8, sys.SH-(6*8), TGR_REDT,true,1);
+     getChar(text, 1*8, sys.SH-((6+ShowInput*2)*8), TGR_REDT,true,1);
      sprintf(text,"VRAM Usage: %9i/%9i bytes(%03.2f%%) full)",(uint32_t)sys.VMemUse,TGR_MEM_VRAM_FULL,(sys.VMemUse/TGR_MEM_VRAM_FULL)*100);
-     getChar(text,1*8, sys.SH-(5*8), TGR_REDT,true,1);
+     getChar(text,1*8, sys.SH-((5+ShowInput*2)*8), TGR_REDT,true,1);
      sprintf(text,"FPS: %2i/%2i | IPS: %8i (%03.2f%%) TR: %ld",sys.FPS,GetFPS(),(int)(sys.IPS[0]+sys.IPS[1]),(sys.IPS[0]+sys.IPS[1])/24000000.0f*100,(uint64_t)(CPU[0].TI+CPU[1].TI));
-     getChar(text, 2*8, sys.SH-(4*8), TGR_REDT,true,1);
+     getChar(text, 2*8, sys.SH-((4+ShowInput*2)*8), TGR_REDT,true,1);
  
     }
     if (ShowInput) {
-     for(j=0;j<2;j++) {
+     for(j=0;j<4;j++) {
       sprintf(text,"P%i:",j+1);
-      getChar(text, 2*8, sys.SH-(3-j)*8, BLUET, true,1);
+      getChar(text, 2*8, sys.SH-(5-j)*8, BLUET, true,1);
       switch(sys.ControllerType[j]) {
-       defult:
        case 0:
-        getChar("DISCONNECTED", 6*8, sys.SH-(3-j)*8, TGR_DIM_REDT, true,1);
+        getChar("DISCONNECTED", 6*8, sys.SH-(5-j)*8, TGR_DIM_REDT, true,1);
         break;
        case 1:
-        getChar("[", 5*8, sys.SH-(3-j)*8, BLUET, true,1);
-        if (UInput[j][ 0]) { getChar("A",       6*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 1]) { getChar("B",       8*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 2]) { getChar("C",      10*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 3]) { getChar("X",      12*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 4]) { getChar("Y",      14*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 5]) { getChar("Z",      16*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 6]) { getChar("L",      18*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 7]) { getChar("R",      20*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 8]) { getChar("START",  22*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 9]) { getChar("SELECT", 28*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][10]) { getChar("UP",     35*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][11]) { getChar("DOWN",   38*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][12]) { getChar("LEFT",   43*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][13]) { getChar("RIGHT",  48*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        getChar("]", 53*8, sys.SH-(3-j)*8, BLUET, true,1);
+        getChar("[", 5*8, sys.SH-(5-j)*8, BLUET, true,1);
+        if (UInput[j][ 0]) { getChar("A",       6*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 1]) { getChar("B",       8*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 2]) { getChar("C",      10*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 3]) { getChar("X",      12*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 4]) { getChar("Y",      14*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 5]) { getChar("Z",      16*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 6]) { getChar("L",      18*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 7]) { getChar("R",      20*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 8]) { getChar("START",  22*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 9]) { getChar("SELECT", 28*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][10]) { getChar("UP",     35*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][11]) { getChar("DOWN",   38*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][12]) { getChar("LEFT",   43*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][13]) { getChar("RIGHT",  48*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        getChar("]", 53*8, sys.SH-(5-j)*8, BLUET, true,1);
         break;
        case 2:
-        getChar("[", 5*8, sys.SH-(3-j)*8, BLUET, true,1);
-        if (UInput[j][ 0]) { getChar("A",       6*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 1]) { getChar("B",       8*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 2]) { getChar("C",      10*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 3]) { getChar("D",      12*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 4]) { getChar("E",      14*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 5]) { getChar("F",      16*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 6]) { getChar("G",      18*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 7]) { getChar("H",      20*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 8]) { getChar("START",  22*8, sys.SH-(3-j)*8,  BLUET,true,1); }
-        if (UInput[j][ 9]) { getChar("SELECT", 28*8, sys.SH-(3-j)*8,  BLUET,true,1); }
+        getChar("[", 5*8, sys.SH-(5-j)*8, BLUET, true,1);
+        if (UInput[j][ 0]) { getChar("A",       6*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 1]) { getChar("B",       8*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 2]) { getChar("C",      10*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 3]) { getChar("D",      12*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 4]) { getChar("E",      14*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 5]) { getChar("F",      16*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 6]) { getChar("G",      18*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 7]) { getChar("H",      20*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 8]) { getChar("START",  22*8, sys.SH-(5-j)*8,  BLUET,true,1); }
+        if (UInput[j][ 9]) { getChar("SELECT", 28*8, sys.SH-(5-j)*8,  BLUET,true,1); }
         if (abs(UInput[j][10])>0) {
          sprintf(text,"%c: %3d", (UInput[j][10]>-1)?'U':'D', abs(UInput[j][10]));
-         getChar(text,     35*8, sys.SH-(3-j)*8,  BLUET,true,1);
+         getChar(text,     35*8, sys.SH-(5-j)*8,  BLUET,true,1);
         }
         if (abs(UInput[j][11])>0) {
          sprintf(text,"%c: %3d", (UInput[j][11]>-1)?'R':'L', abs(UInput[j][11]));
-         getChar(text,     42*8, sys.SH-(3-j)*8,  BLUET,true,1);
+         getChar(text,     42*8, sys.SH-(5-j)*8,  BLUET,true,1);
         }
-        getChar("]", 48*8, sys.SH-(3-j)*8, BLUET, true,1);
+        getChar("]", 48*8, sys.SH-(5-j)*8, BLUET, true,1);
         break;
        default:
         sprintf(text,"P%i: UNKNOWN Controller",j+1);
-        getChar(text, 2*8, sys.SH-(3*8), BLUET, true,1);
+        getChar(text, 2*8, sys.SH-(5-j)*8, BLUET, true,1);
     }}} else {
      sprintf(text,"SystemHUD: %s | SystemMenu: [%i, %i]",(SystemHUD)?"true":"false",0,0);
      getChar(text, 16,sys.SH-24, TGR_DIM_BLUET,  true,1);
@@ -1651,7 +1634,7 @@ void main(int argc, char *argv[]) {
   cJSON_AddNumberToObject(json2, "hour_offset", hour_offset);
   cJSON_AddNumberToObject(json2, "min_offset", min_offset);
   cJSON *Player,*PlayerScancodes,*PlayerScantypes;
-  for(j=0;j<2;j++) {
+  for(j=0;j<4;j++) {
    Player = cJSON_CreateObject();
    cJSON_AddNumberToObject(Player, "device", sys.ControllerDevice[j]);
    cJSON_AddNumberToObject(Player, "type", sys.ControllerType[j]);
@@ -1663,7 +1646,7 @@ void main(int argc, char *argv[]) {
    }
    cJSON_AddItemToObject(Player, "scancodes", PlayerScancodes);
    cJSON_AddItemToObject(Player, "scantypes", PlayerScantypes);
-   cJSON_AddItemToObject(json2,j==0?"Player0":"Player1",Player);
+   cJSON_AddItemToObject(json2,j==0?"Player0":j==1?"Player1":j==2?"Player2":"Player3",Player);
   }
   uint8_t *json_str = cJSON_Print(json2);
   sprintf(MainPrintString,"%s%s%s\n", COLOR_GREEN,json_str,COLOR_RESET); TGR_FilterAnsi(MainPrintString);

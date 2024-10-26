@@ -11,9 +11,171 @@
 #include <time.h>
 #include <raylib.h>
 #include <unistd.h>
+#if _WIN32
+ #include <winsock2.h>
+#else
+ #include <sys/socket.h>
+#endif
 
 #define TAYLOR_GPU_DEBUG_TEST false //forced debug toggle
 uint8_t TaylorPrintString[0xFFFF] = "";
+
+// void dummyNetwork() {
+//  sprintf(sys.NETWORK_IP,"localhost"); sys.NETWORK_PORT=1213;
+//  if (netlib_init() == -1) { sprintf(sys.Error,"netlib_init: %s\n", netlib_get_error()); sys.ErrorType=2; TGR_printError(); exit(2); }
+//  else {
+//   ip_address ip;
+//   tcp_socket sock;
+//   uint32_t sent;
+//   //netlib_check_socket_set(netlib_socket_set set, uint32_t timeout)
+//   char message[1024];
+//   if (netlib_resolve_host(&ip, sys.NETWORK_IP,sys.NETWORK_PORT) == -1) { sprintf(sys.Error,"netlib_resolve_host: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); }
+//   else if (!(sock = netlib_tcp_open(&ip))) { sprintf(sys.Error,"netlib_tcp_open: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); }
+//   else {
+//    sprintf(MainPrintString,"%s%sConnected to server (IP: %s:%i)%s\n",COLOR_BOLD,COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
+//    netlib_byte_buf* buf = netlib_alloc_byte_buf(20);
+//    netlib_write_uint32(buf,'t');
+//    netlib_write_uint32(buf,'e');
+//    netlib_write_uint32(buf,'s');
+//    netlib_write_uint32(buf,'t');
+//    netlib_write_uint32(buf,'1');
+//    sent = netlib_tcp_send_buf(sock, buf);
+//         //netlib_tcp_recv_buf
+//    if (sent < buf->length) { sprintf(sys.Error, "netlib_tcp_send: %s\n", netlib_get_error()); sys.ErrorType=0; TGR_printError(); }
+//    sprintf(MainPrintString,"%sSent %i bytes to (IP: %s:%i)\nData: \"%s",COLOR_GREEN,sent,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_MAGENTA); TGR_FilterAnsi(MainPrintString);
+//    for (sent=0;sent<buf->length;sent++) { printf("%c", buf->data[sent]); }
+//    sprintf(MainPrintString,"%s\"%s\n",COLOR_GREEN,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
+//    netlib_free_byte_buf(buf);
+//    netlib_tcp_close(sock);
+//    sprintf(MainPrintString,"%sClosed connection to server (IP: %s:%i)%s\n",COLOR_BLUE,sys.NETWORK_IP,sys.NETWORK_PORT,COLOR_RESET); TGR_FilterAnsi(MainPrintString);
+//    netlib_quit();
+//  }}
+// }
+#define TaylorNetwork_IsActive  0b10000000
+#define TaylorNetwork_IsHost    0b01000000
+#define TaylorNetwork_NetType   0b00100000
+#define TaylorNetwork_Connected 0b00010000
+#define TaylorNetwork_Operation 0b00001111
+struct TaylorNetwork {
+
+ uint8_t  oper;                                 //  +1
+ //  0: IsActive  //0 Skip   / 1 Tick
+ //  1: IsHost    //0 Client / 1 Server
+ //  2: NetType   //0 TCP    / 1 UDP
+ //  3: Connected //0 No     / 1 Yes
+ //4-7: operation
+
+ uint8_t  Address[256]; //String of IP          //  +1
+ uint16_t Port;                                 //  +2
+ uint32_t BufferPtr;                            //  +4
+ uint16_t BufferSize;                           //  +2
+ uint8_t  Error;                                //  +1
+#if _WIN32
+ SOCKET Sock;
+ WSAPOLLFD FDarray;
+#else
+ //socket Sock;
+#endif
+} TaylorNetwork[256];                           //  =??
+
+// ip_address Sockip;
+// uint32_t sent;
+// uint8_t connI=0;
+// do {
+//  if (TaylorNetwork[connI].oper & TaylorNetwork_IsActive) {
+//   switch(TaylorNetwork[connI].oper & TaylorNetwork_Operation) {
+//    case 0x00: //Nothing
+//     break;
+//    case 0x01: //Connect/Bind
+//     if (netlib_resolve_host(&Sockip, TaylorNetwork[connI].IP,TaylorNetwork[connI].Port) == -1) { sprintf(sys.Error,"netlib_resolve_host: %s (IP: %s:%i)\n", netlib_get_error(), TaylorNetwork[connI].IP,TaylorNetwork[connI].Port); sys.ErrorType=0; TGR_printError(); TaylorNetwork[connI].Error=1; continue; }
+//     if (TaylorNetwork[connI].oper & TaylorNetwork_IsHost) {
+//      if (!(TaylorNetwork[connI].sock = netlib_tcp_open(&Sockip))) { sprintf(sys.Error,"netlib_tcp_open: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); TaylorNetwork[connI].Error=2; continue; }
+//      TaylorNetwork[connI].oper |= TaylorNetwork_Connected;
+     
+//      netlib_resolve_host(&TaylorNetwork[connI].IP)
+//      if (TaylorNetwork[connI].oper & TaylorNetwork_NetType) { //UDP
+      
+
+//      if (TaylorNetwork[connI].oper & TaylorNetwork_NetType) { //UDP
+      
+//       netlib_udp_bind()
+//      } else { //TCP
+//       netlib_tcp_open
+//      }
+//     }
+//     break;
+//    case 0x02: //
+//     break;
+//    case 0x: //
+//     break;
+//    case 0x: //
+//     break;
+//    case 0x: //
+//     break;
+//    case 0x: //
+//     break;
+//    case 0x: //
+//     break;
+//    case 0x: //
+//     break;
+//    case 0x: //
+//     break;
+//   }
+//  }
+// }while(++connI)
+
+// I DON'T KNOW WHAT I'M DOING!!!! TLDR I'm stupid...
+// void NetworkThread() {
+//  #if _WIN32
+//   TaylorNetwork[connI].FDarray = {0};
+//   TaylorNetwork[connI].Sock = INVALID_SOCKET;
+//   SOCKADDR_STORAGE addrLoopback = {0};
+//   INT ret = 0;
+//   ULONG uNonBlockingMode = 1;
+//   CHAR buf[MAX_PATH] = {0};
+
+//   if (INVALID_SOCKET == (TaylorNetwork[connI].Sock = socket(AF_INET6, SOCK_STREAM, 0))) { sprintf(sys.Error,"winsock2: Failed to Create Socket\n"); sys.ErrorType=1; TGR_printError(); TaylorNetwork[connI].Error=1; continue; } }
+//   if (SOCKET_ERROR == ioctlsocket(TaylorNetwork[connI].Sock, FIONBIO, &uNonBlockingMode)) { sprintf(sys.Error,"winsock2: FIONBIO Error\n"); sys.ErrorType=1; TGR_printError(); TaylorNetwork[connI].Error=1; continue; }
+  
+//   addrLoopback.ss_family = AF_INET6;
+//   INETADDR_SETLOOPBACK((SOCKADDR*)&addrLoopback);
+//   SS_PORT((SOCKADDR*)&addrLoopback) = htons(TaylorNetwork[connI].Port);
+
+//   if (SOCKET_ERROR == connect(TaylorNetwork[connI].Sock, (SOCKADDR*)&addrLoopback, sizeof(addrLoopback))) {
+//    if (WSAEWOULDBLOCK != WSAGetLastError()) { ERR("connect"); }
+//   }
+
+//   //Call WSAPoll for writeability on connecting socket
+//   TaylorNetwork[connI].FDarray.fd = TaylorNetwork[connI].Sock;
+//   TaylorNetwork[connI].FDarray.events = POLLWRNORM;
+
+//   if (SOCKET_ERROR == (ret = WSAPoll(&TaylorNetwork[connI].FDarray, 1, DEFAULT_WAIT))) { ERR("WSAPoll"); }
+//   if (ret) {
+//    if (TaylorNetwork[connI].FDarray.revents & POLLWRNORM) {
+//     printf("ConnectThread: Established connection\n");
+//     //Send data
+//     if (SOCKET_ERROR == (ret = send(sock, TST_MSG, sizeof(TST_MSG), 0))) { ERR("send"); }
+//     else printf("ConnectThread: sent %d bytes\n",ret);
+//    }
+//   }
+
+//   //Call WSAPoll for readability on connected socket
+//   TaylorNetwork[connI].FDarray.events = POLLRDNORM;
+
+//   if (SOCKET_ERROR == (ret = WSAPoll(&TaylorNetwork[connI].FDarray, 1, DEFAULT_WAIT))) { ERR("WSAPoll"); }
+//   if (ret) {
+//    if (TaylorNetwork[connI].FDarray.revents & POLLRDNORM) {
+//     if (SOCKET_ERROR == (ret = recv(sock, buf, sizeof(buf), 0))) { ERR("recv"); }
+//     else printf("ConnectThread: recvd %d bytes\n",ret);
+//    }
+//   }
+
+//   WaitForSingleObject(hCloseSignal,DEFAULT_WAIT);
+//   CLOSESOCK(sock);
+//  #else
+//   #include <sys/socket.h>
+//  #endif
+// }
 
 struct timespec start, end;
 uint16_t TAYLOR_CARTINIT();
@@ -1387,7 +1549,7 @@ void TAYLOR_GPU_GraphicsCore() {
      // Y[2] = Rotation[2/2] 0x---.-XXXX (probbly unused)
      // X[3] = Stretch/Resize Width  (Stretch/Resize happens)
      // Y[3] = Stretch/Resize Height (    Before Rotation   )
-     // //perhaps will add scewing or leave that up to the dev to make...
+     // //perhaps will add scewering or leave that up to a dev to make...
      //
      uint8_t*ImageData;
      Image SpritePre,Sprite;

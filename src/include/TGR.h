@@ -85,10 +85,10 @@ struct Application {
 };
 
 typedef struct {
- bool Debug, DebugTick[6], BreakDebug, Pause, skipBIOS, AsService, BlockDisp, ROMloaded, SilentRun, EXTSAV, KeepAspect, AnsiPrinting, StartOnLoad, TapePressent, TapeFramed, TapeFrame, ScreenReady, ClockSync, RapidDebug, Resetting, HelpOnError, ControllerScantype[2][32], DebugGPUstart, GPUoverDraw, SoloPlay, Online, DiscordEnrichment, DiscordEnrichmentInited;
- uint8_t MF, MB, CursorDepth, HeaderSize, *MEM, PageID[2], ROMBANK[33][TGR_MEM_ROM_SIZE], ErrorType, LED[3], Controller[2][32], ControllerType[2], Title[16], ControllerDevice[2], GUIOpacity,
-        *REG, *Error, *BN, *RN, *SN, NETWORK_IP[256], BoarderThiccness;
- uint16_t MFT, FPS, SW,SH, HostWidth, HostHeight, ResizeDict[4], ControllerScancode[2][32], NETWORK_PORT, IntroductionCutscene, NumOfPlayers;
+ bool Debug, DebugTick[6], BreakDebug, Pause, skipBIOS, AsService, BlockDisp, ROMloaded, SilentRun, EXTSAV, KeepAspect, AnsiPrinting, StartOnLoad, TapePressent, TapeFramed, TapeFrame, ScreenReady, ClockSync, RapidDebug, Resetting, HelpOnError, ControllerScantype[4][32], DebugGPUstart, GPUoverDraw, SoloPlay, Online, DiscordEnrichment, DiscordEnrichmentInited;
+ uint8_t MF, MB, CursorDepth, HeaderSize, *MEM, PageID[2], ROMBANK[33][TGR_MEM_ROM_SIZE], ErrorType, LED[3], Controller[4][32], ControllerType[4], ControllerDevice[4], Title[17], GUIOpacity,
+        *REG, *Error, *BN, *RN, *SN, NETWORK_IP[257], BoarderThiccness;
+ uint16_t MFT, FPS, SW,SH, HostWidth, HostHeight, ResizeDict[4], ControllerScancode[4][32], NETWORK_PORT, IntroductionCutscene, NumOfPlayers;
  uint32_t DebugPause[6], Clock, skip;
  uint64_t tmp[8];
  double IPS[2],MemUse,VMemUse;
@@ -211,7 +211,7 @@ enum TGR_TapeState {
 
 enum TGR_Controller_type {
  TGR_CONTROLTYPE_NONE=0,
- TGR_CONTROLTYPE_STANDARD, // . . 14 BUTTON, 0 JOT
+ TGR_CONTROLTYPE_STANDARD, // . . 14 BUTTON, 0 JOY
  TGR_CONTROLTYPE_ARCADE, // . . . 10 BUTTON, 1 JOY
  TGR_CONTROLTYPE_STEERINGWHEEL,// 9  BUTTON, 1 JOY 
 };

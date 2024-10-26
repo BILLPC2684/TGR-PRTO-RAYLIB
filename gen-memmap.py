@@ -16,14 +16,18 @@ length,a,e,c=36,0,[
  [              128*1024    ,"STACK#0       "],
  [              128*1024    ,"STACK#1       "],
  [                       512,"I/O           "],
- [                      -512,"DELETE_ME     "],
+ [                      -512,"I/O SUB.SPACE "], #Note: Delete this from Final output!
+ [                        32,"I/O_INP_DATAIN"],
+ [                         8,"I/O_INP_DATOUT"],
+ [                         1,"I/O_NET_SOCKID"],
+ [                         0,"I/O_    "],
  [                         4,"I/O_NET_IP    "],
  [                         2,"I/O_NET_PORT  "],
  [                         2,"I/O_NET_BUFFER"],
  [                         2,"I/O_NET_SIZE  "],
  [                         1,"I/O_NET_OPER  "],
  [                         1,"I/O_NET_SOCKID"],
- [                    512-12,"I/O_NEXT      "],
+ [                 512-41-12*32,"I/O_NEXT      "],
  [ 64*1024*1024             ,"SRAMEXT       "],
 ]; c=(e if input("Is this for the whole system? [Y/n]: ").lower()=="n"else c+e); print(f"\n##########################################################\n## {'TGR VIDEO MEMORY MAP 'if'vram'==strip(c[0][1]).lower()else'TGR MEMORY MAP ######'}##################################")
 for i in range(len(c)):
