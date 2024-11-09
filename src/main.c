@@ -38,7 +38,7 @@ static volatile bool MainRunning = 1;
 
 #define ScreenSise 2764800
 
-#define version "v0.0.47e Nightly build 5"
+#define version "v0.0.47e"
 
 #include "discord.h"
 

@@ -1,7 +1,7 @@
 TheGameRazer Change Log:
 ! items marked (WIP) are currently in development
 
-# TGR-PROTO v0.0.47e Nightly
+# TGR-PROTO v0.0.47e
 
 Firsts Change Log (idk why i never made eny before)
 
