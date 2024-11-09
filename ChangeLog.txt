@@ -1,0 +1,62 @@
+TheGameRazer Change Log:
+! items marked (WIP) are currently in development
+
+# TGR-PROTO v0.0.47e
+
+Firsts Change Log (idk why i never made eny before)
+
+Graphics Processing still in works
+ * functional Test ROMs was made!!
+ * Drawable Lines(fast), and Pixels(slow)
+ * Drawable Sprites, Strech and Rotatable
+ * Sprites can be rendered past the screen boarder
+ * Full 8-bit(256) ColorPalettes are now supported for Sprites
+
+Sound Added:
+ * Thunder sound now plays when TGR stikes the sky on the intro
+
+UI Improvements:
+ * Text displaying signifigantly improves/optimized
+ * Fading effect to banner when powered off or paused
+ * Working intro animation
+ * Added VCR blue screen when system is off
+
+New Tape Mechanic System:
+ * Tapes can contain up to 5 hours of video/savestates  (WIP)
+ * CommandLine PlayState "stop" or 0 will do nothing when loaded  (WIP)
+ * CommandLine PlayState "play" or 1 will automataticly play when loaded  (WIP)
+
+Working cursor detection:
+ * Inactivity fade out and activity fade in
+
+Settings Changes:
+ * Renamed config booling "FancyPrinting" to "AnsiPrinting"
+ * Added "Channel3", if true, when system is off, the screen will render like you tuned into your VCR, else static
+ * Added "SkipIntro" to the settings to stop the intro animation to start every time you start up TGR
+
+CommandLine Changes:
+ * Added "--help" or "-h", to list all the arguments
+ * Added "--cancelintro" or "-ci" to skip the intro (this does not effect the Setting "SkipIntro")
+ * Added "--tape <PlayState> <TapePath.grtp>" or "-tp <PlayState> <TapePath.grtp>" to load a tape as soon as posssible  (WIP)
+ * Added "--debuggpu" or "--dg", for debugging the GPU when it starts
+ * Improved "--help" updated with new information and added color support
+ 
+Keybind Changes:
+ * CTRL + G, opens and closes memory MAP
+ * CTRL +{SHIFT}+ R, restart system (shift for hard reset)
+ * CTRL + SHIFT + L, to load Tape  (WIP)
+ * CTRL + SHIFT + P, to Play Tape  (WIP)
+ * CTRL + SHIFT + S, to Stop Tape  (WIP)
+ * CTRL + SHIFT + R, to Rewind Tape  (WIP)
+ * CTRL + SHIFT + F, to FastForward Tape  (WIP)
+ * CTRL + SHIFT + E, to Eject Tape  (WIP)
+ * CTRL + SHIFT + C, to Continue from last Tape SaveState  (WIP)
+
+Minor Small Fixes:
+ * Fixed Asni Printing for windows
+ * Slightly optimized the Intro's Memory issue
+
+Major Small Fixes:
+ * Stack System was fixed
+
+(I'm probbly forgetting some things)

@@ -1,1 +1,0 @@
-../std/taylor.asm
