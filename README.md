@@ -15,7 +15,7 @@ Official Wiki Page: [FantasyConsole/TheGameRazer](https://fantasyconsoles.org/wi
 Official ROMs: ~~[Koranva-Forest/Shop/TGR-Cartriges](https://Koranva-Forest.com/shop/cartriges)~~ Not setted up yet! [404]\
 3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
-## Current Build: v0.0.47e Alpha Nightly 5 (goal: v0.0.50x Alpha for Jun/2025)
+## Current Build: v0.0.47e (goal: v0.0.50x Alpha for Jun/2025)
 - Compile Errors: `No`  Just some redudant warning from gcc
 - Runnable Build: `Yes` Functional (For both windows and linux)
 - CPU Utilization: `Unstable` Functional, Not Finished Implementing Yet!! (still adding functionality to instructions)
