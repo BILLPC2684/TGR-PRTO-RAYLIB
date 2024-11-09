@@ -15,7 +15,7 @@ Official Wiki Page: [FantasyConsole/TheGameRazer](https://fantasyconsoles.org/wi
 Official ROMs: ~~[Koranva-Forest/Shop/TGR-Cartriges](https://Koranva-Forest.com/shop/cartriges)~~ Not setted up yet! [404]\
 3rd Party ROMS: ~~[Koranva-Forest/feed/TGR_ROMS](https://Koranva-Forest.com/feed?search=#TGR&#ROM)~~ Not setted up yet! [404]
 
-## Current Build: v0.0.47e Alpha Nightly 5 (goal: v0.0.50x Alpha for Jun/2025)
+## Current Build: v0.0.47f Alpha Nightly 1 (goal: v0.0.50x Alpha for Jun/2025)
 - Compile Errors: `No`  Just some redudant warning from gcc
 - Runnable Build: `Yes` Functional (For both windows and linux)
 - CPU Utilization: `Unstable` Functional, Not Finished Implementing Yet!! (still adding functionality to instructions)
@@ -23,7 +23,7 @@ Official ROMs: ~~[Koranva-Forest/Shop/TGR-Cartriges](https://Koranva-Forest.com/
 - Has Video: `Yes` Using raylib window | GPU pipeline is Unfinished (will be worked on soon)
 - Has Audio: `No` Requesting Help!!!
 - Has Inputs: `Yes`  Using raylib input | Check the [Settings.cfg]() File (if generated)
-- Has Network: `Somewhat` Networking will be underway but not connected to Utilization
+- Has Network: `Somewhat` Networking is being worked on...
 - SAV-able data: `Somewhat` Yes, haven't tested | Note: all ROMs ran will generate 8 MiB files
 - Compiler Status: `Inactive` This project is currently on hold, Please Wait... Please use CustomASM for now
 

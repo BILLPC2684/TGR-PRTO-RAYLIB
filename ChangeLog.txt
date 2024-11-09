@@ -1,7 +1,26 @@
 TheGameRazer Change Log:
 ! items marked (WIP) are currently in development
 
-# TGR-PROTO v0.0.47e Nightly
+# TGR-PROTO v0.0.47f Nightly
+
+User Input:
+ * Extended Player Input count to 4
+ * Readable inputs in memory map
+
+Networking:
+ * Scrapped using Netlib
+ * Setting up Sockets using sys/socket and winsock (WIP)
+ * Designing Network layout (WIP)
+
+Settings Changes:
+ * Added "WindowSizeKeep", if true, it will save the current window resolution, otherwise it will stay
+ * Added "WindowWdith" and "WindowHeight" which set the window resolution apon start up, is smaller than the screen size, it will raise up to it
+
+Emulation Changes:
+ * Patched(not fully fixed) a bug with start a ROM after the cutscene starts
+ * Swapping Cartriges does not clear the memory map (quick swap)
+
+# TGR-PROTO v0.0.47e
 
 Firsts Change Log (idk why i never made eny before)
 

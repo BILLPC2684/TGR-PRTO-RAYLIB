@@ -38,7 +38,7 @@ static volatile bool MainRunning = 1;
 
 #define ScreenSise 2764800
 
-#define version "v0.0.47e Nightly build 5"
+#define version "v0.0.47f Nightly build 1"
 
 #include "discord.h"
 
@@ -784,8 +784,10 @@ void main(int argc, char *argv[]) {
  for (i=0;i<unilist_size;i++) { TGR_chars[95+i] = utf16(TGR_uni[i]); }
  
  bool SystemHUD=false,ShowInput=false,ShowDump=false,FullHUD=false,StartWithOverlay=false,INITFullscreen=false,FullscreenType=true,ForceSkipIntro=false,SkipIntro=false;
-  int8_t UInput[4][32]={0};
- uint8_t hour_offset = 0, min_offset = 0;
+  int8_t  UInput[4][32]={0};
+ uint8_t  hour_offset = 0, min_offset = 0;
+ uint16_t WindowSize[2] = {TGR_GPU_Resolutions[0][0],TGR_GPU_Resolutions[0][1]}; sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
+ bool     WindowSizeKeep;
  Color FadeMask = {0xFF,0xFF,0xFF,0x00};
  
  ResetControllers();
@@ -838,6 +840,14 @@ void main(int argc, char *argv[]) {
    if(cJSON_IsString(jsonItem)) if(strlen(jsonItem->valuestring)>0) sprintf(BIOSPath,"%s",jsonItem->valuestring);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "SkipIntro");
    if(cJSON_IsBool(jsonItem)) ForceSkipIntro = SkipIntro = cJSON_IsTrue(jsonItem);
+   
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "WindowWdith");
+   if(cJSON_IsNumber(jsonItem)) WindowSize[0] = jsonItem->valueint;
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "WindowHeight");
+   if(cJSON_IsNumber(jsonItem)) WindowSize[1] = jsonItem->valueint;
+   
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "WindowSizeKeep");
+   if(cJSON_IsBool(jsonItem)) WindowSizeKeep = cJSON_IsTrue(jsonItem);
    
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "hour_offset");
    if(cJSON_IsNumber(jsonItem)) hour_offset = jsonItem->valueint;
@@ -931,10 +941,8 @@ void main(int argc, char *argv[]) {
     printf("FILE \"%s\"\n",argv[i]);
     if (IsFileExtension(argv[i], ".tgr")) {
      sprintf(NewROMPATH,"%s",argv[i]);
-     printf("0NewROMPATH \"%s\"\n",NewROMPATH);
     } else {
       ArgTypeError(strlen(argv[i])<4?"No Extention":argv[i]+(strlen(argv[i])-4), "\".tgr\"");
-      printf("1NewROMPATH \"%s\"\n",NewROMPATH);
   }}}
   if (!strcmp(TextToLower(argv[i]),"--help"         ) | !strcmp(TextToLower(argv[i]),"-h"    )) {
    sprintf(MainPrintString,"\n\n\
@@ -1032,7 +1040,6 @@ void main(int argc, char *argv[]) {
    exit(0);
   }
  }
- printf("2NewROMPATH \"%s\"\n",NewROMPATH);
 //### Can't get discord_game_sdk.so to work .w. ###///
 // struct Application {
 //  struct IDiscordCore* core;
@@ -1057,13 +1064,11 @@ void main(int argc, char *argv[]) {
  TGR_FilterAnsi(MainPrintString);
 
  TGR_UpdateColors();
- sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
  sys.LED[0]=128,sys.LED[1]=0,sys.LED[2]=0;
  Color display_LED;
  
- printf("3NewROMPATH \"%s\"\n",NewROMPATH);
  SetConfigFlags(FLAG_WINDOW_RESIZABLE);
- InitWindow(sys.SW+4, sys.SH+4, "TheGameRazer");
+ InitWindow((WindowSize[0]<sys.SW?sys.SW:WindowSize[0])+4, (WindowSize[1]<sys.SH?sys.SH:WindowSize[1])+4, "TheGameRazer");
  SetWindowMinSize(sys.SW+4,sys.SH+4);
  SetTargetFPS(60);
  SetExitKey(KEY_NULL);
@@ -1078,11 +1083,9 @@ void main(int argc, char *argv[]) {
   UnloadImage(Icon);
  #endif
  
- printf("4NewROMPATH \"%s\"\n",NewROMPATH);
  uint8_t text[1024] = {0}, TGR_full_logo_data[3872] = {0};
  Image TGR_logo[35];
  uint8_t TGR_logo_SLOT = 0;
- printf("4.1NewROMPATH \"%s\"\n",NewROMPATH); 
  for(i=0;i<35;i++) {
   TGR_logo[i] = RL_Bytes2ImageAlpha(TGR_logo_animation_data[i], 44, 22);
   ImageColorReplace(&TGR_logo[i],(Color){0,0,0,0xFF},TGR_COLOR_VOID);
@@ -1108,7 +1111,6 @@ void main(int argc, char *argv[]) {
  //int sampleSize = GenSampleSize(AudioStream_sampleRate, AudioStream_seconds, AudioStream_bitDepth, AudioStream_channels)
  //AudioStream ThunderStream = LoadAudioStream(AudioStream_sampleRate, sampleSize, AudioStream_channels);
  //Wave Thunder_Wave = ;
- printf("5NewROMPATH \"%s\"\n",NewROMPATH);
  Sound Thunder = LoadSoundFromWave(LoadWaveFromMemory(".wav", Thunder_Wave_Data, 760024));
  SetSoundVolume(Thunder,0.5);
  uint8_t inDialog = 0;
@@ -1139,7 +1141,6 @@ void main(int argc, char *argv[]) {
 
  GPUctl.Rez = GPUctl.NewRez = 0; TAYLOR_GPU_ResetLayers();
 
- printf("6NewROMPATH \"%s\"\n",NewROMPATH);
  HideCursor(); sys.MF = sys.MFT = 1; //CURSOR SETUP
  Image MouseSymbol = GenImageColor(8,8,TGR_COLOR_VOID);
  getCharExt(&MouseSymbol, "+",0,0, WHITE, 0, 1);
@@ -1178,7 +1179,6 @@ void main(int argc, char *argv[]) {
  
  Hexdumpi = TGR_MEM_IO;
  
- printf("7NewROMPATH \"%s\"\n",NewROMPATH);
  if (sys.DiscordEnrichmentInited) DISCORD_REQUIRE(sys.DiscordApp.core->run_callbacks(sys.DiscordApp.core));
  while(MainRunning) {
   time(&rawtime);
@@ -1301,12 +1301,12 @@ void main(int argc, char *argv[]) {
     }
     UnloadDroppedFiles(droppedFiles);
    }
-   if (strcmp(NewROMPATH,ROMPATH)) {
+   if (strcmp(NewROMPATH,ROMPATH) && sys.Cutscene0Timer >= 32*30) {
     printf("NewROMPATH: \"%s\"(%p)\nROMPATH: \"%s\"\n",NewROMPATH,ROMPATH, NewROMPATH);
     strcpy(ROMPATH,NewROMPATH);
-    TAYLOR_CPU_Stop(); TAYLOR_CPU_Load(ROMPATH);
+    TAYLOR_CPU_Reset(false); TAYLOR_CPU_Load(ROMPATH);
     if (strlen(extSAV)>0) {TAYLOR_CPU_ExtSAV(extSAV);}
-    if (sys.StartOnLoad) TAYLOR_CPU_Start();
+    if (sys.StartOnLoad) TAYLOR_CPU_Start(); sleep(1); TAYLOR_CPU_Start(); // why does this need to be called twice to work on startup??
    }
    sprintf(text,"TheGameRazer - [%s] - %i/%i FPS",(uint8_t*)(sys.ROMloaded?(!sys.Title[0]?"No Title":sys.Title):"NO-ROM"),sys.FPS,GetFPS());
    SetWindowTitle(text);
@@ -1397,7 +1397,7 @@ void main(int argc, char *argv[]) {
      ImageDraw(&OverlayUI,TGR_logo[TGR_logo_SLOT],(Rectangle){0,0,TGR_logo[TGR_logo_SLOT].width,TGR_logo[TGR_logo_SLOT].height},(Rectangle){((((sys.SW/8)*8)/2)-((TGR_logo[TGR_logo_SLOT].width/8)*8)/2)-0*8, (((sys.SH/8)*8)/2)-((TGR_logo[TGR_logo_SLOT].height/8)*8)/2-(sys.Cutscene0Position/255.0)*(7*8), 44*8,22*8},(Color){0xFF,0xFF,0xFF,sys.Cutscene0Fade1});
     //DrawText("Powered By:", 120, 250, 20, RAYWHITE);
     //sprintf(text, "sys.MFT: %3d | sys.MF: %3d", sys.MFT,sys.MF);
-    //sprintf(text, "Draw Delta: %d\nRender Delta: %d", delta,GPUctl.RenderDelta);
+    //sprintf(text, "Draw Delta: %dese\nRender Delta: %d", delta,GPUctl.RenderDelta);
     //getChar(text,20*8,1*8,TGR_DIM_REDT,1,1);
 
 //    sprintf(text,"` ABCDEFGHIJKLMN\nOPQRSTUVWXYZ0123\n456789!@#$%^&*()\n-+_=[]{}\\|;:'\".,\n<>/?~abcdefghijk\nlmnopqrstuvwxyz\n┌┬┐╔╦╗╓╥╖╒╤╕─│\n├┼┤╠╬╣╟╫╢╞╪╡═║\n└┴┘╚╩╝╙╨╜╘╧╛\n⢀ ⢠ ⢰ ⢸ ⡀ ⣀ ⣠ ⣰ ⣸ ⡄ ⣄ ⣤ ⣴ ⣼ ⡆ ⣆ ⣦ ⣶ ⣾ ⡇ ⣇ ⣧ ⣷ ⣿ a\n\n⡿ ⡟ ⡏ ⡇ ⢿ ⠿ ⠟ ⠏ ⠇ ⢻ ⠻ ⠛ ⠋ ⠃ ⢹ ⠹ ⠙ ⠉ ⠁ ⢸ ⠸ ⠘ ⠈ b");
@@ -1631,6 +1631,9 @@ void main(int argc, char *argv[]) {
   cJSON_AddNumberToObject(json2, "GUIOpacity", sys.GUIOpacity);
   cJSON_AddBoolToObject(json2,"SkipBIOS",sys.skipBIOS);
   cJSON_AddStringToObject(json2, "BIOSPath", BIOSPath);
+  cJSON_AddBoolToObject(json2, "WindowSizeKeep", WindowSizeKeep);
+  cJSON_AddNumberToObject(json2, "WindowWdith", WindowSizeKeep?sys.HostWidth-4:WindowSize[0]);
+  cJSON_AddNumberToObject(json2, "WindowHeight", WindowSizeKeep?sys.HostHeight-4:WindowSize[1]);
   cJSON_AddNumberToObject(json2, "hour_offset", hour_offset);
   cJSON_AddNumberToObject(json2, "min_offset", min_offset);
   cJSON *Player,*PlayerScancodes,*PlayerScantypes;
