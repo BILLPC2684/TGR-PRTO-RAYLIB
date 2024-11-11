@@ -588,7 +588,7 @@ void TAYLOR_GPU_InitSprites() {
 void TAYLOR_GPU_ResetLayers() {
  uint32_t i; uint16_t l=0; for(i=0;i<4;i++) GPU[i].Pause = true;
  TAYLOR_GPU_InitSprites();
- i = TGR_MEM_VSTACK0; sys.MEM[i] = 0xFF;
+ i = TGR_MEM_VSTACK0-TGR_MEM_VSTACK_SIZE; sys.MEM[i] = 0xFF;
  for (l=4;l!=65535;l--) {
   i-=TGR_GPU_Resolutions[GPUctl.Rez][0]*TGR_GPU_Resolutions[GPUctl.Rez][1]*4;
   //printf("l: %d | i: 0x%07X\n",l,i);
