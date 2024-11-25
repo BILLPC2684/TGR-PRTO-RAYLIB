@@ -113,6 +113,7 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  GPU_led {IMM}         => 0x1C @ 0`12 @ IMM`28
  GPU_led {A}, {B}, {C} => 0x1C @ A`4 @ B`4 @ C`4 @ 0`28
  
+ GPU_clk {A}         => 0x1D @ A`4 @ 0`8 @ 0`28
  GPU_clk {A},{RESET} => 0x1D @ A`4 @ 0`8 @ 0`27 @ RESET`1
  
  GPU_wait {A} => 0x1E @ A`4 @ 0`36
@@ -143,7 +144,8 @@ ProgramAddr = CPLength+PtrLenth+OAMObjects+1
  
  GPU_copy {A} => 0x78 @ A`4 @ 0`36
  
- GPU_palt {A}, {IMM} => 0x7C @ A`4 @ 0`8 @ IMM`28
+ GPU_palti {A}, {IMM} => 0x7C @ A`4 @ 0`8 @ IMM`28
+ GPU_palt  {A}, {B}   => 0x7C @ A`4 @ B`4 @ 0`4 @ 256`28
 
  GPU_sprite {A}, {IMM} => 0x7D @ A`4 @ 0`8 @ IMM`28
  GPU_sprite {A}        => 0x7D @ A`4 @ 0`36

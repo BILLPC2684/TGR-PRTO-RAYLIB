@@ -1,1 +1,1 @@
-../std/taylor.asm
+/media/billpc2684/Shared-Partition/Programming/TGR-PRTO-RAYLIB/asm/customasm/std/taylor.asm

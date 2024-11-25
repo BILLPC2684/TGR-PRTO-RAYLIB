@@ -20,6 +20,11 @@ Emulation Changes:
  * Patched(not fully fixed) a bug with start a ROM after the cutscene starts
  * Swapping Cartriges does not clear the memory map (quick swap)
 
+GPU Emulation:
+ * Fixed Stack Clashing with Layer[0]
+ * Fixed Limit on ColorPalette Resolution to Image size crash (inf -> 512)
+
+
 # TGR-PROTO v0.0.47e
 
 Firsts Change Log (idk why i never made eny before)

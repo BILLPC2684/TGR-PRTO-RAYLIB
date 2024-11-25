@@ -38,7 +38,7 @@ static volatile bool MainRunning = 1;
 
 #define ScreenSise 2764800
 
-#define version "v0.0.47f Nightly build 1"
+#define version "v0.0.47f Nightly build 2"
 
 #include "discord.h"
 
@@ -190,7 +190,7 @@ Image RL_PtrBytes2Image(uint8_t data[], uint16_t width, uint16_t height) {
 
 void TGR_CP2RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPallet[16][4]) {
  uint32_t j=0,k;
- for(uint32_t i=0;i<length;i++) {
+ for(uint32_t i=0;i<length/2;i++) {
   if (data[i]>>4&0xF0 == 0) { j+=4; }
   else { for(k=0; k<4; k++) { out[j++] = ColorPallet[data[i]>>4&0xF][k]; } }
   if (data[i]&0x0F == 0) { j+=4; }
@@ -200,7 +200,10 @@ void TGR_CP2RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPa
 void TGR_CP82RGBA(uint8_t out[], uint8_t data[], uint32_t length, uint8_t ColorPallet[256][4]) {
  uint32_t j=0;
  for(uint32_t i=0; i<length*4; i++) {
-  //if (i%4 == 0) printf("ColorPallet[ data[ i:%10i ]: 0x%02X ]\n", i/4, data[i/4]);
+  //if (i%4 == 0) {
+  // printf("ColorPallet[ data[ i:%10i ]: 0x%02X ]\n", i/4, data[i/4]);
+  // printf("out[%d]: 0x%02X\n", j, out[j]);
+  //}
   out[j++] = ColorPallet[data[i/4]][i%4];
  } //printf("Generated Image from TGR_CP8: did  %i out of %i\n",j,length*4);
 }
@@ -783,7 +786,7 @@ void main(int argc, char *argv[]) {
  uint32_t i,j,k,l;
  for (i=0;i<unilist_size;i++) { TGR_chars[95+i] = utf16(TGR_uni[i]); }
  
- bool SystemHUD=false,ShowInput=false,ShowDump=false,FullHUD=false,StartWithOverlay=false,INITFullscreen=false,FullscreenType=true,ForceSkipIntro=false,SkipIntro=false;
+ bool SystemHUD=false,ShowInput=false,ShowDump=false,FullHUD=false,StartWithOverlay=false,INITFullscreen=false,FullscreenType=true,ForceSkipIntro=false,SkipIntro=false,ShowVolumePeak=false;
   int8_t  UInput[4][32]={0};
  uint8_t  hour_offset = 0, min_offset = 0;
  uint16_t WindowSize[2] = {TGR_GPU_Resolutions[0][0],TGR_GPU_Resolutions[0][1]}; sys.SW = TGR_GPU_Resolutions[GPUctl.Rez][0],sys.SH = TGR_GPU_Resolutions[GPUctl.Rez][1];
@@ -814,6 +817,8 @@ void main(int argc, char *argv[]) {
    if(cJSON_IsBool(jsonItem)) sys.BlockDisp = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "ShowInput");
    if(cJSON_IsBool(jsonItem)) ShowInput = cJSON_IsTrue(jsonItem);
+   jsonItem = cJSON_GetObjectItemCaseSensitive(json, "ShowVolumePeak");
+   if(cJSON_IsBool(jsonItem)) ShowVolumePeak = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "FullHUD");
    if(cJSON_IsBool(jsonItem)) FullHUD = cJSON_IsTrue(jsonItem);
    jsonItem = cJSON_GetObjectItemCaseSensitive(json, "StartWithOverlay");
@@ -1178,6 +1183,8 @@ void main(int argc, char *argv[]) {
  uint8_t fade;
  
  Hexdumpi = TGR_MEM_IO;
+ Image VolumeGraph = GenImageColor(8*12,8*5, TGR_COLOR_VOID);
+ uint8_t VolumeGraphAmount[2] = {16}, VolumeGraphFaller[2][2] = {0}, ShowVolumePeakTimer = 0;
  
  if (sys.DiscordEnrichmentInited) DISCORD_REQUIRE(sys.DiscordApp.core->run_callbacks(sys.DiscordApp.core));
  while(MainRunning) {
@@ -1314,16 +1321,16 @@ void main(int argc, char *argv[]) {
    if(IsKeyDown(KEY_LEFT_CONTROL)||IsKeyDown(KEY_RIGHT_CONTROL)) {
     if(IsKeyDown(KEY_LEFT_ALT)||IsKeyDown(KEY_RIGHT_ALT))
      if (IsKeyReleased(KEY_SPACE)) sys.Cutscene0Timer = 0;
-    if(IsKeyPressed(KEY_I)){ sprintf(MainPrintString,"FullHUD\n"); TGR_FilterAnsi(MainPrintString); FullHUD = 1-FullHUD; }
-    if(IsKeyPressed(KEY_U)){ sprintf(MainPrintString,"ShowInput\n"); TGR_FilterAnsi(MainPrintString); ShowInput = 1-ShowInput; }
-    if(IsKeyPressed(KEY_G)){ sprintf(MainPrintString,"ShowDump\n"); TGR_FilterAnsi(MainPrintString); ShowDump = 1-ShowDump; }
-    if(IsKeyPressed(KEY_O)){ sprintf(MainPrintString,"OPEN DA MENU!!\n"); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
-    if(IsKeyPressed(KEY_R)){ TAYLOR_CPU_Reset(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT)); sprintf(MainPrintString,"%s\n",(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT))?"Hard Reset!":"Soft Reset..."); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
-    if((sys.Debug&&sys.RapidDebug)?IsKeyDown(KEY_D):IsKeyPressed(KEY_D)){ sys.Debug=1-sys.Debug; sprintf(MainPrintString,"Debug mode: %s\n",sys.Debug?"Enabled":"Disabled"); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
-    if(IsKeyPressed(KEY_P)){ sys.Pause=1-sys.Pause; sprintf(MainPrintString,"System: %s!\n",sys.Pause?"Paused":"Unpause"); TGR_FilterAnsi(MainPrintString); }
-    if(IsKeyPressed(KEY_Z)){ TAYLOR_CPU_Start(); }
-   }if((IsKeyDown(KEY_LEFT_ALT)||IsKeyDown(KEY_RIGHT_ALT)) && IsKeyPressed(KEY_ENTER)){
-    if(FullscreenType){ToggleBorderlessWindowed();}else{ToggleFullscreen();} INITFullscreen=!INITFullscreen;
+    if(IsKeyPressed(KEY_I)) { sprintf(MainPrintString,"FullHUD\n"); TGR_FilterAnsi(MainPrintString); FullHUD = 1-FullHUD; }
+    if(IsKeyPressed(KEY_U)) { sprintf(MainPrintString,"ShowInput\n"); TGR_FilterAnsi(MainPrintString); ShowInput = 1-ShowInput; }
+    if(IsKeyPressed(KEY_G)) { sprintf(MainPrintString,"ShowDump\n"); TGR_FilterAnsi(MainPrintString); ShowDump = 1-ShowDump; }
+    if(IsKeyPressed(KEY_O)) { sprintf(MainPrintString,"OPEN DA MENU!!\n"); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
+    if(IsKeyPressed(KEY_R)) { TAYLOR_CPU_Reset(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT)); sprintf(MainPrintString,"%s\n",(IsKeyDown(KEY_LEFT_SHIFT)||IsKeyDown(KEY_RIGHT_SHIFT))?"Hard Reset!":"Soft Reset..."); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
+    if((sys.Debug&&sys.RapidDebug)?IsKeyDown(KEY_D):IsKeyPressed(KEY_D)) { sys.Debug=1-sys.Debug; sprintf(MainPrintString,"Debug mode: %s\n",sys.Debug?"Enabled":"Disabled"); TGR_FilterAnsi(MainPrintString); inDialog = 1; }
+    if(IsKeyPressed(KEY_P)) { sys.Pause=1-sys.Pause; sprintf(MainPrintString,"System: %s!\n",sys.Pause?"Paused":"Unpause"); TGR_FilterAnsi(MainPrintString); }
+    if(IsKeyPressed(KEY_Z)) { TAYLOR_CPU_Start(); }
+   }if((IsKeyDown(KEY_LEFT_ALT)||IsKeyDown(KEY_RIGHT_ALT)) && IsKeyPressed(KEY_ENTER)) {
+    if(FullscreenType) {ToggleBorderlessWindowed();} else {ToggleFullscreen();} INITFullscreen=!INITFullscreen;
     SetWindowMinSize((IsWindowFullscreen)?sys.SW+4:sys.HostWidth,(IsWindowFullscreen)?sys.SH+4:sys.HostHeight);
    }
    for(j=0;j<4;j++) {
@@ -1420,7 +1427,37 @@ void main(int argc, char *argv[]) {
      getChar(text,1*8, sys.SH-((5+ShowInput*2)*8), TGR_REDT,true,1);
      sprintf(text,"FPS: %2i/%2i | IPS: %8i (%03.2f%%) TR: %ld",sys.FPS,GetFPS(),(int)(sys.IPS[0]+sys.IPS[1]),(sys.IPS[0]+sys.IPS[1])/24000000.0f*100,(uint64_t)(CPU[0].TI+CPU[1].TI));
      getChar(text, 2*8, sys.SH-((4+ShowInput*2)*8), TGR_REDT,true,1);
- 
+    }
+    if (ShowVolumePeak) {
+     if (ShowVolumePeakTimer == 0) {
+      VolumeGraphAmount[0]=19-GetRandomValue(0,19); // change this later!
+      VolumeGraphAmount[1]=19-GetRandomValue(0,19);
+      ShowVolumePeakTimer = 10;
+     } else ShowVolumePeakTimer--;
+     ///
+     ImageClearBackground(&VolumeGraph, TGR_COLOR_VOID);
+     sprintf(text,"[          ]");
+     getCharExt(&VolumeGraph,text, 0, 0, TGR_REDT,true,1);
+     getCharExt(&VolumeGraph,text, 0, 16,TGR_REDT,true,1);
+     for(j=0; j<2; j++) {
+      if (VolumeGraphFaller[j][0] > VolumeGraphAmount[j]) {
+       VolumeGraphFaller[j][0] = VolumeGraphAmount[j];
+       VolumeGraphFaller[j][1] = 60;
+      }
+      if (VolumeGraphFaller[j][1] == 0)
+       if (VolumeGraphFaller[j][0] < VolumeGraphAmount[j]) VolumeGraphFaller[j][0]++;
+       else VolumeGraphFaller[j][1] = 60;
+      else VolumeGraphFaller[j][1]--;
+      ///
+      sprintf(text,"\x7F\x2B");
+      for(i=0; i<20; i++) {
+       if (i > VolumeGraphAmount[j] || i == VolumeGraphFaller[j][0]) {
+        getCharExt(&VolumeGraph,text, 4*i+4, j*16, i>8?GREEN:i>4?YELLOW:TGR_REDT,true,1);
+     }}}
+     ImageRotateCCW(&VolumeGraph);
+     ImageFlipVertical(&VolumeGraph);
+     ImageDraw(&sys.Canvas, VolumeGraph, (Rectangle){0,0,VolumeGraph.width,VolumeGraph.height}, (Rectangle){sys.SW-8*4,sys.SH-8*13,VolumeGraph.width,VolumeGraph.height}, WHITE);
+     ImageRotateCW(&VolumeGraph);
     }
     if (ShowInput) {
      for(j=0;j<4;j++) {
@@ -1622,6 +1659,7 @@ void main(int argc, char *argv[]) {
   cJSON_AddBoolToObject(json2,"StartWithOverlay",StartWithOverlay);
   cJSON_AddBoolToObject(json2,"HelpOnError",sys.HelpOnError);
   cJSON_AddBoolToObject(json2,"ShowInput",ShowInput);
+  cJSON_AddBoolToObject(json2,"ShowVolumePeak",ShowVolumePeak);
   cJSON_AddBoolToObject(json2,"FullHUD",FullHUD);
   cJSON_AddBoolToObject(json2,"KeepAspect",sys.KeepAspect);
   cJSON_AddBoolToObject(json2,"EnableFullscreen", INITFullscreen);

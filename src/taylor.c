@@ -15,6 +15,10 @@
  #include <winsock2.h>
 #else
  #include <sys/socket.h>
+ #include <sys/types.h>
+ #include <netdb.h>
+ #include <arpa/inet.h>
+ #include <poll.h>
 #endif
 
 #define TAYLOR_GPU_DEBUG_TEST false //forced debug toggle
@@ -56,126 +60,92 @@ uint8_t TaylorPrintString[0xFFFF] = "";
 #define TaylorNetwork_NetType   0b00100000
 #define TaylorNetwork_Connected 0b00010000
 #define TaylorNetwork_Operation 0b00001111
-struct TaylorNetwork {
+typedef struct {
 
- uint8_t  oper;                                 //  +1
+ uint8_t  oper;                                    //  +1
  //  0: IsActive  //0 Skip   / 1 Tick
  //  1: IsHost    //0 Client / 1 Server
  //  2: NetType   //0 TCP    / 1 UDP
  //  3: Connected //0 No     / 1 Yes
  //4-7: operation
 
- uint8_t  Address[256]; //String of IP          //  +1
- uint16_t Port;                                 //  +2
- uint32_t BufferPtr;                            //  +4
- uint16_t BufferSize;                           //  +2
- uint8_t  Error;                                //  +1
+ uint8_t  Address[256]; //String of IP             //  +1
+ uint8_t  Target;       //TargetSocket for Sending //  +1
+ uint16_t Port;                                    //  +2
+ uint32_t BufferPtr;                               //  +4
+ uint16_t BufferSize;                              //  +2
+ uint8_t  Error;                                   //  +1
 #if _WIN32
  SOCKET Sock;
  WSAPOLLFD FDarray;
 #else
- //socket Sock;
+ int Sock;
 #endif
-} TaylorNetwork[256];                           //  =??
+} TaylorNetwork_t;                           //  =??
+TaylorNetwork_t Network[256];
 
-// ip_address Sockip;
-// uint32_t sent;
-// uint8_t connI=0;
-// do {
-//  if (TaylorNetwork[connI].oper & TaylorNetwork_IsActive) {
-//   switch(TaylorNetwork[connI].oper & TaylorNetwork_Operation) {
-//    case 0x00: //Nothing
-//     break;
-//    case 0x01: //Connect/Bind
-//     if (netlib_resolve_host(&Sockip, TaylorNetwork[connI].IP,TaylorNetwork[connI].Port) == -1) { sprintf(sys.Error,"netlib_resolve_host: %s (IP: %s:%i)\n", netlib_get_error(), TaylorNetwork[connI].IP,TaylorNetwork[connI].Port); sys.ErrorType=0; TGR_printError(); TaylorNetwork[connI].Error=1; continue; }
-//     if (TaylorNetwork[connI].oper & TaylorNetwork_IsHost) {
-//      if (!(TaylorNetwork[connI].sock = netlib_tcp_open(&Sockip))) { sprintf(sys.Error,"netlib_tcp_open: %s (IP: %s:%i)\n", netlib_get_error(),sys.NETWORK_IP,sys.NETWORK_PORT); sys.ErrorType=0; TGR_printError(); TaylorNetwork[connI].Error=2; continue; }
-//      TaylorNetwork[connI].oper |= TaylorNetwork_Connected;
-     
-//      netlib_resolve_host(&TaylorNetwork[connI].IP)
-//      if (TaylorNetwork[connI].oper & TaylorNetwork_NetType) { //UDP
-      
-
-//      if (TaylorNetwork[connI].oper & TaylorNetwork_NetType) { //UDP
-      
-//       netlib_udp_bind()
-//      } else { //TCP
-//       netlib_tcp_open
-//      }
-//     }
-//     break;
-//    case 0x02: //
-//     break;
-//    case 0x: //
-//     break;
-//    case 0x: //
-//     break;
-//    case 0x: //
-//     break;
-//    case 0x: //
-//     break;
-//    case 0x: //
-//     break;
-//    case 0x: //
-//     break;
-//    case 0x: //
-//     break;
-//   }
-//  }
-// }while(++connI)
-
-// I DON'T KNOW WHAT I'M DOING!!!! TLDR I'm stupid...
-// void NetworkThread() {
-//  #if _WIN32
-//   TaylorNetwork[connI].FDarray = {0};
-//   TaylorNetwork[connI].Sock = INVALID_SOCKET;
-//   SOCKADDR_STORAGE addrLoopback = {0};
-//   INT ret = 0;
-//   ULONG uNonBlockingMode = 1;
-//   CHAR buf[MAX_PATH] = {0};
-
-//   if (INVALID_SOCKET == (TaylorNetwork[connI].Sock = socket(AF_INET6, SOCK_STREAM, 0))) { sprintf(sys.Error,"winsock2: Failed to Create Socket\n"); sys.ErrorType=1; TGR_printError(); TaylorNetwork[connI].Error=1; continue; } }
-//   if (SOCKET_ERROR == ioctlsocket(TaylorNetwork[connI].Sock, FIONBIO, &uNonBlockingMode)) { sprintf(sys.Error,"winsock2: FIONBIO Error\n"); sys.ErrorType=1; TGR_printError(); TaylorNetwork[connI].Error=1; continue; }
+void NetworkTick() {
+ struct sockaddr_in addr;
+ uint8_t connI=0,i=0,j=0;//,SockID=sys.MEM[TGR_MEM_IO_NET_SOCKID];
+ do {
+  addr.sin_family = AF_INET;
+  addr.sin_port = htons(Network[connI].Port);
+  addr.sin_addr.s_addr = htonl(Network[connI].Address);
+  if (Network[connI].Sock == NULL)
+   Network[connI].Sock = socket(AF_INET, SOCK_STREAM, 0);
   
-//   addrLoopback.ss_family = AF_INET6;
-//   INETADDR_SETLOOPBACK((SOCKADDR*)&addrLoopback);
-//   SS_PORT((SOCKADDR*)&addrLoopback) = htons(TaylorNetwork[connI].Port);
-
-//   if (SOCKET_ERROR == connect(TaylorNetwork[connI].Sock, (SOCKADDR*)&addrLoopback, sizeof(addrLoopback))) {
-//    if (WSAEWOULDBLOCK != WSAGetLastError()) { ERR("connect"); }
-//   }
-
-//   //Call WSAPoll for writeability on connecting socket
-//   TaylorNetwork[connI].FDarray.fd = TaylorNetwork[connI].Sock;
-//   TaylorNetwork[connI].FDarray.events = POLLWRNORM;
-
-//   if (SOCKET_ERROR == (ret = WSAPoll(&TaylorNetwork[connI].FDarray, 1, DEFAULT_WAIT))) { ERR("WSAPoll"); }
-//   if (ret) {
-//    if (TaylorNetwork[connI].FDarray.revents & POLLWRNORM) {
-//     printf("ConnectThread: Established connection\n");
-//     //Send data
-//     if (SOCKET_ERROR == (ret = send(sock, TST_MSG, sizeof(TST_MSG), 0))) { ERR("send"); }
-//     else printf("ConnectThread: sent %d bytes\n",ret);
-//    }
-//   }
-
-//   //Call WSAPoll for readability on connected socket
-//   TaylorNetwork[connI].FDarray.events = POLLRDNORM;
-
-//   if (SOCKET_ERROR == (ret = WSAPoll(&TaylorNetwork[connI].FDarray, 1, DEFAULT_WAIT))) { ERR("WSAPoll"); }
-//   if (ret) {
-//    if (TaylorNetwork[connI].FDarray.revents & POLLRDNORM) {
-//     if (SOCKET_ERROR == (ret = recv(sock, buf, sizeof(buf), 0))) { ERR("recv"); }
-//     else printf("ConnectThread: recvd %d bytes\n",ret);
-//    }
-//   }
-
-//   WaitForSingleObject(hCloseSignal,DEFAULT_WAIT);
-//   CLOSESOCK(sock);
-//  #else
-//   #include <sys/socket.h>
-//  #endif
-// }
+  if (Network[connI].oper & TaylorNetwork_IsActive) {
+   switch(Network[connI].oper & TaylorNetwork_Operation ) {
+    case 0x00: //Nothing
+     break;
+    case 0x01: //
+     printf("Connection is already made!\n");
+     break;
+    case 0x02: //
+     break;
+    case 0x03: //
+     break;
+    case 0x04: //
+     break;
+    case 0x05: /*
+     break;
+    case 0x: //
+     break;
+    case 0x: //
+     break;
+    case 0x: //
+     break;
+    case 0x: */
+     break;
+    default:
+     printf("Unknown Instruction...\n");
+     break;
+    finally:
+     Network[connI].oper|=~TaylorNetwork_Operation; //clears instruction after finishing
+   }
+  } else {
+   switch(Network[connI].oper & TaylorNetwork_Operation ) {
+    default:
+     printf("Instruction Skipped for Inavtive Connection!\n");
+     break;
+    case 0x01: //Bind/Connect
+     if (Network[connI].oper&TaylorNetwork_IsHost) { //Grab Server Flag
+      #if _WIN32
+      #else
+       sys.MEM[TGR_MEM_IO_NET_ERR] = bind(Network[connI].Sock, &addr.sin_addr, strlen(addr.sin_addr.s_addr));
+      #endif
+     } else { //client
+      #if _WIN32
+      #else
+       sys.MEM[TGR_MEM_IO_NET_ERR] = connect(Network[connI].Sock, &addr.sin_addr, strlen(addr.sin_addr.s_addr));
+      #endif
+     }
+     if (sys.MEM[TGR_MEM_IO_NET_ERR] > 0) printf("Socket Error (%d)\n",sys.MEM[TGR_MEM_IO_NET_ERR]);
+     break;
+   }
+  }
+ }while(++connI);
+}
 
 struct timespec start, end;
 uint16_t TAYLOR_CARTINIT();
@@ -1558,14 +1528,14 @@ void TAYLOR_GPU_GraphicsCore() {
      switch(GPU_RENDER_NODES[ID][NodeID].OperA%4) {
       case 0:
        ImageData = malloc(512*512*4);
-       TGR_CP2RGBA(ImageData, sys.MEM+GPU_RENDER_NODES[ID][NodeID].OperIMM, ceil((GPU_RENDER_NODES[ID][NodeID].X[1]*GPU_RENDER_NODES[ID][NodeID].Y[1])/2.0), GPU_RENDER_NODES[ID][NodeID].CP);
-       Sprite = RL_Bytes2ImageAlpha(ImageData, GPU_RENDER_NODES[ID][NodeID].X[1], GPU_RENDER_NODES[ID][NodeID].Y[1]);
+       TGR_CP2RGBA(ImageData, sys.MEM+GPU_RENDER_NODES[ID][NodeID].OperIMM, min(GPU_RENDER_NODES[ID][NodeID].X[1],512)*min(GPU_RENDER_NODES[ID][NodeID].Y[1],512), GPU_RENDER_NODES[ID][NodeID].CP);
+       Sprite = RL_Bytes2ImageAlpha(ImageData, min(GPU_RENDER_NODES[ID][NodeID].X[1],512), min(GPU_RENDER_NODES[ID][NodeID].Y[1],512));
        free(ImageData);
        break;
       case 1:
        ImageData = malloc(512*512*4);
-       TGR_CP82RGBA(ImageData, sys.MEM+GPU_RENDER_NODES[ID][NodeID].OperIMM, GPU_RENDER_NODES[ID][NodeID].X[1]*GPU_RENDER_NODES[ID][NodeID].Y[1], GPU_RENDER_NODES[ID][NodeID].CP);
-       Sprite = RL_Bytes2ImageAlpha(ImageData, GPU_RENDER_NODES[ID][NodeID].X[1], GPU_RENDER_NODES[ID][NodeID].Y[1]);
+       TGR_CP82RGBA(ImageData, sys.MEM+GPU_RENDER_NODES[ID][NodeID].OperIMM, min(GPU_RENDER_NODES[ID][NodeID].X[1],512)*min(GPU_RENDER_NODES[ID][NodeID].Y[1],512), GPU_RENDER_NODES[ID][NodeID].CP);
+       Sprite = RL_Bytes2ImageAlpha(ImageData, min(GPU_RENDER_NODES[ID][NodeID].X[1],512), min(GPU_RENDER_NODES[ID][NodeID].Y[1],512));
        free(ImageData);
        break;
       case 2:
